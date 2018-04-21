@@ -32,7 +32,7 @@ board.on("ready", function () {
   const server = new mosca.Server(settings)
 
   server.on('ready', function () {
-    console.log('server running on port', port)
+    console.log('server is running')
   })
 
   server.on('clientConnected', function (client) {
