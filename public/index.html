@@ -1,19 +1,20 @@
 <html>
 <head>
   <title>local-iot-architecture</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
-<script src="./mqtt.js"></script>
-<script>
-  var client = mqtt.connect() // you add a ws:// url here
-  client.subscribe("mqtt/demo")
 
-  client.on("message", function (topic, payload) {
-    alert([topic, payload].join(": "))
-    client.end()
-  })
+<form>
+  <input type="text" name="topic" id="mqtt-topic" value="lifecycle/actor/schnuck">
+  <br>
+  <input type="text" name="message" id="mqtt-message">
+  <br>
+  <br>
+  <input type="submit" value="yäs, lol" id="mqtt-send">
+</form>
 
-  client.publish("mqtt/demo", "hello world!")
-</script>
+<script src="local-iot-architecture.js"></script>
 </body>
 </html>

@@ -37,7 +37,7 @@ board.on("ready", function () {
     console.log('server running on port', port)
   })
 
-  server.on('clientConnected', function(client) {
+  server.on('clientConnected', function (client) {
     console.log('client connected', client.id);
   });
 
