@@ -30,7 +30,7 @@ board.on("ready", function () {
       static: './'
     }
   }
-  const server = new mosca.Server({ settings })
+  const server = new mosca.Server({ port: port })
 
   server.on('ready', function () {
     console.log('server running on port', port)
