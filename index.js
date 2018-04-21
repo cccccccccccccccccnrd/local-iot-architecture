@@ -18,6 +18,9 @@ board.on("ready", function () {
   const waterpumpTopic = 'lifecycle/actor/waterpump'
   let waterpumpState = false
 
+  const schnuckTopic = 'lifecycle/actor/schnuck'
+  let schnuckState = 'cool'
+
   /* Mosca server (MQTT server) setup */
   const port = 1883
   const server = new mosca.Server({ port: port })
@@ -52,8 +55,12 @@ board.on("ready", function () {
       } else {
         console.log('invalid message')
       }
+    } else if (topic == schnuckTopic) {
+      lcd.clear().print('Schnuck is ' + schnuckState)
+
+      console.log('schnuck state:', schnuckState)
     } else {
-      console.log('topic was not', waterpumpTopic)
+      console.log('invalid topic')
     }
   })
 
