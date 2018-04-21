@@ -1,5 +1,5 @@
 const mqtt = require('mqtt')
-const client = mqtt.connect('mqtt://127.0.0.1')
+const client = mqtt.connect('mqtt://192.168.178.51')
 
 let waterpumpTopic = 'lifecycle/actor/waterpump'
 let waterpumpState = false
