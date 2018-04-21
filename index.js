@@ -23,7 +23,15 @@ board.on("ready", function () {
 
   /* Mosca server (MQTT server) setup */
   const port = 1883
-  const server = new mosca.Server({ port: port })
+  const settings = {
+    http: {
+      port: 3000,
+      bundle: true,
+      static: './'
+    },
+    port: port
+  }
+  const server = new mosca.Server({ settings })
 
   server.on('ready', function () {
     console.log('server running on port', port)

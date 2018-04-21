@@ -1,0 +1,19 @@
+<html>
+<head>
+  <title>local-iot-architecture</title>
+</head>
+<body>
+<script src="./mqtt.js"></script>
+<script>
+  var client = mqtt.connect() // you add a ws:// url here
+  client.subscribe("mqtt/demo")
+
+  client.on("message", function (topic, payload) {
+    alert([topic, payload].join(": "))
+    client.end()
+  })
+
+  client.publish("mqtt/demo", "hello world!")
+</script>
+</body>
+</html>
