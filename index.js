@@ -43,12 +43,10 @@ board.on("ready", function () {
   const client = mqtt.connect('mqtt://127.0.0.1')
 
   client.on('connect', function () {
-    client.subscribe(waterpumpTopic)
+    client.subscribe('lifecycle/#')
   })
 
-  client.on('message', function (topic, message) {
-    console.log(topic, message)
-    
+  client.on('message', function (topic, message) {    
     if (topic == waterpumpTopic) {
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
@@ -64,7 +62,6 @@ board.on("ready", function () {
         console.log('invalid message')
       }
     } else if (topic == schnuckTopic) {
-      console.log('schnuck state:', schnuckState)
       lcd.clear().print('Schnuck is ' + schnuckState)
 
       console.log('schnuck state:', schnuckState)
