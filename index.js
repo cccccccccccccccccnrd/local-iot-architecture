@@ -2,21 +2,39 @@ const mosca = require('mosca')
 const mqtt = require('mqtt')
 const five = require('johnny-five')
 
+let waterpumpTopic = 'lifecycle/actor/waterpump'
+let waterpumpState = false
+
 /* Mosca server (MQTT server) setup */
-const server = new mosca.Server({ port: 1883 })
+const port = 1883
+const server = new mosca.Server({ port: port })
 
 server.on('ready', function () {
-  console.log('Server ready')
+  console.log('server running on port', port)
 })
 
+server.on('clientConnected', function(client) {
+  console.log('client connected', client.id);
+});
+
 /* MQTT client (publisher) setup */
-const client  = mqtt.connect('mqtt://127.0.0.1')
+const client = mqtt.connect('mqtt://127.0.0.1')
 
 client.on('connect', function () {
-  setInterval(function () {
-    client.publish('myTopic', 'Hello mqtt')
-    console.log('Message Sent')
-  }, 5000)
+  client.subscribe(waterpumpTopic)
+})
+
+client.on('message', function (topic, message) {
+  if (topic == waterpumpTopic) {
+    if (message == 'toggle') {
+      waterpumpState = !waterpumpState
+      console.log('waterpump state:', waterpumpState)
+    } else {
+      console.log('invalid message')
+    }
+  } else {
+    console.log('topic was not', waterpumpTopic)
+  }
 })
 
 /* Arduino setup */
@@ -31,7 +49,7 @@ board.on("ready", function() {
     cols: 16
   })
 
-  lcd.clear().print('Waterpump: on')
+  lcd.clear().print('Waterpump:', waterpumpState)
   lcd.cursor(1, 0)
 
   this.repl.inject({
