@@ -47,6 +47,8 @@ board.on("ready", function () {
   })
 
   client.on('message', function (topic, message) {
+    console.log(topic, message)
+    
     if (topic == waterpumpTopic) {
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
