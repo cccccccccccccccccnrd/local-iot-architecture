@@ -62,6 +62,7 @@ board.on("ready", function () {
         console.log('invalid message')
       }
     } else if (topic == schnuckTopic) {
+      schnuckState = message
       lcd.clear().print('Schnuck is ' + schnuckState)
 
       console.log('schnuck state:', schnuckState)
