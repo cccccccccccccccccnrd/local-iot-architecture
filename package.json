@@ -1,0 +1,23 @@
+{
+  "name": "local-iot-architecture",
+  "version": "1.0.0",
+  "description": "Clear and simple architecture to setup local IoT environment. (technical seminar, 2. semester)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cccccccccccccccccnrd/local-iot-architecture.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cccccccccccccccccnrd/local-iot-architecture/issues"
+  },
+  "homepage": "https://github.com/cccccccccccccccccnrd/local-iot-architecture#readme",
+  "dependencies": {
+    "johnny-five": "^0.14.3",
+    "mosca": "^2.8.1"
+  }
+}
