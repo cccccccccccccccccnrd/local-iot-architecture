@@ -49,8 +49,11 @@ board.on("ready", function() {
     cols: 16
   })
 
-  lcd.clear().print('Waterpump:', waterpumpState)
-  lcd.cursor(1, 0)
+  if (waterpumpState) {
+    lcd.clear().print('Waterpump: on')
+  } else {
+    lcd.clear().print('Waterpump: off')
+  }
 
   this.repl.inject({
     lcd: lcd
