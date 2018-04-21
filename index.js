@@ -28,8 +28,7 @@ board.on("ready", function () {
       port: 3000,
       bundle: true,
       static: './'
-    },
-    port: port
+    }
   }
   const server = new mosca.Server({ settings })
 
