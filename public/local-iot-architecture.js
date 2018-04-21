@@ -5,5 +5,6 @@ button.onclick = function () {
   const topic = document.getElementById('mqtt-topic').value
   const message = document.getElementById('mqtt-message').value
 
+  console.log(topic, message)
   client.publish(topic, message)
 }
