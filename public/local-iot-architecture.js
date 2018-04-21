@@ -1,4 +1,4 @@
-const client = mqtt.connect('mqtt://192.168.178.51')
+const client = mqtt.connect('mqtt://192.168.178.51:3000')
 const button = document.getElementById('mqtt-send')
 
 button.onclick = function () {
