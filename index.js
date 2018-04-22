@@ -21,7 +21,7 @@ board.on("ready", function () {
   const schnuckTopic = 'lifecycle/actor/schnuck'
   let schnuckState = 'cool'
 
-  /* Mosca server (MQTT server) setup */
+  /* Mosca websocket server setup */
   const settings = {
     http: {
       port: 3000,
@@ -39,13 +39,17 @@ board.on("ready", function () {
     console.log('client connected', client.id);
   });
 
-  /* MQTT client (publisher) setup */
-  const client = mqtt.connect('mqtt://127.0.0.1')
+  /* MQTT client setup */
+  const options = {
+    clientId: 'broker-client-' + parseInt(Math.random() * 100000)
+  }
+  const client = mqtt.connect('mqtt://127.0.0.1', options)
 
   client.on('connect', function () {
     client.subscribe('lifecycle/#')
   })
 
+  /* MQTT message handeling */
   client.on('message', function (topic, message) {    
     if (topic == waterpumpTopic) {
       if (message == 'toggle') {
@@ -65,7 +69,7 @@ board.on("ready", function () {
       schnuckState = message
       lcd.clear().print('Schnuck is ' + schnuckState)
 
-      console.log('schnuck state:', schnuckState)
+      console.log('schnuck state:', String.fromCharCode.apply(null, schnuckState))
     } else {
       console.log('invalid topic')
     }

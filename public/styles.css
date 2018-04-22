@@ -1,9 +1,46 @@
 html, body {
   margin: 0;
-  padding: 2em;
+  padding: 0;
 }
 
-textarea, input[type] {
-  font-size: 2.5em;
-  height: 70px;
+body {
+  box-sizing: border-box;
+  margin: 2em;
+  font-family: 'Inconsolata', monospace;
+  font-size: 2em;
+}
+
+hr {
+  margin: 1em;
+  border: 0;
+}
+
+p {
+  font-size: 1.25em;
+}
+
+input[type]:focus, textarea:focus {
+  outline: none;
+}
+
+input[type] {
+  width: 100%;
+  margin: 0 0 0.5em 0;
+  padding: 0.5em;
+  font-family: 'Inconsolata', monospace;
+  font-size: 1.5em;
+  border: 10px solid black;
+}
+
+input[type='submit'] {
+  background: black;
+  color: white;
+}
+
+textarea {
+  width: 100%;
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.45em;
+  opacity: 0.5;
+  border: 0;
 }

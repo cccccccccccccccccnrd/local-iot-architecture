@@ -1,10 +1,35 @@
-const client = mqtt.connect('mqtt://192.168.178.51:3000')
-const button = document.getElementById('mqtt-send')
+let client
 
-button.onclick = function () {
+const connectButton = document.getElementById('mqtt-connect')
+const publishButton = document.getElementById('mqtt-publish')
+const logTextarea = document.getElementById('log')
+
+publishButton.onclick = function () {
   const topic = document.getElementById('mqtt-topic').value
   const message = document.getElementById('mqtt-message').value
 
-  console.log(topic, message)
   client.publish(topic, message)
+  logInTextarea('published ' + message + ' in ' + topic)
+  console.log('published ' + message + ' in ' + topic)
+}
+
+connectButton.onclick = function () {
+  const brokerIp = document.getElementById('mqtt-broker-ip').value
+
+  const options = {
+    clientId: 'local-client-' + parseInt(Math.random() * 100000)
+  }
+  client = mqtt.connect('ws://' + brokerIp, options)
+  logInTextarea('trying to connect to ' + brokerIp)
+  console.log('trying to connect to', brokerIp)
+
+  client.on('connect', function () {
+    logInTextarea('connected to ' + brokerIp)
+    console.log('connected to', brokerIp)
+  })
+}
+
+function logInTextarea (log) {
+  let logTextareaContent = log + '\n\n' + logTextarea.value
+  logTextarea.value = logTextareaContent
 }
