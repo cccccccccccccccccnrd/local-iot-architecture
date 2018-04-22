@@ -7,7 +7,6 @@ body {
   box-sizing: border-box;
   margin: 2em;
   font-family: 'Inconsolata', monospace;
-  font-size: 2em;
 }
 
 hr {
@@ -15,12 +14,12 @@ hr {
   border: 0;
 }
 
-p {
-  font-size: 1.25em;
+input[type]:focus, textarea:focus {
+  outline: 0;
 }
 
-input[type]:focus, textarea:focus {
-  outline: none;
+input[type='text']:focus {
+  border: 0.25em solid black;
 }
 
 input[type] {
@@ -28,8 +27,9 @@ input[type] {
   margin: 0 0 0.5em 0;
   padding: 0.5em;
   font-family: 'Inconsolata', monospace;
-  font-size: 1.5em;
-  border: 10px solid black;
+  font-size: 1em;
+  border: 0.05em solid rgba(0, 0, 0, 0.3);
+  transition: all 100ms ease-in-out;
 }
 
 input[type='submit'] {
@@ -40,7 +40,7 @@ input[type='submit'] {
 textarea {
   width: 100%;
   font-family: 'Inconsolata', monospace;
-  font-size: 0.45em;
+  font-size: 0.8em;
   opacity: 0.5;
   border: 0;
 }
