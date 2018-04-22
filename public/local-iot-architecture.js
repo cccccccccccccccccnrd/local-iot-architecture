@@ -17,7 +17,7 @@ connectButton.onclick = function () {
   const brokerIp = document.getElementById('mqtt-broker-ip').value
 
   const options = {
-    clientId: 'local-client-' + parseInt(Math.random() * 100000)
+    clientId: 'local-client-' + Math.random().toString(16).substr(2, 8)
   }
   client = mqtt.connect('ws://' + brokerIp, options)
   logInTextarea('trying to connect to ' + brokerIp)

@@ -41,7 +41,7 @@ board.on("ready", function () {
 
   /* MQTT client setup */
   const options = {
-    clientId: 'broker-client-' + parseInt(Math.random() * 100000)
+    clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8)
   }
   const client = mqtt.connect('mqtt://127.0.0.1', options)
 
