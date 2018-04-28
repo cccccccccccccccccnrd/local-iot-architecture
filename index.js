@@ -18,8 +18,10 @@ board.on("ready", function () {
   const waterpumpTopic = 'lifecycle/actor/waterpump'
   let waterpumpState = false
 
-  const schnuckTopic = 'lifecycle/actor/schnuck'
-  let schnuckState = 'cool'
+  const lifecycleTopic = 'lifecycle/actor/lifecycle'
+  let lifecycleState = 'cool'
+
+  console.log(__dirname)
 
   /* Mosca websocket server setup */
   const settings = {
@@ -65,11 +67,12 @@ board.on("ready", function () {
       } else {
         console.log('invalid message')
       }
-    } else if (topic == schnuckTopic) {
-      schnuckState = message
-      lcd.clear().print('Schnuck is ' + schnuckState)
+    } else if (topic == lifecycleTopic) {
+      lifecycleState = message
+      lcd.clear().home().print('lifecycle is ...')
+      lcd.cursor(1, 0).print(lifecycleState)
 
-      console.log('schnuck state:', String.fromCharCode.apply(null, schnuckState))
+      console.log('lifecycle state:', String.fromCharCode.apply(null, lifecycleState))
     } else {
       console.log('invalid topic')
     }

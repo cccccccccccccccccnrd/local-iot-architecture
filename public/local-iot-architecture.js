@@ -3,6 +3,8 @@ let client
 const connectButton = document.getElementById('mqtt-connect')
 const publishButton = document.getElementById('mqtt-publish')
 const logTextarea = document.getElementById('log')
+const connectedAs = document.getElementById('connected-as')
+const connectedTo = document.getElementById('connected-to')
 
 publishButton.onclick = function () {
   const topic = document.getElementById('mqtt-topic').value
@@ -19,12 +21,14 @@ connectButton.onclick = function () {
   const options = {
     clientId: 'web-client-' + Math.random().toString(16).substr(2, 8)
   }
-  client = mqtt.connect('ws://' + brokerIp, options)
-  logInTextarea('trying to connect to ' + brokerIp)
-  console.log('trying to connect to', brokerIp)
+  client = mqtt.connect('mqtt://' + brokerIp, options)
+  logInTextarea('connecting to ' + brokerIp + '...')
+  console.log('connecting to', brokerIp + '...')
 
   client.on('connect', function () {
     logInTextarea('connected to ' + brokerIp)
+    connectedTo.innerHTML = brokerIp
+    connectedAs.innerHTML = options.clientId + ' 🤟'
     console.log('connected to', brokerIp)
   })
 }
