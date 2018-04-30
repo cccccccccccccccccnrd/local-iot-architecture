@@ -14,6 +14,22 @@ board.on("ready", function () {
     cols: 16
   })
 
+  dht11 = new five.Multi({
+    controller: "DHT11_I2C_NANO_BACKPACK"
+  })
+
+  dht11.on('change', function() {
+    console.log("Thermometer");
+    console.log("  celsius           : ", this.thermometer.celsius);
+    console.log("  fahrenheit        : ", this.thermometer.fahrenheit);
+    console.log("  kelvin            : ", this.thermometer.kelvin);
+    console.log("--------------------------------------");
+
+    console.log("Hygrometer");
+    console.log("  relative humidity : ", this.hygrometer.relativeHumidity);
+    console.log("--------------------------------------");
+  })
+
   /* Actor states and MQTT topics setup */
   const waterpumpTopic = 'lifecycle/actor/waterpump'
   let waterpumpState = false
