@@ -1,10 +1,16 @@
-let client
-
 const connectButton = document.getElementById('mqtt-connect')
 const publishButton = document.getElementById('mqtt-publish')
 const logTextarea = document.getElementById('log')
 const connectedAs = document.getElementById('connected-as')
 const connectedTo = document.getElementById('connected-to')
+
+let client
+
+const temperatureTopic = 'sensor/temperature'
+let temperatureState
+
+const humidityTopic = 'sensor/humidity'
+let humidityState
 
 publishButton.onclick = function () {
   const topic = document.getElementById('mqtt-topic').value
@@ -26,12 +32,24 @@ connectButton.onclick = function () {
   console.log('connecting to ' + brokerIp + '...')
 
   client.on('connect', function () {
+    client.subscribe('#')
+
     connectedTo.innerHTML = brokerIp
     connectedAs.innerHTML = options.clientId + ' 🤟'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
   })
 }
+
+client.on('message', function (topic, message) {
+  if (topic == temperatureTopic) {
+    temperatureState = message
+    console.log('temperature', temperatureState)
+  } else if (topic == humidityTopic) {
+    humidityState = message
+    console.log('humidity', humidityState)
+  }
+})
 
 function logToTextarea (log) {
   let logTextareaContent = log + '\n\n' + logTextarea.value

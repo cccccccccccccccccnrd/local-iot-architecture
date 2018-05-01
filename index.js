@@ -30,19 +30,18 @@ board.on('ready', function () {
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
-  dht11.on('change', function () {
-    console.log('celsius:', this.thermometer.celsius)
-    console.log('fahrenheit:', this.thermometer.fahrenheit)
-    console.log('kelvin:', this.thermometer.kelvin)
-    console.log('relative humidity:', this.hygrometer.relativeHumidity)
-  })
-
   /* Actor states and MQTT topics setup */
   const waterpumpTopic = 'lifecycle/actor/waterpump'
   let waterpumpState = false
 
   const lifecycleTopic = 'lifecycle/actor/lifecycle'
   let lifecycleState = 'cool'
+
+  const temperatureTopic = 'sensor/temperature'
+  let temperatureState
+
+  const humidityTopic = 'sensor/humidity'
+  let humidityState
 
   /* Mosca websocket server setup */
   const moscaServerSettings = {
@@ -69,11 +68,22 @@ board.on('ready', function () {
   const client = mqtt.connect('mqtt://127.0.0.1', options)
 
   client.on('connect', function () {
-    client.subscribe('lifecycle/#')
+    client.subscribe('#')
   })
 
-  /* MQTT message handeling */
-  client.on('message', function (topic, message) {    
+  /* MQTT publish handeling */
+  dht11.on('change', function () {
+    temperatureState = this.thermometer.celsius
+    client.publish(temperatureTopic, temperatureState)
+    console.log('temperature state:', temperatureState)
+
+    humidityState = this.hygrometer.relativeHumidity
+    client.publish(humidityTopic, humidityState)
+    console.log('humidity state:', humidityState)
+  })
+
+  /* MQTT subscribe handeling */
+  client.on('message', function (topic, message) {
     if (topic == waterpumpTopic) {
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
