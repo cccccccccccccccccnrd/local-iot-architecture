@@ -39,17 +39,17 @@ connectButton.onclick = function () {
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
   })
-}
 
-client.on('message', function (topic, message) {
-  if (topic == temperatureTopic) {
-    temperatureState = message
-    console.log('temperature', temperatureState)
-  } else if (topic == humidityTopic) {
-    humidityState = message
-    console.log('humidity', humidityState)
-  }
-})
+  client.on('message', function (topic, message) {
+    if (topic == temperatureTopic) {
+      temperatureState = message
+      console.log('temperature', temperatureState)
+    } else if (topic == humidityTopic) {
+      humidityState = message
+      console.log('humidity', humidityState)
+    }
+  })
+}
 
 function logToTextarea (log) {
   let logTextareaContent = log + '\n\n' + logTextarea.value
