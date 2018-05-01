@@ -6,20 +6,6 @@ With this technical seminar I want to explore and document a clear and secure wa
 
 In this technical seminar I will continue working on a project called 'Lifecycle' where we are working on decentralized indoor food production with computer aided aquaponics. Nevertheless the environment's architecture can be used for all different kind of machines, actors and humans.
 
-For now the project plan looks like this:
-- Research on open source IoT design patterns
-- Implement the findings in prototypes
-- Evaluate prototypes
-- Clarify architecture of best working prototype (23.05.18)
-- Refactor and document code
-- Finishing documentation of the setup process (13.06.18)
-
-Extra:
-- Focus on front-end (web application) as Progressive Web App + Vue.js
-- Base layout/ components
-- Implementing Progressive Web App features
-- Connecting front-end to middleware
-
 ## Architecture
 ```
 Web application -> Raspberry Pi -> Arduino -> Actor  
