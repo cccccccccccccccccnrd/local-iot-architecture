@@ -95,19 +95,19 @@ board.on('ready', function () {
     if (topic == temperatureTopic) {
       message = JSON.parse(message)
       lcd.cursor(0, 0).print(message.type + ': ' + message.value)
+      console.log('temperature state:', message)
     } else if (topic == humidityTopic) {
       message = JSON.parse(message)
       lcd.cursor(1, 0).print(message.type + ': ' + message.value)
+      console.log('humidity state:', message)
     } else if (topic == waterpumpTopic) {
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
-
         if (waterpumpState) {
           lcd.clear().print('Waterpump is on')
         } else {
           lcd.clear().print('Waterpump is off')
         }
-
         console.log('waterpump state:', waterpumpState)
       } else {
         console.log('invalid message')
@@ -116,7 +116,6 @@ board.on('ready', function () {
       lifecycleState = message
       lcd.clear().home().print('lifecycle is ...')
       lcd.cursor(1, 0).print(lifecycleState)
-
       console.log('lifecycle state:', String.fromCharCode.apply(null, lifecycleState))
     } else {
       console.log('invalid topic')
