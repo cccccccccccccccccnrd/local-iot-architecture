@@ -93,11 +93,9 @@ board.on('ready', function () {
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
     if (topic == temperatureTopic) {
-      message = JSON.parse(message)
       lcd.cursor(0, 0).print(message.type + ': ' + message.value)
       console.log('temperature state:', message.value)
     } else if (topic == humidityTopic) {
-      message = JSON.parse(message)
       lcd.cursor(1, 0).print(message.type + ': ' + message.value)
       console.log('humidity state:', message.value)
     } else if (topic == waterpumpTopic) {
