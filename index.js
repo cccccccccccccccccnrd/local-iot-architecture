@@ -30,16 +30,11 @@ board.on('ready', function () {
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
-  dht11.on('change', function () {
-    console.log('Thermometer')
-    console.log('  celsius           : ', this.thermometer.celsius)
-    console.log('  fahrenheit        : ', this.thermometer.fahrenheit)
-    console.log('  kelvin            : ', this.thermometer.kelvin)
-
-    console.log('--------------------------------------')
-    console.log('Hygrometer');
-    console.log('  relative humidity : ', this.hygrometer.relativeHumidity)
-    console.log('--------------------------------------')
+  dht11.on('data', function () {
+    console.log('celsius:', this.thermometer.celsius)
+    console.log('fahrenheit:', this.thermometer.fahrenheit)
+    console.log('kelvin:', this.thermometer.kelvin)
+    console.log('relative humidity:', this.hygrometer.relativeHumidity)
   })
 
   /* Actor states and MQTT topics setup */
