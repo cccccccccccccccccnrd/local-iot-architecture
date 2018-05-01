@@ -30,7 +30,7 @@ board.on('ready', function () {
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
-  dht11.on('change', function () {
+  dht11.on('data', function () {
     console.log('celsius:', this.thermometer.celsius)
     console.log('fahrenheit:', this.thermometer.fahrenheit)
     console.log('kelvin:', this.thermometer.kelvin)
@@ -43,8 +43,6 @@ board.on('ready', function () {
 
   const lifecycleTopic = 'lifecycle/actor/lifecycle'
   let lifecycleState = 'cool'
-
-  console.log(__dirname)
 
   /* Mosca websocket server setup */
   const moscaServerSettings = {
