@@ -1,5 +1,5 @@
 # Local IoT architecture
-Clear and simple architecture to setup local IoT environment in [Node.js](https://nodejs.org/en/). (technical seminar, 2. semester)
+Clear and simple architecture to setup local IoT environment in [Node.js](https://nodejs.org/en/). (Interactive Application, technical seminar)
 
 ## Abstract
 With this technical seminar I want to explore and document a clear and secure way of setting up a local interconnected architecture of machines, actors and humans (Internet-of-Things). My focus lies on creating a local, closed system, to provide data protection and security. In the end the architecture should be a part of a distributed system of multiple architectures, which on occasion may share information between each other.
