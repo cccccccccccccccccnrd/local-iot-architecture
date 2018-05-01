@@ -42,10 +42,10 @@ connectButton.onclick = function () {
 
   client.on('message', function (topic, message) {
     if (topic == temperatureTopic) {
-      temperatureState = message
+      temperatureState = String(message)
       console.log('temperature', temperatureState)
     } else if (topic == humidityTopic) {
-      humidityState = message
+      humidityState = String(message)
       console.log('humidity', humidityState)
     }
   })
