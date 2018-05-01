@@ -30,7 +30,7 @@ board.on('ready', function () {
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
-  dht11.on('data', function () {
+  dht11.on('change', function () {
     console.log('celsius:', this.thermometer.celsius)
     console.log('fahrenheit:', this.thermometer.fahrenheit)
     console.log('kelvin:', this.thermometer.kelvin)
