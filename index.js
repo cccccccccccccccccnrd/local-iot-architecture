@@ -59,7 +59,7 @@ board.on('ready', function () {
       static: './'
     }
   }
-  const moscaServer = new mosca.Server(settings)
+  const moscaServer = new mosca.Server(moscaServerSettings)
 
   moscaServer.on('ready', function () {
     console.log('mqtt server is running on port', moscaServerSettings.http.port)
