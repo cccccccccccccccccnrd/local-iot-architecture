@@ -57,12 +57,15 @@ typings/
 # dotenv environment variables file
 .env
 
+# node_modules
+node_modules/
+
+# DS_Store
+.DS_Store
+
 # vscode
 .vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-# DS_Store
-.DS_Store

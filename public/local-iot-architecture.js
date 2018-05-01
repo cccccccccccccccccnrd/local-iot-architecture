@@ -11,29 +11,29 @@ publishButton.onclick = function () {
   const message = document.getElementById('mqtt-message').value
 
   client.publish(topic, message)
-  logInTextarea('published ' + message + ' in ' + topic)
+  logToTextarea('published ' + message + ' in ' + topic)
   console.log('published ' + message + ' in ' + topic)
 }
 
 connectButton.onclick = function () {
   const brokerIp = document.getElementById('mqtt-broker-ip').value
-
   const options = {
     clientId: 'web-client-' + Math.random().toString(16).substr(2, 8)
   }
+
   client = mqtt.connect('mqtt://' + brokerIp, options)
-  logInTextarea('connecting to ' + brokerIp + '...')
-  console.log('connecting to', brokerIp + '...')
+  logToTextarea('connecting to ' + brokerIp + '...')
+  console.log('connecting to ' + brokerIp + '...')
 
   client.on('connect', function () {
-    logInTextarea('connected to ' + brokerIp)
     connectedTo.innerHTML = brokerIp
     connectedAs.innerHTML = options.clientId + ' 🤟'
-    console.log('connected to', brokerIp)
+    logToTextarea('connected to ' + brokerIp)
+    console.log('connected to ' + brokerIp)
   })
 }
 
-function logInTextarea (log) {
+function logToTextarea (log) {
   let logTextareaContent = log + '\n\n' + logTextarea.value
   logTextarea.value = logTextareaContent
 }
