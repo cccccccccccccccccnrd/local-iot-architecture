@@ -21,9 +21,11 @@ Extra:
 - Connecting front-end to middleware
 
 ## Architecture
-```Web application -> Raspberry Pi -> Arduino -> Actor  
+```
+Web application -> Raspberry Pi -> Arduino -> Actor  
 Actor -> Arduino -> Raspberry Pi -> Web application  
 
 Web application (html, css, vanilla js, mqtt.js)  
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
-Arduino (StandardFirmataPlus)```
+Arduino (StandardFirmataPlus)
+```
