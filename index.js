@@ -92,7 +92,13 @@ board.on('ready', function () {
 
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
-    if (topic == waterpumpTopic) {
+    if (topic == temperatureTopic) {
+      message = JSON.parse(message)
+      lcd.cursor(0, 0).print(message.type + ': ' + message.value)
+    } else if (topic == humidityTopic) {
+      message = JSON.parse(message)
+      lcd.cursor(1, 0).print(message.type + ': ' + message.value)
+    } else if (topic == waterpumpTopic) {
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
 
