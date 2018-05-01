@@ -73,13 +73,21 @@ board.on('ready', function () {
 
   /* MQTT publish handeling */
   dht11.on('change', function () {
-    temperatureState = String(this.thermometer.celsius)
-    client.publish(temperatureTopic, temperatureState)
-    console.log('temperature state:', temperatureState)
+    temperatureState = {
+      'type': 'temperature',
+      'value': String(this.thermometer.celsius),
+      'timestamp': Date.now()
+    }
+    client.publish(temperatureTopic, JSON.stringify(temperatureState))
+    console.log('temperature state:', JSON.stringify(temperatureState))
 
-    humidityState = String(this.hygrometer.relativeHumidity)
-    client.publish(humidityTopic, humidityState)
-    console.log('humidity state:', humidityState)
+    humidityState = {
+      'type': 'relative-humidity',
+      'value': String(this.hygrometer.relativeHumidity),
+      'timestamp': Date.now()
+    }
+    client.publish(humidityTopic, JSON.stringify(humidityState))
+    console.log('humidity state:', JSON.stringify(humidityState))
   })
 
   /* MQTT subscribe handeling */
