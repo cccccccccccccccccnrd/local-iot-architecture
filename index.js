@@ -4,10 +4,15 @@ const five = require('johnny-five')
 const express = require('express')
 
 /* http-server setup */
-let httpServer = express()
+const httpServerSettings = {
+  port: 3000,
+  staticPath: 'public'
+}
+const httpServer = express()
 
-httpServer.use(express.static('public'))
-httpServer.listen(3000)
+httpServer.use(express.static(httpServerSettings.staticPath))
+httpServer.listen(httpServerSettings.port)
+console.log('http server is running on port', httpServerSettings.port)
 
 /* Arduino setup */
 const board = new five.Board()
@@ -30,8 +35,8 @@ board.on('ready', function () {
     console.log('  celsius           : ', this.thermometer.celsius)
     console.log('  fahrenheit        : ', this.thermometer.fahrenheit)
     console.log('  kelvin            : ', this.thermometer.kelvin)
-    console.log('--------------------------------------')
 
+    console.log('--------------------------------------')
     console.log('Hygrometer');
     console.log('  relative humidity : ', this.hygrometer.relativeHumidity)
     console.log('--------------------------------------')
@@ -47,7 +52,7 @@ board.on('ready', function () {
   console.log(__dirname)
 
   /* Mosca websocket server setup */
-  const settings = {
+  const moscaServerSettings = {
     http: {
       port: 3001,
       bundle: true,
@@ -57,7 +62,7 @@ board.on('ready', function () {
   const moscaServer = new mosca.Server(settings)
 
   moscaServer.on('ready', function () {
-    console.log('server is running')
+    console.log('mqtt server is running on port', moscaServerSettings.http.port)
   })
 
   moscaServer.on('clientConnected', function (client) {
