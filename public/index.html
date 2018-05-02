@@ -9,6 +9,13 @@
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
+<section class="status-bar">
+  <p id="connected-as">...</p>
+  <p id="connected-to">...</p>
+</section>
+<section id="visualization">
+
+</section>
 <section class="inputs">
   <input type="text" name="broker-ip" id="mqtt-broker-ip" spellcheck="false" value="192.168.178.51:3001">
   <span class="flex">
@@ -22,10 +29,6 @@
   <input type="submit" value="publish" id="mqtt-publish">
   <hr>
   <textarea name="log" id="log" rows="15"></textarea>
-</section>
-<section class="status-bar">
-  <p id="connected-as">...</p>
-  <p id="connected-to">...</p>
 </section>
 
 <script src="local-iot-architecture.js"></script>

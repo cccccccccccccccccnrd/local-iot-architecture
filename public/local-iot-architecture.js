@@ -3,8 +3,9 @@ const publishButton = document.getElementById('mqtt-publish')
 const logTextarea = document.getElementById('log')
 const connectedAs = document.getElementById('connected-as')
 const connectedTo = document.getElementById('connected-to')
+const visualization = document.getElementById('visualization')
 
-let client
+let client, visualizationOpen = false
 
 const temperatureTopic = 'sensor/temperature'
 let temperatureState
@@ -37,7 +38,7 @@ connectButton.onclick = function () {
   console.log('connecting to ' + brokerIp + '...')
 
   client.on('connect', function () {
-    client.subscribe('#')
+    client.subscribe('sensor/#')
 
     connectedTo.innerHTML = brokerIp
     connectedAs.innerHTML = options.clientId + ' 🤟'
@@ -48,14 +49,20 @@ connectButton.onclick = function () {
   client.on('message', function (topic, message) {
     if (topic == temperatureTopic) {
       temperatureState = String(message)
-      logToTextarea('revieved ' + temperatureState)
+      logToTextarea(temperatureState)
       console.log('temperature', temperatureState)
     } else if (topic == humidityTopic) {
       humidityState = String(message)
-      logToTextarea('revieved ' + humidityState)
+      logToTextarea(humidityState)
       console.log('humidity', humidityState)
     }
   })
+}
+
+connectedAs.onclick = function () {
+  if (visualizationOpen == false) {
+    
+  }
 }
 
 function logToTextarea (log) {

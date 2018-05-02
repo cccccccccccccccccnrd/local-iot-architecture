@@ -56,12 +56,24 @@ textarea {
 
 .inputs {
   margin: 2em;
+  z-index: 1;
+}
+
+#visualization {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 0;
+  background: white;
 }
 
 .status-bar {
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
+  z-index: 3;
   width: 100%;
   height: 2.5em;
   padding: 0em 2em;
