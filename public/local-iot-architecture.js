@@ -114,7 +114,7 @@ connectButton.onclick = function () {
     client.subscribe('sensor/#')
 
     connectedTo.innerHTML = brokerIp
-    connectedAs.innerHTML = options.clientId
+    connectedAs.innerHTML = options.clientId + ' 🤟'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
   })
@@ -149,8 +149,8 @@ connectedAs.onclick = function () {
     visualizationOpen = true
   } else if (visualizationOpen == true) {
     visualization.style.marginLeft = '-100vw'
-    connectedAs.style.color = 'black'
-    connectedTo.style.color = 'black'
+    connectedAs.style.color = 'blue'
+    connectedTo.style.color = 'blue'
     visualizationOpen = false
   }
 }

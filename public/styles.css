@@ -110,8 +110,10 @@ textarea {
 
 #connected-as {
   float: left;
+  color: blue;
 }
 
 #connected-to {
   float: right;
+  color: blue;
 }
