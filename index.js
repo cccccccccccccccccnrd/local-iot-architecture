@@ -78,8 +78,8 @@ board.on('ready', function () {
       'value': String(this.thermometer.celsius),
       'timestamp': Date.now()
     }
-    client.publish(temperatureTopic, JSON.stringify(temperatureState))
     lcd.cursor(0, 0).print(temperatureState.type + ': ' + temperatureState.value + ' C')
+    client.publish(temperatureTopic, JSON.stringify(temperatureState))
     console.log('temperature state:', JSON.stringify(temperatureState))
 
     humidityState = {
@@ -87,8 +87,8 @@ board.on('ready', function () {
       'value': String(this.hygrometer.relativeHumidity),
       'timestamp': Date.now()
     }
-    client.publish(humidityTopic, JSON.stringify(humidityState))
     lcd.cursor(1, 0).print(humidityState.type + ': ' + humidityState.value + ' %')
+    client.publish(humidityTopic, JSON.stringify(humidityState))
     console.log('humidity state:', JSON.stringify(humidityState))
   })
 
