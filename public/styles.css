@@ -87,6 +87,16 @@ textarea {
   overflow: hidden;
 }
 
+.chart canvas {
+  max-height: 100px;
+}
+
+.chart p {
+  padding: 1.3em;
+  font-size: 0.9em;
+  color: white;
+}
+
 .status-bar {
   box-sizing: border-box;
   position: fixed;

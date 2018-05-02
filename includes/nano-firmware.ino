@@ -73,7 +73,7 @@ void loop() {
     Serial.println(c);
   #endif
 
-    delay(2000);
+    delay(1000);
 
   #if DEBUG_MODE
     Serial.print("free ram: ");

@@ -4,6 +4,8 @@ const logTextarea = document.getElementById('log')
 const connectedAs = document.getElementById('connected-as')
 const connectedTo = document.getElementById('connected-to')
 const visualization = document.getElementById('visualization')
+const currentTemperature = document.getElementById('current-temperature')
+const currentHumidity = document.getElementById('current-humidity')
 const temperatureChartContext = document.getElementById('temperature-chart').getContext('2d')
 const humidityChartContext = document.getElementById('humidity-chart').getContext('2d')
 
@@ -98,7 +100,6 @@ connectButton.onclick = function () {
   const brokerIp = document.getElementById('mqtt-broker-ip').value
   const username = document.getElementById('mqtt-broker-username').value
   const password = document.getElementById('mqtt-broker-password').value
-  console.log(username, password)
   const options = {
     clientId: 'web-client-' + Math.random().toString(16).substr(2, 8),
     username: username,
@@ -124,11 +125,13 @@ connectButton.onclick = function () {
       logToTextarea(temperatureState)
       console.log('temperature', temperatureState)
       updateChart(temperatureChart, JSON.parse(temperatureState).timestamp, JSON.parse(temperatureState).value)
+      currentTemperature.innerHTML = JSON.parse(temperatureState).value
     } else if (topic === humidityTopic) {
       humidityState = String(message)
       logToTextarea(humidityState)
       console.log('humidity', humidityState)
       updateChart(humidityChart, JSON.parse(humidityState).timestamp, JSON.parse(humidityState).value)
+      currentHumidity.innerHTML = JSON.parse(humidityState).value
     }
   })
 }
