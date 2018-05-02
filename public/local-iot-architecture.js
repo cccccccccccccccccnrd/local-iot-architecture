@@ -23,8 +23,12 @@ publishButton.onclick = function () {
 
 connectButton.onclick = function () {
   const brokerIp = document.getElementById('mqtt-broker-ip').value
+  const username = document.getElementById('mqtt-broker-username').value
+  const password = document.getElementById('mqtt-broker-password').value
   const options = {
-    clientId: 'web-client-' + Math.random().toString(16).substr(2, 8)
+    clientId: 'web-client-' + Math.random().toString(16).substr(2, 8),
+    username: username,
+    password: password
   }
 
   client = mqtt.connect('mqtt://' + brokerIp, options)

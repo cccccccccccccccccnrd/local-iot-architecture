@@ -11,6 +11,10 @@
 <body>
 <section class="inputs">
   <input type="text" name="broker-ip" id="mqtt-broker-ip" spellcheck="false" value="192.168.178.51:3001">
+  <span class="flex">
+    <input type="text" name="broker-username" id="mqtt-broker-username" spellcheck="false" value="c">
+    <input type="password" name="broker-password" id="mqtt-broker-password" spellcheck="false" placeholder="password">
+  </span>
   <input type="submit" value="connect" id="mqtt-connect">
   <hr>
   <input type="text" name="topic" id="mqtt-topic" spellcheck="false" value="lifecycle/actor/waterpump">
