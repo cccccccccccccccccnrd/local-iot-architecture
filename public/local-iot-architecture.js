@@ -48,9 +48,11 @@ connectButton.onclick = function () {
   client.on('message', function (topic, message) {
     if (topic == temperatureTopic) {
       temperatureState = String(message)
+      logToTextarea('revieved ' + temperatureState)
       console.log('temperature', temperatureState)
     } else if (topic == humidityTopic) {
       humidityState = String(message)
+      logToTextarea('revieved ' + humidityState)
       console.log('humidity', humidityState)
     }
   })
