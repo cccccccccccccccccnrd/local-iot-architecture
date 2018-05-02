@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
 
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 </head>
 <body>
 <section class="status-bar">
@@ -14,7 +15,12 @@
   <p id="connected-to">...</p>
 </section>
 <section id="visualization">
-
+  <div class="chart">
+    <canvas id="temperature-chart"></canvas>
+  </div>
+  <div class="chart">
+    <canvas id="humidity-chart"></canvas>
+  </div>
 </section>
 <section class="inputs">
   <input type="text" name="broker-ip" id="mqtt-broker-ip" spellcheck="false" value="192.168.178.51:3001">
