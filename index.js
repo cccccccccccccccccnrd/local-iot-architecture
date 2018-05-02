@@ -59,7 +59,7 @@ board.on('ready', function () {
       client.user = username
       callback(null, authorized)
     } else {
-      console.log('Not authorized username ' + username + ' tried to connect')
+      console.log('not authorized username ' + username + ' tried to connect')
     }
   }
 
@@ -74,7 +74,9 @@ board.on('ready', function () {
 
   /* MQTT client setup */
   const options = {
-    clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8)
+    clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
+    username: 'c',
+    password: 'ccc'
   }
   const client = mqtt.connect('mqtt://127.0.0.1', options)
 
