@@ -79,28 +79,22 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
+    lcd.cursor(0, 0).print(temperatureState.type + ': ' + temperatureState.value + ' C')
     console.log('temperature state:', JSON.stringify(temperatureState))
 
     humidityState = {
-      'type': 'relative-humidity',
+      'type': 'humidity',
       'value': String(this.hygrometer.relativeHumidity),
       'timestamp': Date.now()
     }
     client.publish(humidityTopic, JSON.stringify(humidityState))
+    lcd.cursor(1, 0).print(humidityState.type + ': ' + humidityState.value + ' %')
     console.log('humidity state:', JSON.stringify(humidityState))
   })
 
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
-    if (topic == temperatureTopic) {
-      message = JSON.parse(message)
-      lcd.cursor(0, 0).print(message.type + ': ' + message.value)
-      console.log('temperature state:', message)
-    } else if (topic == humidityTopic) {
-      message = JSON.parse(message)
-      lcd.cursor(1, 0).print('humidity' + ': ' + message.value)
-      console.log('humidity state:', message)
-    } else if (topic == waterpumpTopic) {
+    if (topic == waterpumpTopic) {
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
