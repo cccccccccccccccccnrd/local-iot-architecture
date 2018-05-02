@@ -55,8 +55,12 @@ board.on('ready', function () {
 
   let authenticate = function(client, username, password, callback) {
     let authorized = (username === 'c' && String(password) === 'ccc')
-    if (authorized) client.user = username
-    callback(null, authorized)
+    if (authorized) {
+      client.user = username
+      callback(null, authorized)
+    } else {
+      console.log('Not authorized username ' + username + ' tried to connect')
+    }
   }
 
   moscaServer.on('ready', function () {
