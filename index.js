@@ -31,10 +31,10 @@ board.on('ready', function () {
   })
 
   /* Actor states and MQTT topics setup */
-  const waterpumpTopic = 'lifecycle/actor/waterpump'
+  const waterpumpTopic = 'actor/waterpump'
   let waterpumpState = false
 
-  const lifecycleTopic = 'lifecycle/actor/lifecycle'
+  const lifecycleTopic = 'actor/lifecycle'
   let lifecycleState = 'cool'
 
   const temperatureTopic = 'sensor/temperature'
@@ -52,8 +52,15 @@ board.on('ready', function () {
     }
   }
   const moscaServer = new mosca.Server(moscaServerSettings)
+  
+  let authenticate = function(client, username, password, callback) {
+    let authorized = (username === 'c' && String(password) === 'ccc')
+    if (authorized) client.user = username
+    callback(null, authorized)
+  }
 
   moscaServer.on('ready', function () {
+    moscaServer.authenticate = authenticate
     console.log('mqtt server is running on port', moscaServerSettings.http.port)
   })
 
@@ -68,7 +75,7 @@ board.on('ready', function () {
   const client = mqtt.connect('mqtt://127.0.0.1', options)
 
   client.on('connect', function () {
-    client.subscribe('#')
+    client.subscribe('actor/#')
   })
 
   /* MQTT publish handeling */
