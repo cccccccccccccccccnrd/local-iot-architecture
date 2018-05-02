@@ -24,8 +24,8 @@ let temperatureChart = new Chart(temperatureChartContext, {
     datasets: [{
       label: 'Data',
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
-      borderWidth: 1,
-      borderColor: 'rgba(255, 255, 255, 0.6)',
+      borderWidth: 0,
+      borderColor: 'rgba(255, 255, 255, 0)',
       pointRadius: 0,
       pointBorderColor: 'white',
       pointBackgroundColor: 'white',
@@ -59,8 +59,8 @@ let humidityChart = new Chart(humidityChartContext, {
     datasets: [{
       label: 'Data',
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
-      borderWidth: 1,
-      borderColor: 'rgba(255, 255, 255, 0.6)',
+      borderWidth: 0,
+      borderColor: 'rgba(255, 255, 255, 0)',
       pointRadius: 0,
       pointBorderColor: 'white',
       pointBackgroundColor: 'white',
@@ -158,7 +158,7 @@ connectedAs.onclick = function () {
 function updateChart (chart, label, data) {
   chart.data.labels.push(label)
   chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(data)
+    dataset.data.push(data)
   })
   chart.update()
 }
