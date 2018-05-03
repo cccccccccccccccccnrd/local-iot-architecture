@@ -1,8 +1,8 @@
 const connectButton = document.getElementById('mqtt-connect')
 const publishButton = document.getElementById('mqtt-publish')
 const logTextarea = document.getElementById('log')
-const connectedAs = document.getElementById('connected-as')
-const connectedTo = document.getElementById('connected-to')
+const statusBarLeft = document.getElementById('status-bar-left')
+const statusBarRight = document.getElementById('status-bar-right')
 const visualization = document.getElementById('visualization')
 const currentTemperature = document.getElementById('current-temperature')
 const currentHumidity = document.getElementById('current-humidity')
@@ -113,8 +113,7 @@ connectButton.onclick = function () {
   client.on('connect', function () {
     client.subscribe('sensor/#')
 
-    connectedTo.innerHTML = brokerIp
-    connectedAs.innerHTML = options.clientId + ' 🤟'
+    statusBarRight.innerHTML = options.clientId + ' 🔐'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
   })
@@ -141,16 +140,18 @@ function logToTextarea (log) {
   logTextarea.value = logTextareaContent
 }
 
-connectedAs.onclick = function () {
+statusBarLeft.onclick = function () {
   if (visualizationOpen == false) {
     visualization.style.marginLeft = '0'
-    connectedAs.style.color = 'white'
-    connectedTo.style.color = 'white'
+    statusBarLeft.innerHTML = '&gt;'
+    statusBarLeft.style.color = 'white'
+    statusBarRight.style.color = 'white'
     visualizationOpen = true
   } else if (visualizationOpen == true) {
     visualization.style.marginLeft = '-100vw'
-    connectedAs.style.color = 'blue'
-    connectedTo.style.color = 'blue'
+    statusBarLeft.innerHTML = '&lt;'
+    statusBarLeft.style.color = 'blue'
+    statusBarRight.style.color = 'blue'
     visualizationOpen = false
   }
 }

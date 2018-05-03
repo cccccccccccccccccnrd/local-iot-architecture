@@ -10,10 +10,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 </head>
 <body>
-<section class="status-bar">
-  <p id="connected-as">...</p>
-  <p id="connected-to">...</p>
-</section>
 <section id="visualization">
   <div class="chart">
     <canvas id="temperature-chart"></canvas>
@@ -38,6 +34,10 @@
   <hr>
   <textarea name="log" id="log" rows="15"></textarea>
 </section>
+<section class="status-bar">
+    <p id="status-bar-left">&lt;</p>
+    <p id="status-bar-right">...</p>
+  </section>
 
 <script src="local-iot-architecture.js"></script>
 </body>
