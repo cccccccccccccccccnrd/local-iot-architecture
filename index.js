@@ -26,8 +26,10 @@ board.on('ready', function () {
     height: 64,
     address: 0x3C
   })
-  oled.clearDisplay()
-  oled.update()
+  for (let i = 0; i < 10; i++) {
+    oled.clearDisplay()
+    oled.update()
+  }
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
@@ -35,7 +37,7 @@ board.on('ready', function () {
 
   light = new five.Light({
     pin: 'A0',
-    freq: 1000
+    freq: 2000
   })
 
   /* States and MQTT topics setup */
