@@ -122,9 +122,11 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     oled.setCursor(0, 30)
-    oled.writeString(font, 1, 'light-intensity: ' + lightIntensitiyState.value + ' %', 1, true, 2)
+    oled.writeString(font, 1, 'light: ' + lightIntensitiyState.value + ' %', 1, true, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensitiyState))
     console.log('light-intensitiy state:', JSON.stringify(lightIntensitiyState))
+
+    setTimeout(2000)
   })
 
   /* MQTT subscribe handeling */
