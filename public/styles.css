@@ -46,6 +46,7 @@ textarea {
   width: 100%;
   font-family: 'Inconsolata', monospace;
   font-size: 0.7em;
+  word-break: break-all;
   background: none;
   opacity: 0.3;
   border: 0;
