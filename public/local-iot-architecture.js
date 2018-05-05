@@ -10,7 +10,7 @@ const temperatureChartContext = document.getElementById('temperature-chart').get
 const humidityChartContext = document.getElementById('humidity-chart').getContext('2d')
 
 let client, visualizationOpen = false
-
+/* States and MQTT topics setup */
 const temperatureTopic = 'sensor/temperature'
 let temperatureState
 

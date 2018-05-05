@@ -33,7 +33,9 @@ board.on('ready', function () {
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
-  /* Actor states and MQTT topics setup */
+  light = new five.Light('A3')
+
+  /* States and MQTT topics setup */
   const waterpumpTopic = 'actor/waterpump'
   let waterpumpState = false
 
@@ -45,6 +47,9 @@ board.on('ready', function () {
 
   const humidityTopic = 'sensor/humidity'
   let humidityState
+
+  const lightIntensityTopic = 'sensor/light-intensity'
+  let lightIntensityState
 
   /* Mosca websocket server setup */
   const moscaServerSettings = {
@@ -108,6 +113,18 @@ board.on('ready', function () {
     oled.writeString(font, 1, 'humidity: ' + humidityState.value + ' %', 1, true, 2)
     client.publish(humidityTopic, JSON.stringify(humidityState))
     console.log('humidity state:', JSON.stringify(humidityState))
+  })
+
+  light.on('change', function() {
+    lightIntensitiyState = {
+      'type': 'light-intensity',
+      'value': String(this.level),
+      'timestamp': Date.now()
+    }
+    oled.setCursor(0, 30)
+    oled.writeString(font, 1, 'light-intensity: ' + lightIntensitiyState.value + ' %', 1, true, 2)
+    client.publish(lightIntensitiyTopic, JSON.stringify(lightIntensitiyState))
+    console.log('light-intensitiy state:', JSON.stringify(lightIntensitiyState))
   })
 
   /* MQTT subscribe handeling */
