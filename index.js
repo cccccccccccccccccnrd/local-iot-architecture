@@ -27,14 +27,14 @@ board.on('ready', function () {
     address: 0x3C
   })
   oled.clearDisplay()
-    /* oled.update() */
+  oled.update()
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
   light = new five.Light({
-    pin: 'A0',
+    pin: 'A3',
     freq: 2000
   })
 
@@ -121,10 +121,10 @@ board.on('ready', function () {
   light.on('data', function() {
     lightIntensitiyState = {
       'type': 'light-intensity',
-      'value': String(this.level),
+      'value': (100 - String(this.level) * 100).toFixed(0),
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 30)
+    oled.setCursor(0, 24)
     oled.writeString(font, 1, 'light: ' + lightIntensitiyState.value + ' %', 1, true, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensitiyState))
     console.log('light-intensitiy state:', JSON.stringify(lightIntensitiyState))
