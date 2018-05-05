@@ -105,7 +105,7 @@ board.on('ready', function () {
     oled.setCursor(0, 0)
     oled.writeString(font, 1, 'temperature: ' + temperatureState.value + ' C', 1, true, 2)
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
-    console.log('temperature state:', JSON.stringify(temperatureState))
+    console.log(JSON.stringify(temperatureState))
 
     humidityState = {
       'type': 'humidity',
@@ -115,7 +115,7 @@ board.on('ready', function () {
     oled.setCursor(0, 12)
     oled.writeString(font, 1, 'humidity: ' + humidityState.value + ' %', 1, true, 2)
     client.publish(humidityTopic, JSON.stringify(humidityState))
-    console.log('humidity state:', JSON.stringify(humidityState))
+    console.log(JSON.stringify(humidityState))
   })
 
   light.on('data', function() {
@@ -127,7 +127,7 @@ board.on('ready', function () {
     oled.setCursor(0, 24)
     oled.writeString(font, 1, 'light: ' + lightIntensitiyState.value + ' %', 1, true, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensitiyState))
-    console.log('light-intensitiy state:', JSON.stringify(lightIntensitiyState))
+    console.log(JSON.stringify(lightIntensitiyState))
   })
 
   /* MQTT subscribe handeling */

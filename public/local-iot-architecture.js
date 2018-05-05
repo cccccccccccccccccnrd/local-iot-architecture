@@ -6,8 +6,10 @@ const statusBarRight = document.getElementById('status-bar-right')
 const visualization = document.getElementById('visualization')
 const currentTemperature = document.getElementById('current-temperature')
 const currentHumidity = document.getElementById('current-humidity')
+const currentLightIntensity = document.getElementById('current-light-intensity')
 const temperatureChartContext = document.getElementById('temperature-chart').getContext('2d')
 const humidityChartContext = document.getElementById('humidity-chart').getContext('2d')
+const lightIntensityChartContext = document.getElementById('light-intensity-chart').getContext('2d')
 
 let client, visualizationOpen = false
 /* States and MQTT topics setup */
@@ -16,6 +18,9 @@ let temperatureState
 
 const humidityTopic = 'sensor/humidity'
 let humidityState
+
+const lightIntensityTopic = 'sensor/light-intensity'
+let lightIntensityState
 
 let temperatureChart = new Chart(temperatureChartContext, {
   type: 'line',
@@ -53,6 +58,41 @@ let temperatureChart = new Chart(temperatureChartContext, {
 })
 
 let humidityChart = new Chart(humidityChartContext, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Data',
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      borderWidth: 0,
+      borderColor: 'rgba(255, 255, 255, 0)',
+      pointRadius: 0,
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'white',
+      pointHoverRadius: 3,
+      pointHoverBorderColor: 'white',
+      pointHoverBackgroundColor: 'white',
+      data: []
+    }]
+  },
+  options: {
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        display: false
+      }],
+      yAxes: [{
+        display: false
+      }]
+    },
+    responsive: true,
+    maintainAspectRatio: true
+  }
+})
+
+let lightIntensityChart = new Chart(lightIntensityChartContext, {
   type: 'line',
   data: {
     labels: [],
@@ -131,6 +171,12 @@ connectButton.onclick = function () {
       console.log('humidity', humidityState)
       updateChart(humidityChart, JSON.parse(humidityState).timestamp, JSON.parse(humidityState).value)
       currentHumidity.innerHTML = JSON.parse(humidityState).value
+    } else if (topic === lightIntensityTopic) {
+      lightIntensityState = String(message)
+      logToTextarea(lightIntensityState)
+      console.log('light-intensity', lightIntensityState)
+      updateChart(lightIntensityChart, JSON.parse(lightIntensityState).timestamp, JSON.parse(lightIntensityState).value)
+      currentLightIntensity.innerHTML = JSON.parse(lightIntensityState).value
     }
   })
 }
