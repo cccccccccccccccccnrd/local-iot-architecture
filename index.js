@@ -1,6 +1,8 @@
 const mosca = require('mosca')
 const mqtt = require('mqtt')
 const five = require('johnny-five')
+const Oled = require('oled-js')
+const font = require('oled-font-5x7')
 const express = require('express')
 
 /* http-server setup */
@@ -18,12 +20,11 @@ console.log('http server is running on port', httpServerSettings.port)
 const board = new five.Board()
 
 board.on('ready', function () {
-
-  lcd = new five.LCD({
-    pins: [7, 8, 9, 10, 11, 12],
-    backlight: 6,
-    rows: 2,
-    cols: 16
+  
+  oled = new Oled(board, five, {
+    width: 128,
+    height: 64,
+    address: 0x3C
   })
 
   dht11 = new five.Multi({
@@ -91,7 +92,8 @@ board.on('ready', function () {
       'value': String(this.thermometer.celsius),
       'timestamp': Date.now()
     }
-    lcd.cursor(0, 0).print('temp' + ': ' + temperatureState.value + ' C')
+    oled.clearDisplay()
+    oled.writeString(font, 1, 'temp' + ': ' + temperatureState.value + ' C', 1, true, 2)
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
     console.log('temperature state:', JSON.stringify(temperatureState))
 
@@ -100,7 +102,6 @@ board.on('ready', function () {
       'value': String(this.hygrometer.relativeHumidity),
       'timestamp': Date.now()
     }
-    lcd.cursor(1, 0).print('hum' + ': ' + humidityState.value + ' %')
     client.publish(humidityTopic, JSON.stringify(humidityState))
     console.log('humidity state:', JSON.stringify(humidityState))
   })
@@ -111,9 +112,7 @@ board.on('ready', function () {
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
-          lcd.clear().print('Waterpump is on')
         } else {
-          lcd.clear().print('Waterpump is off')
         }
         console.log('waterpump state:', waterpumpState)
       } else {
@@ -121,15 +120,9 @@ board.on('ready', function () {
       }
     } else if (topic == lifecycleTopic) {
       lifecycleState = message
-      lcd.clear().home().print('lifecycle is ...')
-      lcd.cursor(1, 0).print(lifecycleState)
       console.log('lifecycle state:', String.fromCharCode.apply(null, lifecycleState))
     } else {
       console.log('invalid topic')
     }
-  })
-
-  this.repl.inject({
-    lcd: lcd
   })
 })
