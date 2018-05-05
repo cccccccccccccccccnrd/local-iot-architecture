@@ -123,7 +123,7 @@ board.on('ready', function () {
     }
     oled.setCursor(0, 30)
     oled.writeString(font, 1, 'light-intensity: ' + lightIntensitiyState.value + ' %', 1, true, 2)
-    client.publish(lightIntensitiyTopic, JSON.stringify(lightIntensitiyState))
+    client.publish(lightIntensityTopic, JSON.stringify(lightIntensitiyState))
     console.log('light-intensitiy state:', JSON.stringify(lightIntensitiyState))
   })
 
