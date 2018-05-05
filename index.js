@@ -33,7 +33,10 @@ board.on('ready', function () {
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
-  light = new five.Light('A3')
+  light = new five.Light({
+    pin: 'A0',
+    freq: 1000
+  })
 
   /* States and MQTT topics setup */
   const waterpumpTopic = 'actor/waterpump'
@@ -115,7 +118,7 @@ board.on('ready', function () {
     console.log('humidity state:', JSON.stringify(humidityState))
   })
 
-  light.on('change', function() {
+  light.on('data', function() {
     lightIntensitiyState = {
       'type': 'light-intensity',
       'value': String(this.level),
@@ -125,8 +128,6 @@ board.on('ready', function () {
     oled.writeString(font, 1, 'light: ' + lightIntensitiyState.value + ' %', 1, true, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensitiyState))
     console.log('light-intensitiy state:', JSON.stringify(lightIntensitiyState))
-
-    setTimeout(2000)
   })
 
   /* MQTT subscribe handeling */
