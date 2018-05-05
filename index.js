@@ -26,6 +26,8 @@ board.on('ready', function () {
     height: 64,
     address: 0x3C
   })
+  oled.clearDisplay()
+  oled.update()
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
@@ -92,8 +94,8 @@ board.on('ready', function () {
       'value': String(this.thermometer.celsius),
       'timestamp': Date.now()
     }
-    oled.clearDisplay()
-    oled.writeString(font, 1, 'temp' + ': ' + temperatureState.value + ' C', 1, true, 2)
+    oled.setCursor(0, 0)
+    oled.writeString(font, 1, 'temperature: ' + temperatureState.value + ' C', 1, true, 2)
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
     console.log('temperature state:', JSON.stringify(temperatureState))
 
@@ -102,6 +104,8 @@ board.on('ready', function () {
       'value': String(this.hygrometer.relativeHumidity),
       'timestamp': Date.now()
     }
+    oled.setCursor(0, 12)
+    oled.writeString(font, 1, 'humidity: ' + humidityState.value + ' %', 1, true, 2)
     client.publish(humidityTopic, JSON.stringify(humidityState))
     console.log('humidity state:', JSON.stringify(humidityState))
   })
