@@ -33,17 +33,19 @@ board.on('ready', function () {
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
 
-  light = new five.Light({
+  photocell = new five.Light({
     pin: 'A3',
     freq: 2000
   })
 
-  /* States and MQTT topics setup */
-  const waterpumpTopic = 'actor/waterpump'
-  let waterpumpState = false
+  relayLight = new five.Relay({
+    pin: 8, 
+    type: 'NC'
+  })
 
-  const lifecycleTopic = 'actor/lifecycle'
-  let lifecycleState = 'cool'
+  /* States and MQTT topics setup */
+  const lightTopic = 'actor/light'
+  let lightState = true
 
   const temperatureTopic = 'sensor/temperature'
   let temperatureState
@@ -118,7 +120,7 @@ board.on('ready', function () {
     console.log(JSON.stringify(humidityState))
   })
 
-  light.on('data', function() {
+  photocell.on('data', function() {
     lightIntensitiyState = {
       'type': 'light-intensity',
       'value': (100 - String(this.level) * 100).toFixed(0),
@@ -132,15 +134,15 @@ board.on('ready', function () {
 
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
-    if (topic == waterpumpTopic) {
+    if (topic == lightTopic) {
       if (message == 'toggle') {
-        waterpumpState = !waterpumpState
-        if (waterpumpState) {
+        lightState = !lightState
+        if (lightState) {
+          relayLight.close()
         } else {
+          relayLight.open()
         }
-        console.log('waterpump state:', waterpumpState)
-      } else {
-        console.log('invalid message')
+        console.log('light-relay:', lightState)
       }
     } else if (topic == lifecycleTopic) {
       lifecycleState = message
