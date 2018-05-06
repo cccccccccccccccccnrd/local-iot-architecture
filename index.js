@@ -134,8 +134,8 @@ board.on('ready', function () {
 
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
-    if (topic == lightTopic) {
-      if (message == 'toggle') {
+    if (topic === lightTopic) {
+      if (message === 'toggle') {
         lightState = !lightState
         if (lightState) {
           relayLight.close()
@@ -144,7 +144,7 @@ board.on('ready', function () {
         }
         console.log('light-relay:', lightState)
       }
-    } else if (topic == lifecycleTopic) {
+    } else if (topic === lifecycleTopic) {
       lifecycleState = message
       console.log('lifecycle state:', String.fromCharCode.apply(null, lifecycleState))
     } else {
