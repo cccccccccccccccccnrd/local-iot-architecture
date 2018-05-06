@@ -1,3 +1,3 @@
 #!/bin/bash
 docker build \
-  -t lifecycle-app:$1 .
+  -t local-iot-architecture:$1 .
