@@ -38,8 +38,10 @@ board.on('ready', function () {
     freq: 2000
   })
 
+  phElectrode = new five.Sensor('A0')
+
   relayLight = new five.Relay({
-    pin: 8, 
+    pin: 7,
     type: 'NC'
   })
 
@@ -132,10 +134,14 @@ board.on('ready', function () {
     console.log(JSON.stringify(lightIntensitiyState))
   })
 
+  phElectrode.on('change', function() {
+    console.log(this.value)
+  })
+
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
     if (topic === lightTopic) {
-      if (message === 'toggle') {
+      if (message == 'toggle') {
         lightState = !lightState
         if (lightState) {
           relayLight.close()

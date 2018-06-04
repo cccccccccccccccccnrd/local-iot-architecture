@@ -8,8 +8,8 @@ In this technical seminar I will continue working on a project called 'Lifecycle
 
 ### Architecture
 ```
-Web application -> Raspberry Pi -> Arduino -> Actor  
-Actor -> Arduino -> Raspberry Pi -> Web application  
+Web application -> Raspberry Pi -> Arduino -> Actor/Sensor
+Actor/Sensor -> Arduino -> Raspberry Pi -> Web application
 
 Web application (html, css, vanilla js, mqtt.js)  
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
