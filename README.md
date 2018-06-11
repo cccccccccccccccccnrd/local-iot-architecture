@@ -11,7 +11,7 @@ In this technical seminar I will continue working on a project called 'Lifecycle
 Web application -> Raspberry Pi -> Arduino -> Actor/Sensor
 Actor/Sensor -> Arduino -> Raspberry Pi -> Web application
 
-Web application (html, css, vanilla js, mqtt.js)  
+Web application (html, css, vanilla js, mqtt.js)
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
 Arduino (StandardFirmataPlus)
 ```

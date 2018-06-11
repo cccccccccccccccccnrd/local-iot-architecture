@@ -38,8 +38,6 @@ board.on('ready', function () {
     freq: 2000
   })
 
-  phElectrode = new five.Sensor('A0')
-
   relayLight = new five.Relay({
     pin: 7,
     type: 'NC'
@@ -132,10 +130,6 @@ board.on('ready', function () {
     oled.writeString(font, 1, 'light: ' + lightIntensitiyState.value + ' %', 1, true, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensitiyState))
     console.log(JSON.stringify(lightIntensitiyState))
-  })
-
-  phElectrode.on('change', function() {
-    console.log(this.value)
   })
 
   /* MQTT subscribe handeling */
