@@ -6,6 +6,7 @@ const font = require('oled-font-5x7')
 const express = require('express')
 
 /* http-server setup */
+
 const httpServerSettings = {
   port: 3000,
   staticPath: 'public'
@@ -17,6 +18,7 @@ httpServer.listen(httpServerSettings.port)
 console.log('http server is running on port', httpServerSettings.port)
 
 /* Arduino setup */
+
 const board = new five.Board()
 
 board.on('ready', function () {
@@ -44,6 +46,7 @@ board.on('ready', function () {
   })
 
   /* States and MQTT topics setup */
+
   const lightTopic = 'actor/light'
   let lightState = true
 
@@ -57,6 +60,7 @@ board.on('ready', function () {
   let lightIntensityState
 
   /* Mosca websocket server setup */
+
   const moscaServerSettings = {
     http: {
       port: 3001,
@@ -86,6 +90,7 @@ board.on('ready', function () {
   });
 
   /* MQTT client setup */
+
   const options = {
     clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
     username: 'c',
@@ -98,6 +103,7 @@ board.on('ready', function () {
   })
 
   /* MQTT publish handeling */
+
   dht11.on('change', function () {
     temperatureState = {
       'type': 'temperature',
@@ -121,18 +127,19 @@ board.on('ready', function () {
   })
 
   photocell.on('data', function() {
-    lightIntensitiyState = {
+    lightIntensityState = {
       'type': 'light-intensity',
       'value': (100 - String(this.level) * 100).toFixed(0),
       'timestamp': Date.now()
     }
     oled.setCursor(0, 24)
-    oled.writeString(font, 1, 'light: ' + lightIntensitiyState.value + ' %', 1, true, 2)
-    client.publish(lightIntensityTopic, JSON.stringify(lightIntensitiyState))
-    console.log(JSON.stringify(lightIntensitiyState))
+    oled.writeString(font, 1, 'light: ' + lightIntensityState.value + ' %', 1, true, 2)
+    client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
+    console.log(JSON.stringify(lightIntensityState))
   })
 
   /* MQTT subscribe handeling */
+
   client.on('message', function (topic, message) {
     if (topic === lightTopic) {
       if (message == 'toggle') {
