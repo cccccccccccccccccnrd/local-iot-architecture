@@ -157,24 +157,20 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-    console.log(data.toString())
-    /* dataStringified = data.toString()
-    console.log(dataStringified)
-    dataCleaned = /(?<=\#)(.*?)(?=\#)/.exec(dataStringified)
-    console.log(dataCleaned) */
-/*     waterTemperatureState = {
+    waterTemperatureState = {
       'type': 'water-temperature',
-      'value': JSON.parse(dataStringified).temperature,
+      'value': JSON.parse(data.toString()).temperature,
       'timestamp': Date.now()
     }
+    client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
+    console.log(JSON.stringify(waterTemperatureState))
+    
     waterElectricalConductivityState = {
       'type': 'electrical-conductivity',
-      'value': JSON.parse(dataStringified).ec,
+      'value': JSON.parse(data.toString()).ec,
       'timestamp': Date.now()
-    } */
-    client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
+    }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
-    console.log(JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
