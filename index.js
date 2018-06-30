@@ -51,11 +51,6 @@ board.on('ready', function () {
   water = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
   })
-  const parsers = SerialPort.parsers
-  const parser = new parsers.Readline({
-    delimiter: '\n'
-  })
-  water.pipe(parser)
 
   /* States and MQTT topics setup */
 
