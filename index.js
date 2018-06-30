@@ -49,9 +49,13 @@ board.on('ready', function () {
   })
 
   water = new SerialPort('/dev/ttyACM1', {
-    baudRate: 115200,
-    parser: SerialPort.parsers.readline('\n')
+    baudRate: 115200
   })
+  const parsers = SerialPort.parsers
+  const parser = new parsers.Readline({
+    delimiter: '\n'
+  })
+  water.pipe(parser)
 
   /* States and MQTT topics setup */
 
@@ -156,7 +160,6 @@ board.on('ready', function () {
     dataStringified = data.toString()
     //console.log(dataStringified)
     console.log(data)
-
     waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(dataStringified).temperature,
