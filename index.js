@@ -166,7 +166,7 @@ board.on('ready', function () {
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterElectricalConductivityState))
-    console.log(data.toString('hex'))
+    console.log(data.toString())
   })
 
   /* MQTT subscribe handeling */
