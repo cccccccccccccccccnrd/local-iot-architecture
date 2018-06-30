@@ -153,7 +153,8 @@ board.on('ready', function () {
   
   water.on('data', function (data) {
     dataStringified = data.toString()
-    
+    console.log(dataStringified)
+
     waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(dataStringified).temperature,
