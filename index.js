@@ -48,7 +48,7 @@ board.on('ready', function () {
     type: 'NC'
   })
 
-  water = new SerialPort('/dev/ttyACM1', {
+  additionalArduino = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
   })
 
@@ -151,8 +151,9 @@ board.on('ready', function () {
     console.log(JSON.stringify(lightIntensityState))
   })
   
-  water.on('data', function (data) {
-    dataStringified = data.toString()
+  additionalArduino.on('data', function (data) {
+    dataCleaned = /(?<=\#)(.*?)(?=\#)/g.exec(data)
+    dataStringified = dataCleaned.toString()
     console.log(dataStringified)
 /*     waterTemperatureState = {
       'type': 'water-temperature',
