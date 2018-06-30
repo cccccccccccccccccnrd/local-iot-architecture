@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/cccccccccccccccccnrd/local-iot-architecture#readme",
   "dependencies": {
+    "@serialport/parser-readline": "^1.0.5",
     "express": "^4.16.3",
     "johnny-five": "^0.14.3",
     "mosca": "^2.8.1",
     "oled-font-5x7": "^1.0.1",
-    "oled-js": "^4.0.5"
+    "oled-js": "^4.0.5",
+    "serialport": "^6.2.1"
   }
 }
