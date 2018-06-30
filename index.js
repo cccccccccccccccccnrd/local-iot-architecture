@@ -153,6 +153,7 @@ board.on('ready', function () {
   
   additionalArduino.on('data', function (data) {
     dataStringified = data.toString()
+    console.log(dataStringified)
     dataCleaned = /(?<=\#)(.*?)(?=\#)/g.exec(dataStringified)
     console.log(dataCleaned)
 /*     waterTemperatureState = {
