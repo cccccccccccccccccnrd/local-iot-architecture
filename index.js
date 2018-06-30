@@ -154,19 +154,18 @@ board.on('ready', function () {
   water.on('data', function (data) {
     waterTemperatureState = {
       'type': 'water-temperature',
-      'value': JSON.stringify(data).temperature,
+      'value': JSON.parse(data.toString()).temperature,
       'timestamp': Date.now()
     }
     waterElectricalConductivityState = {
       'type': 'electrical-conductivity',
-      'value': JSON.stringify(data).ec,
+      'value': JSON.parse(data.toString()).ec,
       'timestamp': Date.now()
     }
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterElectricalConductivityState))
-    console.log(data.toString())
   })
 
   /* MQTT subscribe handeling */
