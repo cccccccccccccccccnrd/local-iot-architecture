@@ -153,9 +153,8 @@ board.on('ready', function () {
   
   water.on('data', function (data) {
     dataStringified = data.toString()
-    //console.log(dataStringified)
-    console.log(data)
-    waterTemperatureState = {
+    console.log(dataStringified)
+/*     waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(dataStringified).temperature,
       'timestamp': Date.now()
@@ -164,7 +163,7 @@ board.on('ready', function () {
       'type': 'electrical-conductivity',
       'value': JSON.parse(dataStringified).ec,
       'timestamp': Date.now()
-    }
+    } */
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterTemperatureState))
