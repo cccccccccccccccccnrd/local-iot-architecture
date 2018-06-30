@@ -20,9 +20,7 @@ console.log('http server is running on port', httpServerSettings.port)
 
 /* Arduino setup */
 
-const board = new five.Board({
-  port: '/dev/bus/usb/001/004'
-})
+const board = new five.Board()
 
 board.on('ready', function () {
   
@@ -48,7 +46,7 @@ board.on('ready', function () {
     type: 'NC'
   })
 
-  water = new SerialPort('/dev/bus/usb/001/005', {
+  water = new SerialPort('/dev/bus/usb/001/006', {
     baudRate: 115200
   })
 
@@ -69,7 +67,7 @@ board.on('ready', function () {
   const waterTemperatureTopic = 'sensor/water-temperature'
   let waterTemperatureState
 
-  const waterElectricalConductivity = 'sensor/water-electrical-conductivity'
+  const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
   let waterElectricalConductivityState
 
   /* Mosca websocket server setup */
