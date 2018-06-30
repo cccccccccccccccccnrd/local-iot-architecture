@@ -152,9 +152,9 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-    console.log(/(?<=\#)(.*?)(?=\#)/g.exec(data))
-  /*   dataStringified = dataCleaned.toString()
-    console.log(dataStringified) */
+    dataStringified = dataCleaned.toString()
+    dataCleaned = /(?<=\#)(.*?)(?=\#)/g.exec(dataStringified)
+    console.log(dataCleaned)
 /*     waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(dataStringified).temperature,
