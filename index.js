@@ -1,6 +1,7 @@
 const mosca = require('mosca')
 const mqtt = require('mqtt')
 const five = require('johnny-five')
+const SerialPort = require('serialport')
 const Oled = require('oled-js')
 const font = require('oled-font-5x7')
 const express = require('express')
@@ -19,7 +20,9 @@ console.log('http server is running on port', httpServerSettings.port)
 
 /* Arduino setup */
 
-const board = new five.Board()
+const board = new five.Board({
+  port: '/dev/bus/usb/001/004'
+})
 
 board.on('ready', function () {
   
@@ -45,6 +48,10 @@ board.on('ready', function () {
     type: 'NC'
   })
 
+  water = new SerialPort('/dev/bus/usb/001/005', {
+    baudRate: 115200
+  })
+
   /* States and MQTT topics setup */
 
   const lightTopic = 'actor/light'
@@ -58,6 +65,12 @@ board.on('ready', function () {
 
   const lightIntensityTopic = 'sensor/light-intensity'
   let lightIntensityState
+
+  const waterTemperatureTopic = 'sensor/water-temperature'
+  let waterTemperatureState
+
+  const waterElectricalConductivity = 'sensor/water-electrical-conductivity'
+  let waterElectricalConductivityState
 
   /* Mosca websocket server setup */
 
@@ -136,6 +149,23 @@ board.on('ready', function () {
     oled.writeString(font, 1, 'light: ' + lightIntensityState.value + ' %', 1, true, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
     console.log(JSON.stringify(lightIntensityState))
+  })
+  
+  water.on('data', function (data) {
+    waterTemperatureState = {
+      'type': 'water-temperature',
+      'value': JSON.stringify(data).temperature,
+      'timestamp': Date.now()
+    }
+    waterElectricalConductivityState = {
+      'type': 'electrical-conductivity',
+      'value': JSON.stringify(data).ec,
+      'timestamp': Date.now()
+    }
+    client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
+    client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
+    console.log(JSON.stringify(waterTemperatureState))
+    console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
   /* MQTT subscribe handeling */
