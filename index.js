@@ -20,7 +20,9 @@ console.log('http server is running on port', httpServerSettings.port)
 
 /* Arduino setup */
 
-const board = new five.Board()
+const board = new five.Board({
+  port: '/dev/ttyACM0'
+})
 
 board.on('ready', function () {
   
@@ -46,7 +48,7 @@ board.on('ready', function () {
     type: 'NC'
   })
 
-  water = new SerialPort('/dev/bus/usb/001/006', {
+  water = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
   })
 
