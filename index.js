@@ -2,6 +2,7 @@ const mosca = require('mosca')
 const mqtt = require('mqtt')
 const five = require('johnny-five')
 const SerialPort = require('serialport')
+const Readline = require('@serialport/parser-readline')
 const Oled = require('oled-js')
 const font = require('oled-font-5x7')
 const express = require('express')
@@ -47,15 +48,11 @@ board.on('ready', function () {
     pin: 7,
     type: 'NC'
   })
-
-  const parsers = SerialPort.parsers
-  const parser = new parsers.Readline({
-    delimiter: '\n'
-  })
-  additionalArduino = new SerialPort('/dev/ttyACM1', {
+  
+  additionalArduinoPort = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
   })
-  additionalArduino.pipe(parser)
+  const additionalArduino = additionalArduinoPort.pipe(new Readline())
 
   /* States and MQTT topics setup */
 
