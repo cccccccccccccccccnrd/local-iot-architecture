@@ -157,7 +157,7 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-    console.log(data)
+    console.log(data.toString())
     /* dataStringified = data.toString()
     console.log(dataStringified)
     dataCleaned = /(?<=\#)(.*?)(?=\#)/.exec(dataStringified)
