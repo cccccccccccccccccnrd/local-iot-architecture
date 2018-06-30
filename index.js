@@ -50,7 +50,7 @@ board.on('ready', function () {
 
   const parsers = SerialPort.parsers
   const parser = new parsers.Readline({
-    delimiter: '\r\n'
+    delimiter: '\n'
   })
   additionalArduino = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
