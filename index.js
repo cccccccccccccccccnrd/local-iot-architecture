@@ -155,7 +155,7 @@ board.on('ready', function () {
     console.log(JSON.stringify(lightIntensityState))
   })
   
-  additionalArduino.on('data', function (data) {
+  additionalArduino.on('readable', function (data) {
     waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(data.toString()).temperature,
