@@ -168,11 +168,11 @@ board.on('ready', function () {
 
     waterElectricalConductivityState = {
       'type': 'electrical-conductivity',
-      'value': JSON.parse(data.toString()).ec,
+      'value': Math.floor(JSON.parse(data.toString()).ec),
       'timestamp': Date.now()
     }
     oled.setCursor(0, 48)
-    oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' µS/cm', 1, true, 2)
+    oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' uS/cm', 1, true, 2)
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
