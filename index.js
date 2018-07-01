@@ -154,6 +154,12 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
+    if (data.startsWith('{')) {
+      continue
+    } else {
+      console.log('Error from parser: ', data)
+    }
+    
     waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(data.toString()).temperature,
