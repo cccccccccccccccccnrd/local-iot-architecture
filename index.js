@@ -146,7 +146,7 @@ board.on('ready', function () {
   photocell.on('data', function() {
     lightIntensityState = {
       'type': 'light-intensity',
-      'value': (100 - this.level * 100).toFixed(0),
+      'value': (100 - this.level * 100),
       'timestamp': Date.now()
     }
     oled.setCursor(0, 24)
