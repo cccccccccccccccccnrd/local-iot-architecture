@@ -162,7 +162,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     oled.setCursor(0, 36)
-    oled.writeString(font, 1, 'water-temperature: ' + waterTemperatureState.value + ' C', 1, true, 2)
+    oled.writeString(font, 1, 'w-temperature: ' + waterTemperatureState.value + ' C', 1, true, 2)
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterTemperatureState))
 
@@ -172,7 +172,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     oled.setCursor(0, 48)
-    oled.writeString(font, 1, 'water-ec: ' + waterElectricalConductivityState.value + ' µS/cm', 1, true, 2)
+    oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' µS/cm', 1, true, 2)
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
