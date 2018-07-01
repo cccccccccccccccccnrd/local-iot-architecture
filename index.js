@@ -154,7 +154,7 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-    if (data.startsWith('{')) continue
+    if (data.startsWith('{')) return
 
     waterTemperatureState = {
       'type': 'water-temperature',
