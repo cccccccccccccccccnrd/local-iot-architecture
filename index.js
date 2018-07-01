@@ -156,9 +156,16 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
+    dataStringified = data.toString().catch(err => {
+      console.log(err)
+    })
+    dataParsed = JSON.parse(dataStringified).catch(err => {
+      console.log(err)
+    })
+
     waterTemperatureState = {
       'type': 'water-temperature',
-      'value': JSON.parse(data.toString()).temperature,
+      'value': dataParsed.temperature,
       'timestamp': Date.now()
     }
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
@@ -166,7 +173,7 @@ board.on('ready', function () {
 
     waterElectricalConductivityState = {
       'type': 'electrical-conductivity',
-      'value': JSON.parse(data.toString()).ec,
+      'value': dataParsed.ec,
       'timestamp': Date.now()
     }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
