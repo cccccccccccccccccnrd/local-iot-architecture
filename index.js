@@ -156,10 +156,10 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-    dataParsed = JSON.parse(data.toString())
     console.log(data, dataParsed)
+    /* dataParsed = JSON.parse(data.toString())
 
-    /* waterTemperatureState = {
+     waterTemperatureState = {
       'type': 'water-temperature',
       'value': dataParsed.temperature,
       'timestamp': Date.now()
