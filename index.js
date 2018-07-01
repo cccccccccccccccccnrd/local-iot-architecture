@@ -22,7 +22,7 @@ console.log('http server is running on port', httpServerSettings.port)
 /* Arduino setup */
 
 const board = new five.Board({
-  port: '/dev/ttyACM0'
+  port: '/dev/ttyACM1'
 })
 
 board.on('ready', function () {
@@ -49,7 +49,7 @@ board.on('ready', function () {
     type: 'NC'
   })
   
-  additionalArduinoPort = new SerialPort('/dev/ttyACM1', {
+  additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
     baudRate: 115200
   })
   const additionalArduino = additionalArduinoPort.pipe(new Readline({
