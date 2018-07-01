@@ -156,7 +156,8 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-    dataParsed = JSON.parse(data.toString()).catch(err => {
+    dataParsed = JSON.parse(data.toString())
+    .catch(err => {
       console.log(err)
     })
 
