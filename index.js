@@ -154,9 +154,7 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-
-    console.log(data)
-/*      waterTemperatureState = {
+    waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(data.toString()).temperature,
       'timestamp': Date.now()
@@ -170,7 +168,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
-    console.log(JSON.stringify(waterElectricalConductivityState)) */
+    console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
   /* MQTT subscribe handeling */
