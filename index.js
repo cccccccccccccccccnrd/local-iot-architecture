@@ -124,7 +124,7 @@ board.on('ready', function () {
   dht11.on('change', function () {
     temperatureState = {
       'type': 'temperature',
-      'value': String(this.thermometer.celsius),
+      'value': this.thermometer.celsius,
       'timestamp': Date.now()
     }
     oled.setCursor(0, 0)
@@ -134,7 +134,7 @@ board.on('ready', function () {
 
     humidityState = {
       'type': 'humidity',
-      'value': String(this.hygrometer.relativeHumidity),
+      'value': this.hygrometer.relativeHumidity,
       'timestamp': Date.now()
     }
     oled.setCursor(0, 12)
@@ -146,7 +146,7 @@ board.on('ready', function () {
   photocell.on('data', function() {
     lightIntensityState = {
       'type': 'light-intensity',
-      'value': (100 - String(this.level) * 100).toFixed(0),
+      'value': (100 - this.level * 100).toFixed(0),
       'timestamp': Date.now()
     }
     oled.setCursor(0, 24)
@@ -156,8 +156,6 @@ board.on('ready', function () {
   })
   
   additionalArduino.on('data', function (data) {
-    console.log(data.toString())
-    console.log(JSON.parse(data.toString()))
     waterTemperatureState = {
       'type': 'water-temperature',
       'value': JSON.parse(data.toString()).temperature,
