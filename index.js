@@ -52,9 +52,7 @@ board.on('ready', function () {
   const additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
     baudRate: 115200
   })
-  const additionalArduino = additionalArduinoPort.pipe(new Readline({
-    delimiter: '\r\n'
-  }))
+  const additionalArduino = additionalArduinoPort.pipe(new Readline())
 
   /* States and MQTT topics setup */
 
