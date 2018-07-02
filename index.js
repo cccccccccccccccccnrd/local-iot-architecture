@@ -32,6 +32,7 @@ board.on('ready', function () {
   })
   oled.clearDisplay()
   oled.update()
+  oled.EventEmitter.defaultMaxListeners = 15
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
