@@ -7,6 +7,8 @@ const Oled = require('oled-js')
 const font = require('oled-font-5x7')
 const express = require('express')
 
+require('events').EventEmitter.defaultMaxListeners = 11
+
 /* HTTP server setup */
 const httpServerSettings = {
   port: 3000,
@@ -32,7 +34,6 @@ board.on('ready', function () {
   })
   oled.clearDisplay()
   oled.update()
-  oled.EventEmitter.defaultMaxListeners = 15
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
