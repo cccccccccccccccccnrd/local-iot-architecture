@@ -229,14 +229,14 @@ connectButton.onclick = function () {
     password: password
   }
 
-  login.style.height = '0'
   client = mqtt.connect('mqtt://' + brokerIp, options)
   logToTextarea('connecting to ' + brokerIp + '...')
   console.log('connecting to ' + brokerIp + '...')
 
   client.on('connect', function () {
     client.subscribe('sensor/#')
-
+    
+    login.style.height = '0'
     statusBarRight.innerHTML = options.clientId + ' 🔐'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
