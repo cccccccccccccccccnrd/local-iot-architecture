@@ -1,3 +1,4 @@
+const login = document.getElementById('login')
 const connectButton = document.getElementById('mqtt-connect')
 const publishButton = document.getElementById('mqtt-publish')
 const logTextarea = document.getElementById('log')
@@ -228,6 +229,7 @@ connectButton.onclick = function () {
     password: password
   }
 
+  login.style.height = '0'
   client = mqtt.connect('mqtt://' + brokerIp, options)
   logToTextarea('connecting to ' + brokerIp + '...')
   console.log('connecting to ' + brokerIp + '...')
