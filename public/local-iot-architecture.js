@@ -236,12 +236,13 @@ connectButton.onclick = function () {
   client.on('connect', function () {
     client.subscribe('sensor/#')
 
-    setTimeout(() => {
-      login.style.removeProperty('height')
-    }, 1000)
-    statusBarRight.innerHTML = brokerIp + ' 🔐'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
+
+    setTimeout(() => {
+      login.style.removeProperty('height')
+      statusBarRight.innerHTML = brokerIp + ' 🔐'
+    }, 1000)
   })
 
   client.on('message', function (topic, message) {
