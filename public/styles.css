@@ -73,6 +73,7 @@ textarea {
   padding: 2em;
   background: blue;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
