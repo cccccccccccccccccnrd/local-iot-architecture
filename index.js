@@ -17,7 +17,7 @@ const httpServer = express()
 
 httpServer.use(express.static(httpServerSettings.staticPath))
 httpServer.listen(httpServerSettings.port)
-console.log('http server is running on port', httpServerSettings.port)
+console.log('http server is running on http://localhost:' + httpServerSettings.port)
 
 /* Arduino setup */
 
