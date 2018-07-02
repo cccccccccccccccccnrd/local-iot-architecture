@@ -241,7 +241,7 @@ connectButton.onclick = function () {
 
     setTimeout(() => {
       login.style.removeProperty('height')
-      statusBarRight.innerHTML = brokerIp + ' 🔐'
+      statusBarRight.innerHTML = brokerIp + ' as ' + options.clientId + ' 🔐'
     }, 1500)
   })
 
