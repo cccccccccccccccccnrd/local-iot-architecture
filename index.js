@@ -190,9 +190,6 @@ board.on('ready', function () {
         }
         console.log('light-relay:', lightState)
       }
-    } else if (topic === lifecycleTopic) {
-      lifecycleState = message
-      console.log('lifecycle state:', String.fromCharCode.apply(null, lifecycleState))
     } else {
       console.log('invalid topic')
     }

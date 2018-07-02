@@ -5,15 +5,21 @@ const statusBarLeft = document.getElementById('status-bar-left')
 const statusBarRight = document.getElementById('status-bar-right')
 const visualization = document.getElementById('visualization')
 const currentTemperature = document.getElementById('current-temperature')
-const currentHumidity = document.getElementById('current-humidity')
-const currentLightIntensity = document.getElementById('current-light-intensity')
 const temperatureChartContext = document.getElementById('temperature-chart').getContext('2d')
+const currentHumidity = document.getElementById('current-humidity')
 const humidityChartContext = document.getElementById('humidity-chart').getContext('2d')
+const currentLightIntensity = document.getElementById('current-light-intensity')
 const lightIntensityChartContext = document.getElementById('light-intensity-chart').getContext('2d')
+const currentWaterTemperature = document.getElementById('current-water-temperature')
+const waterTemperatureChartContext = document.getElementById('water-temperature-chart').getContext('2d')
+const currentWaterElectricalConductivity = document.getElementById('current-water-electrical-conductivity')
+const waterElectricalConductivityChartContext = document.getElementById('water-electrical-conductivity-chart').getContext('2d')
 
-let client, visualizationOpen = false
+let client
+let visualizationOpen = false
 
 /* States and MQTT topics setup */
+
 const temperatureTopic = 'sensor/temperature'
 let temperatureState
 
@@ -22,6 +28,12 @@ let humidityState
 
 const lightIntensityTopic = 'sensor/light-intensity'
 let lightIntensityState
+
+const waterTemperatureTopic = 'sensor/water-temperature'
+let waterTemperatureState
+
+const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
+let waterElectricalConductivityState
 
 let temperatureChart = new Chart(temperatureChartContext, {
   type: 'line',
@@ -128,6 +140,76 @@ let lightIntensityChart = new Chart(lightIntensityChartContext, {
   }
 })
 
+let waterTemperatureChart = new Chart(waterTemperatureChartContext, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Data',
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      borderWidth: 0,
+      borderColor: 'rgba(255, 255, 255, 0)',
+      pointRadius: 0,
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'white',
+      pointHoverRadius: 3,
+      pointHoverBorderColor: 'white',
+      pointHoverBackgroundColor: 'white',
+      data: []
+    }]
+  },
+  options: {
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        display: false
+      }],
+      yAxes: [{
+        display: false
+      }]
+    },
+    responsive: true,
+    maintainAspectRatio: true
+  }
+})
+
+let waterElectricalConductivityChart = new Chart(waterElectricalConductivityChartContext, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Data',
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      borderWidth: 0,
+      borderColor: 'rgba(255, 255, 255, 0)',
+      pointRadius: 0,
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'white',
+      pointHoverRadius: 3,
+      pointHoverBorderColor: 'white',
+      pointHoverBackgroundColor: 'white',
+      data: []
+    }]
+  },
+  options: {
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        display: false
+      }],
+      yAxes: [{
+        display: false
+      }]
+    },
+    responsive: true,
+    maintainAspectRatio: true
+  }
+})
+
 publishButton.onclick = function () {
   const topic = document.getElementById('mqtt-topic').value
   const message = document.getElementById('mqtt-message').value
@@ -162,29 +244,21 @@ connectButton.onclick = function () {
   client.on('message', function (topic, message) {
     if (topic === temperatureTopic) {
       temperatureState = String(message)
-      logToTextarea(temperatureState)
-      console.log('temperature', temperatureState)
-      updateChart(temperatureChart, JSON.parse(temperatureState).timestamp, JSON.parse(temperatureState).value)
-      currentTemperature.innerHTML = JSON.parse(temperatureState).value
+      updateUserInterface(temperatureState, temperatureChart, currentTemperature, 'temperature')
     } else if (topic === humidityTopic) {
       humidityState = String(message)
-      logToTextarea(humidityState)
-      console.log('humidity', humidityState)
-      updateChart(humidityChart, JSON.parse(humidityState).timestamp, JSON.parse(humidityState).value)
-      currentHumidity.innerHTML = JSON.parse(humidityState).value
+      updateUserInterface(humidityState, humidityChart, currentHumidity, 'humidity')
     } else if (topic === lightIntensityTopic) {
       lightIntensityState = String(message)
-      logToTextarea(lightIntensityState)
-      console.log('light-intensity', lightIntensityState)
-      updateChart(lightIntensityChart, JSON.parse(lightIntensityState).timestamp, JSON.parse(lightIntensityState).value)
-      currentLightIntensity.innerHTML = JSON.parse(lightIntensityState).value
+      updateUserInterface(lightIntensityState, lightIntensityChart, currentLightIntensity, 'light-intensity')
+    } else if (topic === waterTemperatureTopic) {
+      waterTemperatureState = String(message)
+      updateUserInterface(waterTemperatureState, waterTemperatureChart, currentWaterTemperature, 'water-temperature')
+    } else if (topic === waterElectricalConductivityTopic) {
+      waterElectricalConductivityState = String(message)
+      updateUserInterface(waterElectricalConductivityState, waterElectricalConductivityChart, currentWaterElectricalConductivity, 'water-electrical-conductivity')
     }
   })
-}
-
-function logToTextarea (log) {
-  let logTextareaContent = log + '\n\n' + logTextarea.value
-  logTextarea.value = logTextareaContent
 }
 
 statusBarLeft.onclick = function () {
@@ -201,6 +275,18 @@ statusBarLeft.onclick = function () {
     statusBarRight.style.color = 'blue'
     visualizationOpen = false
   }
+}
+
+function updateUserInterface (state, chart, current, label) {
+  logToTextarea(state)
+  updateChart(chart, JSON.parse(state).timestamp, JSON.parse(state).value)
+  current.innerHTML = JSON.parse(state).value
+  console.log(label, state)
+}
+
+function logToTextarea (log) {
+  let logTextareaContent = log + '\n\n' + logTextarea.value
+  logTextarea.value = logTextareaContent
 }
 
 function updateChart (chart, label, data) {
