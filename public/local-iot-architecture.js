@@ -1,3 +1,4 @@
+const login = document.getElementById('login')
 const connectButton = document.getElementById('mqtt-connect')
 const publishButton = document.getElementById('mqtt-publish')
 const logTextarea = document.getElementById('log')
@@ -235,6 +236,7 @@ connectButton.onclick = function () {
   client.on('connect', function () {
     client.subscribe('sensor/#')
 
+    login.removeProperty('height')
     statusBarRight.innerHTML = options.clientId + ' 🔐'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
