@@ -89,6 +89,10 @@ textarea {
   overflow: hidden;
 }
 
+.chart:last-of-type {
+  margin-bottom: 2em;
+}
+
 .chart canvas {
   max-height: 100px;
 }
