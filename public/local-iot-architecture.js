@@ -237,7 +237,7 @@ connectButton.onclick = function () {
     client.subscribe('sensor/#')
 
     login.style.removeProperty('height')
-    statusBarRight.innerHTML = options.clientId + ' 🔐'
+    statusBarRight.innerHTML = brokerIp + ' 🔐'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
   })
