@@ -236,7 +236,7 @@ connectButton.onclick = function () {
   client.on('connect', function () {
     client.subscribe('sensor/#')
 
-    login.style.marginTop = '-' + login.scrollHeight + 'px'
+    login.style.marginTop = '-' + login.offsetHeight + 'px'
     statusBarRight.innerHTML = options.clientId + ' 🔐'
     logToTextarea('connected to ' + brokerIp)
     console.log('connected to ' + brokerIp)
