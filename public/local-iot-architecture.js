@@ -19,7 +19,6 @@ let client
 let visualizationOpen = false
 
 /* States and MQTT topics setup */
-
 const temperatureTopic = 'sensor/temperature'
 let temperatureState
 

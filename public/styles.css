@@ -68,10 +68,11 @@ textarea {
   top: 0;
   z-index: 2;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   margin-left: -100vw;
   padding: 2em;
   background: blue;
+  overflow-y: scroll;
   transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 

@@ -7,8 +7,7 @@ const Oled = require('oled-js')
 const font = require('oled-font-5x7')
 const express = require('express')
 
-/* http-server setup */
-
+/* HTTP server setup */
 const httpServerSettings = {
   port: 3000,
   staticPath: 'public'
@@ -19,8 +18,7 @@ httpServer.use(express.static(httpServerSettings.staticPath))
 httpServer.listen(httpServerSettings.port)
 console.log('http server is running on http://localhost:' + httpServerSettings.port)
 
-/* Arduino setup */
-
+/* Microcontroller and sensor setup */
 const board = new five.Board({
   port: '/dev/ttyACM1'
 })
@@ -55,7 +53,6 @@ board.on('ready', function () {
   const additionalArduino = additionalArduinoPort.pipe(new Readline())
 
   /* States and MQTT topics setup */
-
   const lightTopic = 'actor/light'
   let lightState = true
 
@@ -75,7 +72,6 @@ board.on('ready', function () {
   let waterElectricalConductivityState
 
   /* Mosca websocket server setup */
-
   const moscaServerSettings = {
     http: {
       port: 3001,
@@ -105,7 +101,6 @@ board.on('ready', function () {
   });
 
   /* MQTT client setup */
-
   const options = {
     clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
     username: 'c',
@@ -118,7 +113,6 @@ board.on('ready', function () {
   })
 
   /* MQTT publish handeling */
-
   dht11.on('change', function () {
     temperatureState = {
       'type': 'temperature',
@@ -178,7 +172,6 @@ board.on('ready', function () {
   })
 
   /* MQTT subscribe handeling */
-
   client.on('message', function (topic, message) {
     if (topic === lightTopic) {
       if (message == 'toggle') {
