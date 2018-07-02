@@ -242,7 +242,7 @@ connectButton.onclick = function () {
     setTimeout(() => {
       login.style.removeProperty('height')
       statusBarRight.innerHTML = brokerIp + ' 🔐'
-    }, 1000)
+    }, 1500)
   })
 
   client.on('message', function (topic, message) {
