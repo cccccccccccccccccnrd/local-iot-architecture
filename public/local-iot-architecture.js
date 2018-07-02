@@ -243,19 +243,19 @@ connectButton.onclick = function () {
   client.on('message', function (topic, message) {
     if (topic === temperatureTopic) {
       temperatureState = String(message)
-      updateUserInterface(temperatureState, temperatureChart, currentTemperature, 'temperature')
+      updateUserInterface(temperatureState, temperatureChart, currentTemperature)
     } else if (topic === humidityTopic) {
       humidityState = String(message)
-      updateUserInterface(humidityState, humidityChart, currentHumidity, 'humidity')
+      updateUserInterface(humidityState, humidityChart, currentHumidity)
     } else if (topic === lightIntensityTopic) {
       lightIntensityState = String(message)
-      updateUserInterface(lightIntensityState, lightIntensityChart, currentLightIntensity, 'light-intensity')
+      updateUserInterface(lightIntensityState, lightIntensityChart, currentLightIntensity)
     } else if (topic === waterTemperatureTopic) {
       waterTemperatureState = String(message)
-      updateUserInterface(waterTemperatureState, waterTemperatureChart, currentWaterTemperature, 'water-temperature')
+      updateUserInterface(waterTemperatureState, waterTemperatureChart, currentWaterTemperature)
     } else if (topic === waterElectricalConductivityTopic) {
       waterElectricalConductivityState = String(message)
-      updateUserInterface(waterElectricalConductivityState, waterElectricalConductivityChart, currentWaterElectricalConductivity, 'water-electrical-conductivity')
+      updateUserInterface(waterElectricalConductivityState, waterElectricalConductivityChart, currentWaterElectricalConductivity)
     }
   })
 }
@@ -276,11 +276,11 @@ statusBarLeft.onclick = function () {
   }
 }
 
-function updateUserInterface (state, chart, current, label) {
+function updateUserInterface (state, chart, current) {
   logToTextarea(state)
   updateChart(chart, JSON.parse(state).timestamp, JSON.parse(state).value)
   current.innerHTML = JSON.parse(state).value
-  console.log(label, state)
+  console.log(state)
 }
 
 function logToTextarea (log) {
