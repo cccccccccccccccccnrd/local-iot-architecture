@@ -32,8 +32,7 @@ board.on('ready', function () {
     height: 64,
     address: 0x3C
   })
-  //oled.clearDisplay()
-  //oled.dimDisplay(true)
+  oled.clearDisplay()
   //oled.update()
 
   dht11 = new five.Multi({
@@ -168,7 +167,6 @@ board.on('ready', function () {
       'value': Math.floor(JSON.parse(data.toString()).ec),
       'timestamp': Date.now()
     }
-    oled.clearDisplay()
     oled.setCursor(0, 48)
     oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' uS/cm', 1, true, 2)
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
