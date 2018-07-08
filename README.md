@@ -18,7 +18,7 @@ Arduino (StandardFirmataPlus)
 
 ### Installing local-iot-architecture
 
-local-iot-architecture is build with the JavaScript runtime [Node.js](https://nodejs.org).
+The environment is build with the JavaScript runtime [Node.js](https://nodejs.org).
 
 #### Installing Node.js
 
@@ -57,11 +57,15 @@ npm install
 
 #### Starting the application
 
-To run the application simply execute the `index.js` file with node.
+To start the environment simply execute the `index.js` file with node.
 
 ```bash
 node index.js
 ```
+
+### Configuring local-iot-architecture
+
+### Interface and Settings
 
 ### Resources
 - [MQTT.js](https://github.com/mqttjs/MQTT.js)
