@@ -64,10 +64,11 @@ To start the environment simply execute the `index.js` file with node.
 ```bash
 node index.js
 ```
+> Use a tool like [Forever](https://github.com/foreverjs/forever) to run the script continuously.
 
 ### Configuring local-iot-architecture
 
-The basic dataflow starts with initializing a Arduino board.
+The basic dataflow starts with initializing an Arduino board.
 
 ```js
 const board = new five.Board({
@@ -80,7 +81,7 @@ board.on('ready', function () {
 ```
 > If you have just have one board connected you don't have to specify the port.
 
-Continues with the setup of a sensor or actor as a Johnny-Five component class
+Continues with the setup of a sensor or an actor as a Johnny-Five component class
 
 ```js
 photocell = new five.Light({
@@ -110,7 +111,7 @@ photocell.on('data', function() {
 })
 ```
 
-The web application receives the new state over [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and updates its user interface accordingly.
+As the last cycle in the dataflow the web application receives the new state over the right MQTT topic via [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and updates its user interface accordingly.
 
 ```js
 client.on('message', function (topic, message) {
