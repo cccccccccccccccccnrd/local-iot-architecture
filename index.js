@@ -32,11 +32,8 @@ board.on('ready', function () {
     height: 64,
     address: 0x3C
   })
-
-  setTimeout(() => {
-    oled.clearDisplay()
-    oled.update()
-  }, 2000)
+  oled.clearDisplay()
+  oled.update()
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
@@ -160,7 +157,7 @@ board.on('ready', function () {
       'value': Math.floor(JSON.parse(data.toString()).temperature),
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 36)
+    oled.setCursor(0, 40)
     oled.writeString(font, 1, 'w-temp: ' + waterTemperatureState.value + ' C', 1, false, 2)
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterTemperatureState))
@@ -170,7 +167,7 @@ board.on('ready', function () {
       'value': Math.floor(JSON.parse(data.toString()).ec),
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 48)
+    oled.setCursor(0, 52)
     oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' uS/cm', 1, true, 2)
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterElectricalConductivityState))
