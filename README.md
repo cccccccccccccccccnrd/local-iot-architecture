@@ -18,7 +18,7 @@ Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)
 Arduino (StandardFirmataPlus, OpenAquaponics)
 ```
 
-### Installing local-iot-architecture
+### Installation
 
 The environment is build with the JavaScript runtime [Node.js](https://nodejs.org).
 
@@ -66,7 +66,7 @@ node index.js
 ```
 > Use a tool like [Forever](https://github.com/foreverjs/forever) to run the script continuously.
 
-### Configuring local-iot-architecture
+### Configuration
 
 The basic dataflow starts with initializing an Arduino board.
 
