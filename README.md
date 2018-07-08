@@ -111,7 +111,7 @@ photocell.on('data', function() {
 })
 ```
 
-As the last cycle in the dataflow the web application receives the new state over the right MQTT topic via [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and updates its user interface accordingly.
+As the last cycle in the dataflow the web application receives the new state over the MQTT topic via [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and updates its user interface accordingly.
 
 ```js
 client.on('message', function (topic, message) {
