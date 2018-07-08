@@ -154,11 +154,11 @@ board.on('ready', function () {
 
     waterTemperatureState = {
       'type': 'water-temperature',
-      'value': JSON.parse(data.toString()).temperature,
+      'value': Math.floor(JSON.parse(data.toString()).temperature),
       'timestamp': Date.now()
     }
     oled.setCursor(0, 36)
-    oled.writeString(font, 1, 'w-temperature: ' + waterTemperatureState.value + ' C', 1, false, 2)
+    oled.writeString(font, 1, 'w-temp: ' + waterTemperatureState.value + ' C', 1, false, 2)
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterTemperatureState))
 
