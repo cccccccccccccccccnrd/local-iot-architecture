@@ -123,6 +123,8 @@ client.on('message', function (topic, message) {
 ```
 
 ### Interface and Settings
+![local-iot-architecture-ui](http://tinyimg.io/i/sgUm3oC.gif "local-iot-architecture-ui")
+
 
 ### Resources
 - [MQTT.js](https://github.com/mqttjs/MQTT.js)
