@@ -32,9 +32,9 @@ board.on('ready', function () {
     height: 64,
     address: 0x3C
   })
-  oled.clearDisplay()
-  oled.dimDisplay(true)
-  oled.update()
+  //oled.clearDisplay()
+  //oled.dimDisplay(true)
+  //oled.update()
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
