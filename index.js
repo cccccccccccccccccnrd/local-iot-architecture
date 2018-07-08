@@ -7,7 +7,7 @@ const Oled = require('oled-js')
 const font = require('oled-font-5x7')
 const express = require('express')
 
-require('events').EventEmitter.defaultMaxListeners = 11
+require('events').EventEmitter.defaultMaxListeners = 12
 
 /* HTTP server setup */
 const httpServerSettings = {
