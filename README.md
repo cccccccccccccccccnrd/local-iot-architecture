@@ -98,7 +98,7 @@ const lightIntensityTopic = 'sensor/light-intensity'
 let lightIntensityState
 ```
 
-When the sensor sends new data we assign its `type`, `value` and `timestamp` to the state object and publish it to the MQTT stream in [JSON](https://en.wikipedia.org/wiki/JSON) format so the web application can process it further.
+When the sensor sends new data we assign its `type`, `value` and `timestamp` to the state object and publish it to the MQTT topic in [JSON](https://en.wikipedia.org/wiki/JSON) format, so the web application can process it further.
 
 ```js
 photocell.on('data', function() {
