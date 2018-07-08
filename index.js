@@ -168,6 +168,7 @@ board.on('ready', function () {
       'value': Math.floor(JSON.parse(data.toString()).ec),
       'timestamp': Date.now()
     }
+    oled.clearDisplay()
     oled.setCursor(0, 48)
     oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' uS/cm', 1, true, 2)
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
