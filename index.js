@@ -22,7 +22,7 @@ console.log('http server is running on http://localhost:' + httpServerSettings.p
 
 /* Microcontroller and sensor setup */
 const board = new five.Board({
-  port: '/dev/ttyACM0'
+  port: '/dev/ttyACM1'
 })
 
 board.on('ready', function () {
@@ -49,7 +49,7 @@ board.on('ready', function () {
     type: 'NC'
   })
   
-  const additionalArduinoPort = new SerialPort('/dev/ttyACM1', {
+  const additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
     baudRate: 115200
   })
   const additionalArduino = additionalArduinoPort.pipe(new Readline())
