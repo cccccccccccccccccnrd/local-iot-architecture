@@ -6,15 +6,17 @@ With this technical seminar I want to explore and document a clear and secure wa
 
 In this technical seminar I will continue working on a project called 'Lifecycle' where we are working on decentralized indoor food production with computer aided aquaponics. Nevertheless the environment's architecture can be used for all kind of different purposes.
 
-### Architecture
+### Basic architecture
 ```
-Web application -> Raspberry Pi -> Arduino -> Actor/Sensor
+Web application -> Raspberry Pi -> Arduino(s) -> Actor/Sensor
 Actor/Sensor -> Arduino -> Raspberry Pi -> Web application
 
 Web application (html, css, vanilla js, mqtt.js)
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
-Arduino (StandardFirmataPlus)
+Arduino (StandardFirmataPlus, OpenAquaponics)
 ```
+
+The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component: it handels the communication between the Web application and the Actors/Sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server([Mosca](https://github.com/mcollina/mosca)).
 
 ### Installing local-iot-architecture
 
