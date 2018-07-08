@@ -7,7 +7,7 @@ With this technical seminar I want to explore and document a clear and secure wa
 In this technical seminar I will continue working on a project called 'Lifecycle' where we are working on decentralized indoor food production with computer aided aquaponics. Nevertheless the environment's architecture can be used for all kind of different purposes.
 
 ### Basic architecture
-The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the Web application and the Actors/Sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)).
+The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the web application and the actors/sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)).
 
 ```
 Web application -> Raspberry Pi -> Arduino(s) -> Actors/Sensors
@@ -97,7 +97,7 @@ const lightIntensityTopic = 'sensor/light-intensity'
 let lightIntensityState
 ```
 
-When the sensor sends new data we assign its `type`, `value` and `timestamp` to the state object and publish it to the MQTT stream in [JSON](https://en.wikipedia.org/wiki/JSON) format so the Web application can process it further.
+When the sensor sends new data we assign its `type`, `value` and `timestamp` to the state object and publish it to the MQTT stream in [JSON](https://en.wikipedia.org/wiki/JSON) format so the web application can process it further.
 
 ```js
 photocell.on('data', function() {
@@ -107,6 +107,17 @@ photocell.on('data', function() {
     'timestamp': Date.now()
   }
   client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
+})
+```
+
+The web application receives the new state over [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and updates its user interface accordingly.
+
+```js
+client.on('message', function (topic, message) {
+  if (topic === lightIntensityTopic) {
+    lightIntensityState = String(message)
+    updateUserInterface(lightIntensityState, lightIntensityChart, currentLightIntensity)
+  }
 })
 ```
 
