@@ -16,6 +16,53 @@ Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)
 Arduino (StandardFirmataPlus)
 ```
 
+### Installing local-iot-architecture
+
+local-iot-architecture is build with the JavaScript runtime [Node.js](https://nodejs.org).
+
+#### Installing Node.js
+
+To install Node.js we are using [Node Version Manager](https://github.com/creationix/nvm). It's pretty straight forward and allows you to easily switch node versions if needed.
+
+```shell
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+```
+
+Then we install the lastest node version
+
+```shell
+nvm install latest
+```
+> If `nvm` isn't found run your `~/.bashrc` file once.
+
+To check your node version just
+
+```shell
+node -v
+```
+
+#### Cloning the repository
+
+To get local-iot-architecture version 1.0.0 we clone from here
+
+```bash
+git clone git@github.com:cccccccccccccccccnrd/local-iot-architecture.git
+```
+
+and install the node modules with [npm](https://www.npmjs.com/) which came with the Node.js installation
+
+```bash
+npm install
+```
+
+#### Starting the application
+
+To run the application simply execute the `index.js` file with node.
+
+```bash
+node index.js
+```
+
 ### Resources
 - [MQTT.js](https://github.com/mqttjs/MQTT.js)
 - [Mosca](https://github.com/mcollina/mosca)
