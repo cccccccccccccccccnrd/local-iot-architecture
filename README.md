@@ -123,7 +123,7 @@ client.on('message', function (topic, message) {
 ```
 
 ### Interface and Settings
-![local-iot-architecture-ui](http://tinyimg.io/i/sgUm3oC.gif "local-iot-architecture-ui")
+![local-iot-architecture-ui](http://tinyimg.io/i/u7pRMWe.gif "local-iot-architecture-ui")
 
 
 ### Resources
