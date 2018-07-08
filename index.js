@@ -144,7 +144,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     oled.setCursor(0, 24)
-    oled.writeString(font, 1, 'light: ' + lightIntensityState.value + ' %', 1, true, 2)
+    oled.writeString(font, 1, 'light: ' + lightIntensityState.value + ' %', 1, false, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
     console.log(JSON.stringify(lightIntensityState))
   })
@@ -158,7 +158,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     oled.setCursor(0, 36)
-    oled.writeString(font, 1, 'w-temperature: ' + waterTemperatureState.value + ' C', 1, true, 2)
+    oled.writeString(font, 1, 'w-temperature: ' + waterTemperatureState.value + ' C', 1, false, 2)
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterTemperatureState))
 
