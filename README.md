@@ -67,7 +67,7 @@ node index.js
 
 ### Configuring local-iot-architecture
 
-The basic dataflow starts with initialazing the Arduino board
+The basic dataflow starts with initializing a Arduino board.
 
 ```js
 const board = new five.Board({
@@ -80,7 +80,7 @@ board.on('ready', function () {
 ```
 > If you have just have one board connected you don't have to specify the port.
 
-we setup a sensor or actor as a Johnny-Five component class
+Continues with the setup of a sensor or actor as a Johnny-Five component class
 
 ```js
 photocell = new five.Light({

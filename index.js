@@ -100,7 +100,7 @@ board.on('ready', function () {
 
   moscaServer.on('clientConnected', function (client) {
     console.log('client connected', client.id);
-  });
+  })
 
   /* MQTT client setup */
   const options = {
