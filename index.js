@@ -33,6 +33,7 @@ board.on('ready', function () {
     address: 0x3C
   })
   oled.clearDisplay()
+  oled.update()
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
@@ -167,7 +168,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     oled.setCursor(0, 54)
-    oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' uS/cm', 1, true, 2)
+    oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' uS/cm             ', 1, true, 2)
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
