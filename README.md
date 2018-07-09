@@ -15,7 +15,7 @@ The communication of the environment is based on the machine-to-machine protocol
 Web application -> Raspberry Pi -> Arduino(s) -> Actors/Sensors
 Actors/Sensors -> Arduino(s) -> Raspberry Pi -> Web application
 
-Web application (html, css, vanilla js, mqtt.js)
+Web application (HTML, CSS, Javascript, mqtt.js)
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
 Arduino (StandardFirmataPlus, OpenAquaponics)
 ```
