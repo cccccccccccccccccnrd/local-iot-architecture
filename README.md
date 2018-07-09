@@ -9,6 +9,8 @@ In this technical seminar I will continue working on a project called 'Lifecycle
 ### Basic architecture
 The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the web application and the actors/sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)).
 
+![local-iot-architecture](http://tinyimg.io/i/0yXkClR.jpg "local-iot-architecture")
+
 ```
 Web application -> Raspberry Pi -> Arduino(s) -> Actors/Sensors
 Actors/Sensors -> Arduino -> Raspberry Pi -> Web application
