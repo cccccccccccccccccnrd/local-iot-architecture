@@ -125,6 +125,9 @@ client.on('message', function (topic, message) {
 ```
 
 ### Interface and Settings
+
+The interface is served by a http-server on port 3000 from the Raspberry Pi (http://raspberry-pi-ip:3000) and can be devided into two main areas: the dashboard and the visualization area. The dashboard is used to connect and publish to the MQTT broker. After a successfull connection it shows the broker-ip in the lower right corner and subscribes to all topics from the broker and logs them into a textarea. The visualization area processes the incoming data and shows the current value of the sensors in charts.
+
 ![local-iot-architecture-ui](http://tinyimg.io/i/u7pRMWe.gif "local-iot-architecture-ui")
 
 
