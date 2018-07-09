@@ -17,7 +17,7 @@ Actors/Sensors -> Arduino(s) -> Raspberry Pi -> Web application
 
 Web application (HTML, CSS, Javascript, mqtt.js)
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
-Arduino (StandardFirmataPlus, OpenAquaponics)
+Arduino (StandardFirmataPlus, OpenAquarium)
 ```
 
 ### Installation
