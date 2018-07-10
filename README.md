@@ -146,7 +146,6 @@ You can find all C/C++ scripts for the Arduinos in the [includes](/includes) fol
 - [Node Serialport](https://github.com/node-serialport/node-serialport)
 - [Johnny-Five](https://github.com/rwaldron/johnny-five)
 - [Chart.js](https://github.com/chartjs/Chart.js)
-
 - [DHT11 setup](http://johnny-five.io/examples/multi-DHT11_I2C_NANO_BACKPACK)
 - [Arduino Nano DHT11 setup firmware](https://github.com/rwaldron/johnny-five/blob/master/firmwares/dht_i2c_nano_backpack.ino)
 - [Arduino StandardFirmataPlus firmware](https://github.com/firmata/arduino/blob/master/examples/StandardFirmataPlus/StandardFirmataPlus.ino)
