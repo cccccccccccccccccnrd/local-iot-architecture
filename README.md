@@ -19,7 +19,6 @@ Web application (HTML, CSS, Javascript, mqtt.js)
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
 Arduino (StandardFirmataPlus, OpenAquarium)
 ```
-> The hardware setup for this example is the following: Raspberry Pi, 2x Arduino Uno, Arduino Nano + DHT11, Photocell, DS18B20, Open Aquarium Conductivity sensor, OLED display
 
 ### Installation
 
