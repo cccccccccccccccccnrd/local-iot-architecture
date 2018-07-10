@@ -8,7 +8,6 @@ In this technical seminar I will continue working on a project called 'Lifecycle
 
 ### Basic architecture
 The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the web application and the actors/sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)).
-> The hardware setup for this example is the following: Raspberry Pi, 2x Arduino Uno, Arduino Nano + DHT11, Photocell, DS18B20, Open Aquarium Conductivity sensor, OLED display
 
 ![local-iot-architecture](http://tinyimg.io/i/02yZoqg.jpg "local-iot-architecture")
 
@@ -20,6 +19,7 @@ Web application (HTML, CSS, Javascript, mqtt.js)
 Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
 Arduino (StandardFirmataPlus, OpenAquarium)
 ```
+> The hardware setup for this example is the following: Raspberry Pi, 2x Arduino Uno, Arduino Nano + DHT11, Photocell, DS18B20, Open Aquarium Conductivity sensor, OLED display
 
 ### Installation
 
