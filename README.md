@@ -7,7 +7,7 @@ With this technical seminar I want to explore and document a clear and secure wa
 In this technical seminar I will continue working on a project called 'Lifecycle' where we are working on decentralized indoor food production with computer aided aquaponics. Nevertheless the environment's architecture can be used for all kind of different purposes.
 
 ### Basic architecture
-The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the web application and the actors/sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)).
+The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the web application and the actors/sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)). 
 
 ![local-iot-architecture](http://tinyimg.io/i/02yZoqg.jpg "local-iot-architecture")
 
@@ -126,20 +126,27 @@ client.on('message', function (topic, message) {
 
 ### Web application
 
-The web application is served by a http-server on port 3000 from the Raspberry Pi (http://192.168.178.51:3000) and its interface can be devided into two main areas: the dashboard and the visualization area.
+The web application is served by a http-server ([express](https://github.com/expressjs/express)) on port 3000 from the Raspberry Pi and its interface can be devided into two main areas: the dashboard and the visualization area.
+> To find out the IP address of the Raspberry Pi use the `hostname -I` command.
 
-The dashboard is used to connect and publish to the MQTT broker. After a successfull connection it shows the broker-ip in the lower right corner and subscribes to all topics from the broker and logs them into a textarea.
+The dashboard is used to connect and publish to the MQTT broker. After a successfull connection it shows the broker's IP address in the lower right corner, it subscribes to all available MQTT topics and logs all incoming data into a textarea.
 
-The visualization area processes the incoming data and shows the current value of the sensors in charts.
+The visualization area processes the incoming data and shows the current value of the sensors. Because the MQTT broker uses WebSockets, the charts ([Chart.js](https://github.com/chartjs/Chart.js)) are updated in real-time.
 
 ![local-iot-architecture-ui](http://tinyimg.io/i/u7pRMWe.gif "local-iot-architecture-ui")
 
+### Includes
+
+You can find all C/C++ scripts for the Arduinos in the [includes](/includes) folder.
 
 ### Resources
 - [MQTT.js](https://github.com/mqttjs/MQTT.js)
+- [express](https://github.com/expressjs/express)
 - [Mosca](https://github.com/mcollina/mosca)
 - [Node Serialport](https://github.com/node-serialport/node-serialport)
 - [Johnny-Five](https://github.com/rwaldron/johnny-five)
+- [Chart.js](https://github.com/chartjs/Chart.js)
+
 - [DHT11 setup](http://johnny-five.io/examples/multi-DHT11_I2C_NANO_BACKPACK)
 - [Arduino Nano DHT11 setup firmware](https://github.com/rwaldron/johnny-five/blob/master/firmwares/dht_i2c_nano_backpack.ino)
 - [Arduino StandardFirmataPlus firmware](https://github.com/firmata/arduino/blob/master/examples/StandardFirmataPlus/StandardFirmataPlus.ino)
