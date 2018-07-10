@@ -7,7 +7,8 @@ With this technical seminar I want to explore and document a clear and secure wa
 In this technical seminar I will continue working on a project called 'Lifecycle' where we are working on decentralized indoor food production with computer aided aquaponics. Nevertheless the environment's architecture can be used for all kind of different purposes.
 
 ### Basic architecture
-The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the web application and the actors/sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)). 
+The communication of the environment is based on the machine-to-machine protocol [MQTT](http://mqtt.org/). It is extremely lightweight and builds upon simple publish/subscribe messaging transport. The Raspberry Pi acts as the main component — it handels the communication between the web application and the actors/sensors ([Johnny-Five](https://github.com/rwaldron/johnny-five), [Node Serialport](https://github.com/node-serialport/node-serialport)) via serving a http- and the mqtt-server ([Mosca](https://github.com/mcollina/mosca)).
+> The hardware setup for this example is the following: Raspberry Pi, 2x Arduino Uno, Arduino Nano + DHT11, Photocell, DS18B20, Open Aquarium Conductivity sensor, OLED display
 
 ![local-iot-architecture](http://tinyimg.io/i/02yZoqg.jpg "local-iot-architecture")
 
