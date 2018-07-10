@@ -68,7 +68,7 @@ node index.js
 ```
 > Use a tool like [Forever](https://github.com/foreverjs/forever) to run the script continuously.
 
-### Configuration
+### Dataflow
 
 The basic dataflow starts with initializing an Arduino board.
 
@@ -113,7 +113,7 @@ photocell.on('data', function() {
 })
 ```
 
-As the last cycle in the dataflow the web application receives the new state over the MQTT topic via [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and updates its user interface accordingly.
+As the last step in the dataflow the web application receives the new state over the MQTT topic via [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) and updates its user interface accordingly.
 
 ```js
 client.on('message', function (topic, message) {
@@ -124,9 +124,13 @@ client.on('message', function (topic, message) {
 })
 ```
 
-### Interface and Settings
+### Web application
 
-The interface is served by a http-server on port 3000 from the Raspberry Pi (http://raspberry-pi-ip:3000) and can be devided into two main areas: the dashboard and the visualization area. The dashboard is used to connect and publish to the MQTT broker. After a successfull connection it shows the broker-ip in the lower right corner and subscribes to all topics from the broker and logs them into a textarea. The visualization area processes the incoming data and shows the current value of the sensors in charts.
+The web application is served by a http-server on port 3000 from the Raspberry Pi (http://192.168.178.51:3000) and its interface can be devided into two main areas: the dashboard and the visualization area.
+
+The dashboard is used to connect and publish to the MQTT broker. After a successfull connection it shows the broker-ip in the lower right corner and subscribes to all topics from the broker and logs them into a textarea.
+
+The visualization area processes the incoming data and shows the current value of the sensors in charts.
 
 ![local-iot-architecture-ui](http://tinyimg.io/i/u7pRMWe.gif "local-iot-architecture-ui")
 
