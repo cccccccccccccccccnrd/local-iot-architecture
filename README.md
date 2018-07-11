@@ -16,7 +16,7 @@ Web application -> Raspberry Pi -> Arduino(s) -> Actors/Sensors
 Actors/Sensors -> Arduino(s) -> Raspberry Pi -> Web application
 
 Web application (HTML, CSS, Javascript, mqtt.js)
-Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)  
+Raspberry Pi (Raspbian, Node.js, Mosca, Johnny-Five)
 Arduino (StandardFirmataPlus, OpenAquarium)
 ```
 
@@ -127,6 +127,7 @@ client.on('message', function (topic, message) {
 ### Web application
 
 The web application is served by a http-server ([express](https://github.com/expressjs/express)) on port 3000 from the Raspberry Pi and its interface can be devided into two main areas: the dashboard and the visualization area.
+> The http-server's static files are located in the [/public](/public) folder.
 > To find out the IP address of the Raspberry Pi use the `hostname -I` command.
 
 The dashboard is used to connect and publish to the MQTT broker. After a successfull connection it shows the broker's IP address in the lower right corner, it subscribes to all available MQTT topics and logs all incoming data into a textarea.
