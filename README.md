@@ -128,9 +128,9 @@ client.on('message', function (topic, message) {
 
 The web application is served by a http-server ([express](https://github.com/expressjs/express)) on port 3000 from the Raspberry Pi and its interface can be devided into two main areas: the dashboard and the visualization area.
 > The http-server's static files are located in the [/public](/public) folder.
-> To find out the IP address of the Raspberry Pi use the `hostname -I` command.
 
 The dashboard is used to connect and publish to the MQTT broker. After a successfull connection it shows the broker's IP address in the lower right corner, it subscribes to all available MQTT topics and logs all incoming data into a textarea.
+> To find out the IP address of the Raspberry Pi use the `hostname -I` command.
 
 The visualization area processes the incoming data and shows the current value of the sensors. Because the MQTT broker uses WebSockets, the charts ([Chart.js](https://github.com/chartjs/Chart.js)) are updated in real-time.
 
