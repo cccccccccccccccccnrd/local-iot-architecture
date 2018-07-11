@@ -138,7 +138,7 @@ The visualization area processes the incoming data and shows the current value o
 
 ### Includes
 
-You can find all C/C++ scripts for the Arduinos in the [includes](/includes) folder.
+You can find all C/C++ scripts for the Arduinos in the [/includes](/includes) folder.
 
 ### Resources
 - [MQTT.js](https://github.com/mqttjs/MQTT.js)
