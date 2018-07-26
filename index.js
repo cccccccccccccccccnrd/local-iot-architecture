@@ -26,7 +26,7 @@ const board = new five.Board({
 })
 
 board.on('ready', function () {
-  
+
   oled = new Oled(board, five, {
     width: 128,
     height: 64,
@@ -48,7 +48,12 @@ board.on('ready', function () {
     pin: 7,
     type: 'NC'
   })
-  
+
+  relayWaterpump = new five.Relay({
+    pin: 6,
+    type: 'NC'
+  })
+
   const additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
     baudRate: 115200
   })
@@ -57,6 +62,9 @@ board.on('ready', function () {
   /* States and MQTT topics setup */
   const lightTopic = 'actor/light'
   let lightState = true
+
+  const waterpumpTopic = 'actor/waterpump'
+  let waterpumpState = false
 
   const temperatureTopic = 'sensor/temperature'
   let temperatureState
@@ -83,7 +91,7 @@ board.on('ready', function () {
   }
   const moscaServer = new mosca.Server(moscaServerSettings)
 
-  let authenticate = function(client, username, password, callback) {
+  let authenticate = function (client, username, password, callback) {
     let authorized = (username === 'c' && String(password) === 'ccc')
     if (authorized) {
       client.user = username
@@ -137,7 +145,7 @@ board.on('ready', function () {
     console.log(JSON.stringify(humidityState))
   })
 
-  photocell.on('data', function() {
+  photocell.on('data', function () {
     lightIntensityState = {
       'type': 'light-intensity',
       'value': Math.floor(100 - this.level * 100),
@@ -148,7 +156,7 @@ board.on('ready', function () {
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
     console.log(JSON.stringify(lightIntensityState))
   })
-  
+
   additionalArduino.on('data', function (data) {
     if (!data.startsWith('{')) return
 
@@ -184,9 +192,20 @@ board.on('ready', function () {
           relayLight.open()
         }
         console.log('light-relay:', lightState)
+      } else if (topic === waterpumpTopic) {
+        waterpumpState = !waterpumpState
+          if (waterpumpState) {
+            relayWaterpump.open()
+            console.log('waterpump:', waterpumpState)
+            setTimeout(() => {
+              waterpumpState = !waterpumpState
+              relayWaterpump.close()
+              console.log('waterpump:', waterpumpState)
+            }, 5000)
+          }
+        }
+      } else {
+        console.log('invalid topic')
       }
-    } else {
-      console.log('invalid topic')
-    }
-  })
+    })
 })
