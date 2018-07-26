@@ -192,18 +192,18 @@ board.on('ready', function () {
           relayLight.open()
         }
         console.log('light-relay:', lightState)
-      } else if (topic === waterpumpTopic) {
-        if (message == 'toggle') {
-          waterpumpState = !waterpumpState
-          if (waterpumpState) {
-            relayWaterpump.open()
+      }
+    } else if (topic === waterpumpTopic) {
+      if (message == 'toggle') {
+        waterpumpState = !waterpumpState
+        if (waterpumpState) {
+          relayWaterpump.open()
+          console.log('waterpump:', waterpumpState)
+          setTimeout(() => {
+            waterpumpState = !waterpumpState
+            relayWaterpump.close()
             console.log('waterpump:', waterpumpState)
-            setTimeout(() => {
-              waterpumpState = !waterpumpState
-              relayWaterpump.close()
-              console.log('waterpump:', waterpumpState)
-            }, 5000)
-          }
+          }, 5000)
         }
       }
     } else {
