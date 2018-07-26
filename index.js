@@ -194,7 +194,7 @@ board.on('ready', function () {
         console.log('light-relay:', lightState)
       }
     } else if (topic === waterpumpTopic) {
-      console.log(Number.isInteger(String(message)), String(message))
+      console.log(Number.isInteger(Number(message)), Number(message))
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
@@ -206,7 +206,7 @@ board.on('ready', function () {
             console.log('waterpump:', waterpumpState)
           }, 5000)
         }
-      } else if (Number.isInteger(String(message))) {
+      } else if (Number.isInteger(Number(message))) {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
           relayWaterpump.open()
