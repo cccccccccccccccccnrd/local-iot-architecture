@@ -205,6 +205,17 @@ board.on('ready', function () {
             console.log('waterpump:', waterpumpState)
           }, 5000)
         }
+      } else if (Number.isInteger(message)) {
+        waterpumpState = !waterpumpState
+        if (waterpumpState) {
+          relayWaterpump.open()
+          console.log('waterpump:', waterpumpState)
+          setTimeout(() => {
+            waterpumpState = !waterpumpState
+            relayWaterpump.close()
+            console.log('waterpump:', waterpumpState)
+          }, message)
+        }
       }
     } else {
       console.log('invalid topic')
