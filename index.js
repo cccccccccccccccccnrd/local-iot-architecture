@@ -194,7 +194,7 @@ board.on('ready', function () {
         console.log('light-relay:', lightState)
       }
     } else if (topic === waterpumpTopic) {
-      if (message == 'toggle') {
+      if (message == 'full') {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
           relayWaterpump.open()
@@ -203,7 +203,7 @@ board.on('ready', function () {
             waterpumpState = !waterpumpState
             relayWaterpump.close()
             console.log('waterpump:', waterpumpState)
-          }, 5000)
+          }, 10000)
         }
       } else if (Number.isInteger(Number(message))) {
         waterpumpState = !waterpumpState
