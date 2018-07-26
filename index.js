@@ -205,7 +205,7 @@ board.on('ready', function () {
             console.log('waterpump:', waterpumpState)
           }, 5000)
         }
-      } else if (isNaN(String(message))) {
+      } else if (Number.isInteger(String(message))) {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
           relayWaterpump.open()
