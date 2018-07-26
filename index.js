@@ -206,6 +206,7 @@ board.on('ready', function () {
           }, 5000)
         }
       } else if (Number.isInteger(message)) {
+        console.log(Number.isInteger(message))
         waterpumpState = !waterpumpState
         if (waterpumpState) {
           relayWaterpump.open()
