@@ -193,7 +193,8 @@ board.on('ready', function () {
         }
         console.log('light-relay:', lightState)
       } else if (topic === waterpumpTopic) {
-        waterpumpState = !waterpumpState
+        if (message == 'toggle') {
+          waterpumpState = !waterpumpState
           if (waterpumpState) {
             relayWaterpump.open()
             console.log('waterpump:', waterpumpState)
@@ -204,8 +205,9 @@ board.on('ready', function () {
             }, 5000)
           }
         }
-      } else {
-        console.log('invalid topic')
       }
-    })
+    } else {
+      console.log('invalid topic')
+    }
+  })
 })
