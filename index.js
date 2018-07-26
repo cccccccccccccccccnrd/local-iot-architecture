@@ -194,7 +194,7 @@ board.on('ready', function () {
         console.log('light-relay:', lightState)
       }
     } else if (topic === waterpumpTopic) {
-      console.log(message)
+      console.log(String(message))
       if (message == 'toggle') {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
