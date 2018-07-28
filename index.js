@@ -181,6 +181,15 @@ board.on('ready', function () {
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
+  /* Timed MQTT publish handeling */
+  setInterval(() => {
+    const now = new Date()
+
+    if (now.getHours() === 8 && now.getMinutes() === 0) {
+      // cool
+    }
+  }, 60000)
+
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
     if (topic === lightTopic) {
