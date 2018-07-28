@@ -194,7 +194,16 @@ board.on('ready', function () {
         console.log('light-relay:', lightState)
       }
     } else if (topic === waterpumpTopic) {
-      if (message == 'full') {
+      if (message == 'toggle') {
+        waterpumpState = !waterpumpState
+        if (waterpumpState) {
+          relayWaterpump.open()
+          console.log('waterpump:', waterpumpState)
+        } else {
+          relayWaterpump.close()
+          console.log('waterpump:', waterpumpState)
+        }
+      } else if (message == 'full') {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
           relayWaterpump.open()
