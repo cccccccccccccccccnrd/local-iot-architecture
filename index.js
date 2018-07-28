@@ -203,7 +203,7 @@ board.on('ready', function () {
           relayWaterpump.close()
           console.log('waterpump:', waterpumpState)
         }
-      } else if (message == 'full') {
+      } else if (message == 'half') {
         waterpumpState = !waterpumpState
         if (waterpumpState) {
           relayWaterpump.open()
@@ -212,7 +212,7 @@ board.on('ready', function () {
             waterpumpState = !waterpumpState
             relayWaterpump.close()
             console.log('waterpump:', waterpumpState)
-          }, 10000)
+          }, 30000)
         }
       } else if (Number.isInteger(Number(message))) {
         waterpumpState = !waterpumpState
