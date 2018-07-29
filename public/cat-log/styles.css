@@ -5,14 +5,17 @@ html, body {
 
 body {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   font-family: 'Inconsolata', monospace;
   box-shadow: inset 0px 0px 0px 10px blue;
 }
 
 img {
-  max-width: 30%;
-  margin: 2em;
+  width: 352px;
+  height: 240px;
+  max-width: 100%;
+  margin: 5em;
 }
 
 p {
