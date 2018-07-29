@@ -140,6 +140,7 @@ textarea {
   position: absolute;
   bottom: 5%;
   right: 5%;
+  color: blue;
 }
 
 .status-bar {
