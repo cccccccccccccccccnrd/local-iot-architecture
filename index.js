@@ -30,7 +30,7 @@ const webcam = NodeWebcam.create({
   delay: 0,
   saveShots: true,
   output: 'jpeg',
-  device: false,
+  device: '/dev/video0',
   callbackReturn: 'location',
   verbose: false
 })
@@ -42,9 +42,9 @@ setInterval(() => {
 
   webcam.capture('public/cat-log/logs/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
     if (err) return console.log(err)
-    webcamImagesCounter++
-    console.log(webcam.list())
+
     console.log('saved image at', data)
+    webcamImagesCounter++
   })
 }, 10000)
 
