@@ -248,8 +248,6 @@ connectButton.onclick = function () {
     setTimeout(() => {
       login.style.removeProperty('height')
       statusBarRight.innerHTML = brokerIp + ' 🔐'
-      webcamLogsLink.innerHTML = '😻'
-      webcamLogsLink.style.display = 'inline-block'
     }, 1200)
   })
 
