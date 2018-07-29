@@ -12,9 +12,9 @@ body {
 }
 
 img {
-  width: 352px;
-  height: 240px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
   margin: 2em;
 }
 
