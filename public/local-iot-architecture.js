@@ -18,6 +18,7 @@ const waterElectricalConductivityChartContext = document.getElementById('water-e
 const webcamLogs = document.getElementById('webcam-logs')
 const webcamLogsLink = document.getElementById('webcam-logs-link')
 const webcamImageTimestaps = [].slice.call(document.getElementsByClassName('webcam-image-timestap'))
+console.log(webcamImageTimestaps)
 
 let client
 let visualizationOpen = false, webcamLogsOpen = false
@@ -269,6 +270,7 @@ connectButton.onclick = function () {
       updateUserInterface(waterElectricalConductivityState, waterElectricalConductivityChart, currentWaterElectricalConductivity)
     } else if (topic === webcamTopic) {
       webcamState = JSON.parse(message)
+      console.log(webcamState)
       webcamImageTimestaps[webcamState[0].counter - 1].innerHTML = String(new Date(webcamState[webcamState[0].counter].timestamp))
     }
   })
