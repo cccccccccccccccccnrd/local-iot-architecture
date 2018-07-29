@@ -271,7 +271,7 @@ connectButton.onclick = function () {
     } else if (topic === webcamTopic) {
       webcamState = JSON.parse(message)
       console.log(webcamState)
-      webcamImageTimestaps[webcamState[0].counter - 1].innerHTML = String(new Date(webcamState[webcamState[0].counter].timestamp))
+      webcamImageTimestaps[webcamState[0].counter - 1].innerHTML = String(webcamState[webcamState[0].counter].timestamp)
     }
   })
 }
