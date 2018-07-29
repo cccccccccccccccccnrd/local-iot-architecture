@@ -42,10 +42,10 @@ setInterval(() => {
   console.log(webcam.list())
 
   webcam.capture('public/cat-log/logs/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
-    console.log(err, data)
+    if (err) console.log(err)
+    webcamImagesCounter++
+    console.log('saved image at', data)
   })
-
-  webcamImagesCounter++
 }, 10000)
 
 /* Microcontroller and sensor setup */
