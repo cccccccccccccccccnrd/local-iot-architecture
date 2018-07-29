@@ -9,20 +9,23 @@ body {
 
 img {
   align-self: center;
-  width: 90%;
-  max-width: 400px;
+  width: 100%;
   height: auto;
-  margin: 5%;
-}
-
-a {
-  text-decoration: none;
 }
 
 p {
   margin: 0;
   font-size: 0.7em;
   line-height: 21px;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: blue;
 }
 
 .logs {
@@ -44,5 +47,5 @@ p {
 
 #status-bar-left {
   float: left;
-  color: white;
+  color: blue;
 }
