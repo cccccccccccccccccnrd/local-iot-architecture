@@ -10,6 +10,7 @@ body {
 
 img {
   align-self: center;
+  max-width: 700px;
   width: 100%;
   height: auto;
 }
@@ -35,6 +36,7 @@ a, a:visited {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  max-width: 700px;
 }
 
 .status-bar {
