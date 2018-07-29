@@ -35,7 +35,7 @@ const webcam = NodeWebcam.create({
   verbose: false
 })
 
-webcam.capture('./public/cat-log', (err, data) => {
+webcam.capture('./public/cat-log.jpg', (err, data) => {
   console.log(err, data)
 })
 
