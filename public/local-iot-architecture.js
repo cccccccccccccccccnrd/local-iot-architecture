@@ -283,7 +283,7 @@ statusBarLeft.onclick = function () {
     statusBarRight.style.color = 'white'
     visualizationOpen = true
   } else if (webcamLogsOpen == true && visualizationOpen == false) {
-    webcamLogs.style.marginLeft = '0'
+    webcamLogs.style.marginLeft = '-100vw'
     statusBarLeft.innerHTML = '&lt;'
     statusBarLeft.style.color = 'blue'
     statusBarRight.style.color = 'blue'
