@@ -22,32 +22,6 @@ httpServer.use(express.static(httpServerSettings.staticPath))
 httpServer.listen(httpServerSettings.port)
 console.log('http server is running on http://localhost:' + httpServerSettings.port)
 
-/* Webcam setup */
-const webcam = NodeWebcam.create({
-  width: 1280,
-  height: 720,
-  quality: 100,
-  delay: 0,
-  saveShots: true,
-  output: 'jpeg',
-  device: '/dev/video0',
-  callbackReturn: 'location',
-  verbose: false
-})
-
-let webcamImagesCounter = 1
-
-setInterval(() => {
-  if (webcamImagesCounter > 12) webcamImagesCounter = 1
-
-  webcam.capture('public/cat-log/logs/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
-    if (err) return console.log(err)
-
-    console.log('saved image at', data)
-    webcamImagesCounter++
-  })
-}, 60000 * 10)
-
 /* Microcontroller and sensor setup */
 const board = new five.Board({
   port: '/dev/ttyACM1'
@@ -87,6 +61,19 @@ board.on('ready', function () {
   })
   const additionalArduino = additionalArduinoPort.pipe(new Readline())
 
+  /* Webcam setup */
+  const webcam = NodeWebcam.create({
+    width: 1280,
+    height: 720,
+    quality: 100,
+    delay: 0,
+    saveShots: true,
+    output: 'jpeg',
+    device: '/dev/video0',
+    callbackReturn: 'location',
+    verbose: false
+  })
+
   /* States and MQTT topics setup */
   const lightTopic = 'actor/light'
   let lightState = true
@@ -108,6 +95,9 @@ board.on('ready', function () {
 
   const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
   let waterElectricalConductivityState
+
+  const webcamTopic = 'sensor/webcam'
+  let webcamState = [{ counter: 1 }]
 
   /* Mosca websocket server setup */
   const moscaServerSettings = {
@@ -217,6 +207,21 @@ board.on('ready', function () {
       // cool
     }
   }, 60000)
+
+  /* Interval MQTT publish handeling */
+  setInterval(() => {
+    if (webcamState[0].counter > 12) webcamState[0].counter = 1
+  
+    webcam.capture('public/logs/cat-log-' + webcamState[0].counter + '.jpg', (err, data) => {
+      if (err) return console.log(err)
+  
+      webcamState[webcamState[0].counter].timestamp = new Date()
+      client.publish(webcamTopic, JSON.stringify(webcamState))
+  
+      console.log('saved image at', data)
+      webcamState[0].counter++
+    })
+  }, 10000)
 
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {

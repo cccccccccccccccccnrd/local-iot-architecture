@@ -1,4 +1,5 @@
 <html>
+
 <head>
   <title>local-iot-architecture</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -9,50 +10,110 @@
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 </head>
+
 <body>
-<section id="visualization">
-  <div class="chart">
-    <canvas id="temperature-chart"></canvas>
-    <p>temperature: <span id="current-temperature">00</span> C</p>
-  </div>
-  <div class="chart">
-    <canvas id="humidity-chart"></canvas>
-    <p>relative-humidity: <span id="current-humidity">00</span> %</p>
-  </div>
-  <div class="chart">
-    <canvas id="light-intensity-chart"></canvas>
-    <p>light-intensity: <span id="current-light-intensity">00</span> %</p>
-  </div>
-  <div class="chart">
-    <canvas id="water-temperature-chart"></canvas>
-    <p>water-temperature: <span id="current-water-temperature">00</span> C</p>
-  </div>
-  <div class="chart">
-    <canvas id="water-electrical-conductivity-chart"></canvas>
-    <p>electrical-conduct.: <span id="current-water-electrical-conductivity">00</span> uS/cm</p>
-  </div>
-</section>
-<section class="inputs">
-  <section id="login" style="height: 160px;">
-    <input type="text" name="broker-ip" id="mqtt-broker-ip" spellcheck="false" value="192.168.178.51:3001">
-    <span class="flex">
-      <input type="text" name="broker-username" id="mqtt-broker-username" spellcheck="false" value="c">
-      <input type="password" name="broker-password" id="mqtt-broker-password" spellcheck="false" placeholder="password">
-    </span>
-    <input type="submit" value="connect" id="mqtt-connect">
-    <hr>
+  <section id="visualization">
+    <div class="chart">
+      <canvas id="temperature-chart"></canvas>
+      <p>temperature:
+        <span id="current-temperature">00</span> C</p>
+    </div>
+    <div class="chart">
+      <canvas id="humidity-chart"></canvas>
+      <p>relative-humidity:
+        <span id="current-humidity">00</span> %</p>
+    </div>
+    <div class="chart">
+      <canvas id="light-intensity-chart"></canvas>
+      <p>light-intensity:
+        <span id="current-light-intensity">00</span> %</p>
+    </div>
+    <div class="chart">
+      <canvas id="water-temperature-chart"></canvas>
+      <p>water-temperature:
+        <span id="current-water-temperature">00</span> C</p>
+    </div>
+    <div class="chart">
+      <canvas id="water-electrical-conductivity-chart"></canvas>
+      <p>electrical-conduct.:
+        <span id="current-water-electrical-conductivity">00</span> uS/cm</p>
+    </div>
   </section>
-  <input type="text" name="topic" id="mqtt-topic" spellcheck="false" value="actor/light">
-  <input type="text" name="message" id="mqtt-message" spellcheck="false" value="toggle">
-  <input type="submit" value="publish" id="mqtt-publish">
-  <hr>
-  <textarea name="log" id="log" rows="25"></textarea>
-</section>
-<section class="status-bar">
+  <section id="webcam-logs">
+    <h1>😻</h1>
+    <section class="webcam-logs">
+      <span>
+        <img src="logs/cat-log-1.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-2.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-3.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-4.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-5.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-6.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-7.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-8.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-9.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-10.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-11.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+      <span>
+        <img src="logs/cat-log-12.jpg">
+        <p class="webcam-image-timestap">...</p>
+      </span>
+    </section>
+  </section>
+  <section class="inputs">
+    <section id="login" style="height: 160px;">
+      <input type="text" name="broker-ip" id="mqtt-broker-ip" spellcheck="false" value="192.168.178.51:3001">
+      <span class="flex">
+        <input type="text" name="broker-username" id="mqtt-broker-username" spellcheck="false" value="c">
+        <input type="password" name="broker-password" id="mqtt-broker-password" spellcheck="false" placeholder="password">
+      </span>
+      <input type="submit" value="connect" id="mqtt-connect">
+      <hr>
+    </section>
+    <input type="text" name="topic" id="mqtt-topic" spellcheck="false" value="actor/light">
+    <input type="text" name="message" id="mqtt-message" spellcheck="false" value="toggle">
+    <input type="submit" value="publish" id="mqtt-publish">
+    <hr>
+    <textarea name="log" id="log" rows="25"></textarea>
+  </section>
+  <section class="status-bar">
     <p id="status-bar-left">&lt;</p>
     <p id="status-bar-right">...</p>
-</section>
+  </section>
 
-<script src="local-iot-architecture.js"></script>
+  <script src="local-iot-architecture.js"></script>
 </body>
+
 </html>

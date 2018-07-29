@@ -15,9 +15,12 @@ const currentWaterTemperature = document.getElementById('current-water-temperatu
 const waterTemperatureChartContext = document.getElementById('water-temperature-chart').getContext('2d')
 const currentWaterElectricalConductivity = document.getElementById('current-water-electrical-conductivity')
 const waterElectricalConductivityChartContext = document.getElementById('water-electrical-conductivity-chart').getContext('2d')
+const webcamLogs = document.getElementById('webcam-logs')
+const webcamLogsLink = document.getElementById('webcam-logs-link')
+const webcamImageTimestaps = [].slice.call(document.getElementsByClassName('webcam-image-timestap'))
 
 let client
-let visualizationOpen = false
+let visualizationOpen = false, webcamLogsOpen = false
 
 /* States and MQTT topics setup */
 const temperatureTopic = 'sensor/temperature'
@@ -34,6 +37,9 @@ let waterTemperatureState
 
 const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
 let waterElectricalConductivityState
+
+const webcamTopic = 'sensor/webcam'
+let webcamState
 
 let temperatureChart = new Chart(temperatureChartContext, {
   type: 'line',
@@ -241,7 +247,7 @@ connectButton.onclick = function () {
 
     setTimeout(() => {
       login.style.removeProperty('height')
-      statusBarRight.innerHTML = brokerIp + ' 🔐 <a href="/cat-log">😻</a>'
+      statusBarRight.innerHTML = brokerIp + ' 🔐 <a id="webcam-logs-link">😻</a>'
     }, 1200)
   })
 
@@ -261,6 +267,9 @@ connectButton.onclick = function () {
     } else if (topic === waterElectricalConductivityTopic) {
       waterElectricalConductivityState = String(message)
       updateUserInterface(waterElectricalConductivityState, waterElectricalConductivityChart, currentWaterElectricalConductivity)
+    } else if (topic === webcamTopic) {
+      webcamState = JSON.parse(message)
+      webcamImageTimestaps[webcamState[0].counter - 1].innerHTML = String(new Date(webcamState[webcamState[0].counter].timestamp))
     }
   })
 }
@@ -278,6 +287,22 @@ statusBarLeft.onclick = function () {
     statusBarLeft.style.color = 'blue'
     statusBarRight.style.color = 'blue'
     visualizationOpen = false
+  }
+}
+
+webcamLogsLink.onclick = function () {
+  if (webcamLogsOpen == false) {
+    webcamLogs.style.marginLeft = '0'
+    statusBarLeft.innerHTML = '&gt;'
+    statusBarLeft.style.color = 'white'
+    statusBarRight.style.color = 'white'
+    webcamLogsOpen = true
+  } else if (webcamLogsOpen == true) {
+    webcamLogs.style.marginLeft = '-100vw'
+    statusBarLeft.innerHTML = '&lt;'
+    statusBarLeft.style.color = 'blue'
+    statusBarRight.style.color = 'blue'
+    webcamLogsOpen = false
   }
 }
 
