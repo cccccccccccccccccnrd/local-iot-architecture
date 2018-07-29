@@ -23,7 +23,6 @@ httpServer.listen(httpServerSettings.port)
 console.log('http server is running on http://localhost:' + httpServerSettings.port)
 
 /* Webcam setup */
-
 const webcam = NodeWebcam.create({
   width: 1280,
   height: 720,
@@ -35,7 +34,10 @@ const webcam = NodeWebcam.create({
   callbackReturn: 'location',
   verbose: false
 })
-console.log(webcam.list())
+
+webcam.capture('test-picture', (err, data) => {
+  console.log(err, data)
+})
 
 /* Microcontroller and sensor setup */
 const board = new five.Board({
@@ -109,7 +111,7 @@ board.on('ready', function () {
   const moscaServer = new mosca.Server(moscaServerSettings)
 
   let authenticate = function (client, username, password, callback) {
-    let authorized = (username === 'c' && String(password) === 'ccc')
+    let authorized = (username === 'c' && String(password) === 'aUoia6vvXPwMomnUmXNKMQiA')
     if (authorized) {
       client.user = username
       callback(null, authorized)
