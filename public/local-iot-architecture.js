@@ -270,9 +270,9 @@ connectButton.onclick = function () {
       updateUserInterface(waterElectricalConductivityState, waterElectricalConductivityChart, currentWaterElectricalConductivity)
     } else if (topic === webcamTopic) {
       webcamState = JSON.parse(message)
-      webcamImageTimestaps.forEach(element, i => {
+      webcamImageTimestaps.forEach(((element, i) => {
         element.innerHTML = String(webcamState[i + 1].timestamp)
-      })
+      }))
       webcamImageTimestaps[webcamState[0].counter - 1].innerHTML = String(webcamState[webcamState[0].counter].timestamp)
     }
   })
