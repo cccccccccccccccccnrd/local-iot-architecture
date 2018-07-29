@@ -162,3 +162,7 @@ textarea {
   float: right;
   color: blue;
 }
+
+#webcam-logs-link {
+  display: none;
+}
