@@ -40,7 +40,7 @@ let webcamImagesCounter = 1
 setInterval(() => {
   if (webcamImagesCounter >= 12) webcamImagesCounter = 1
 
-  webcam.capture('./public/cat-log/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
+  webcam.capture('public/cat-log/logs/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
     console.log(err, data)
   })
 }, 60000 * 1)
