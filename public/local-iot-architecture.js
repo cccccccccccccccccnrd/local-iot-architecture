@@ -276,19 +276,19 @@ connectButton.onclick = function () {
 }
 
 statusBarLeft.onclick = function () {
-  if (visualizationOpen == false) {
-    visualization.style.marginLeft = '0'
-    statusBarLeft.innerHTML = '&gt;'
-    statusBarLeft.style.color = 'white'
-    statusBarRight.style.color = 'white'
-    visualizationOpen = true
-  } else if (webcamLogsOpen == true && visualizationOpen == false) {
+  if (webcamLogsOpen == true && visualizationOpen == false) {
     webcamLogs.style.marginLeft = '-100vw'
     statusBarLeft.innerHTML = '&lt;'
     statusBarLeft.style.color = 'blue'
     statusBarRight.style.color = 'blue'
     webcamLogsOpen = false
-  } else if (visualizationOpen == true) {
+  } else if (visualizationOpen == false) {
+    visualization.style.marginLeft = '0'
+    statusBarLeft.innerHTML = '&gt;'
+    statusBarLeft.style.color = 'white'
+    statusBarRight.style.color = 'white'
+    visualizationOpen = true
+  }  else if (visualizationOpen == true) {
     visualization.style.marginLeft = '-100vw'
     statusBarLeft.innerHTML = '&lt;'
     statusBarLeft.style.color = 'blue'
