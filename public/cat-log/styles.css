@@ -1,0 +1,22 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Inconsolata', monospace;
+  box-shadow: inset 0px 0px 0px 10px blue;
+}
+
+img {
+  max-width: 30%;
+  margin: 2em;
+}
+
+p {
+  margin: 0;
+  font-size: 0.7em;
+  line-height: 21px;
+}

@@ -35,9 +35,15 @@ const webcam = NodeWebcam.create({
   verbose: false
 })
 
-webcam.capture('./public/cat-log.jpg', (err, data) => {
-  console.log(err, data)
-})
+let webcamImagesCounter = 1
+
+setInterval(() => {
+  if (webcamImagesCounter >= 12) webcamImagesCounter = 1
+
+  webcam.capture('./public/cat-log/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
+    console.log(err, data)
+  })
+}, 60000 * 1)
 
 /* Microcontroller and sensor setup */
 const board = new five.Board({
