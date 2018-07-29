@@ -46,7 +46,7 @@ setInterval(() => {
     console.log('saved image at', data)
     webcamImagesCounter++
   })
-}, 10000)
+}, 60000 * 10)
 
 /* Microcontroller and sensor setup */
 const board = new five.Board({
