@@ -43,7 +43,9 @@ setInterval(() => {
   webcam.capture('public/cat-log/logs/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
     console.log(err, data)
   })
-}, 60000 * 1)
+
+  webcamImagesCounter++
+}, 10000)
 
 /* Microcontroller and sensor setup */
 const board = new five.Board({
