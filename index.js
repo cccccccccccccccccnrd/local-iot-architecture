@@ -5,6 +5,8 @@ const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const Oled = require('oled-js')
 const font = require('oled-font-5x7')
+const v4l2camera = require('v4l2camera')
+const fs = require('fs')
 const express = require('express')
 
 require('events').EventEmitter.defaultMaxListeners = 12
@@ -19,6 +21,11 @@ const httpServer = express()
 httpServer.use(express.static(httpServerSettings.staticPath))
 httpServer.listen(httpServerSettings.port)
 console.log('http server is running on http://localhost:' + httpServerSettings.port)
+
+/* Webcam setup */
+
+const webcam = new v4l2camera.Camera('/dev/video0')
+console.log(webcam.configGet())
 
 /* Microcontroller and sensor setup */
 const board = new five.Board({
