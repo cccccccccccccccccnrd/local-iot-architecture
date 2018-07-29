@@ -247,7 +247,7 @@ board.on('ready', function () {
       console.log('saved image at', data)
       webcamState[0].counter++
     })
-  }, 60000 * 10)
+  }, 60000)
 
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {
