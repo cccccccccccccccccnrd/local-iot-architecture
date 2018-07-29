@@ -5,6 +5,7 @@ html, body {
 
 body {
   font-family: 'Inconsolata', monospace;
+  background: blue;
 }
 
 img {
@@ -20,7 +21,9 @@ p {
 }
 
 h1 {
-  font-size: 3em;
+  margin: 0.75em;
+  font-size: 5em;
+  text-align: center;
 }
 
 a, a:visited {
