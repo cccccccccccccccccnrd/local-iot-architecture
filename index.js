@@ -97,7 +97,33 @@ board.on('ready', function () {
   let waterElectricalConductivityState
 
   const webcamTopic = 'sensor/webcam'
-  let webcamState = [{ counter: 1 }]
+  let webcamState = [{
+    counter: 1
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }, {
+    timestamp: null,
+  }]
 
   /* Mosca websocket server setup */
   const moscaServerSettings = {
@@ -214,7 +240,6 @@ board.on('ready', function () {
   
     webcam.capture('public/logs/cat-log-' + webcamState[0].counter + '.jpg', (err, data) => {
       if (err) return console.log(err)
-      console.log(webcamState[0].counter)
   
       webcamState[webcamState[0].counter].timestamp = new Date()
       client.publish(webcamTopic, JSON.stringify(webcamState))
