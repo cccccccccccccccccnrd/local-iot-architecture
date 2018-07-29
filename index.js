@@ -38,7 +38,7 @@ const webcam = NodeWebcam.create({
 let webcamImagesCounter = 1
 
 setInterval(() => {
-  if (webcamImagesCounter >= 12) webcamImagesCounter = 1
+  if (webcamImagesCounter > 12) webcamImagesCounter = 1
 
   webcam.capture('public/cat-log/logs/cat-log-' + webcamImagesCounter + '.jpg', (err, data) => {
     if (err) return console.log(err)
