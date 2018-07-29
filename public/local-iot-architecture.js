@@ -283,6 +283,12 @@ statusBarLeft.onclick = function () {
     statusBarLeft.style.color = 'white'
     statusBarRight.style.color = 'white'
     visualizationOpen = true
+  } else if (webcamLogsOpen == true && visualizationOpen == false) {
+    webcamLogs.style.marginLeft = '0'
+    statusBarLeft.innerHTML = '&lt;'
+    statusBarLeft.style.color = 'blue'
+    statusBarRight.style.color = 'blue'
+    webcamLogsOpen = false
   } else if (visualizationOpen == true) {
     visualization.style.marginLeft = '-100vw'
     statusBarLeft.innerHTML = '&lt;'
@@ -299,12 +305,6 @@ webcamLogsLink.onclick = function () {
     statusBarLeft.style.color = 'white'
     statusBarRight.style.color = 'white'
     webcamLogsOpen = true
-  } else if (webcamLogsOpen == true) {
-    webcamLogs.style.marginLeft = '-100vw'
-    statusBarLeft.innerHTML = '&lt;'
-    statusBarLeft.style.color = 'blue'
-    statusBarRight.style.color = 'blue'
-    webcamLogsOpen = false
   }
 }
 
