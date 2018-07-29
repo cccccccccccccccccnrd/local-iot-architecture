@@ -247,8 +247,7 @@ connectButton.onclick = function () {
 
     setTimeout(() => {
       login.style.removeProperty('height')
-      statusBarRight.innerHTML = brokerIp + ' 🔐 <a id="webcam-logs-link">😻</a>'
-      webcamLogsLink.style.display = null
+      statusBarRight.innerHTML = brokerIp + ' 🔐 <a id="webcam-logs-link" style="display: block;">😻</a>'
     }, 1200)
   })
 
