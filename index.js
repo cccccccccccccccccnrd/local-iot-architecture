@@ -35,7 +35,7 @@ const webcam = NodeWebcam.create({
   verbose: false
 })
 
-webcam.capture('test-picture', (err, data) => {
+webcam.capture('./public/cat-log', (err, data) => {
   console.log(err, data)
 })
 
@@ -133,7 +133,7 @@ board.on('ready', function () {
   const options = {
     clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
     username: 'c',
-    password: 'ccc'
+    password: 'aUoia6vvXPwMomnUmXNKMQiA'
   }
   const client = mqtt.connect('mqtt://127.0.0.1', options)
 
