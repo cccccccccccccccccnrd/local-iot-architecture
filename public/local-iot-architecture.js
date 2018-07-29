@@ -241,7 +241,7 @@ connectButton.onclick = function () {
 
     setTimeout(() => {
       login.style.removeProperty('height')
-      statusBarRight.innerHTML = brokerIp + ' 🔐'
+      statusBarRight.innerHTML = brokerIp + ' 🔐 <a href="/cat-log">😻</a>'
     }, 1200)
   })
 
