@@ -1,3 +1,4 @@
+require('dotenv').config()
 const mosca = require('mosca')
 const mqtt = require('mqtt')
 const five = require('johnny-five')
@@ -80,7 +81,7 @@ board.on('ready', function () {
   const moscaServer = new mosca.Server(moscaServerSettings)
 
   let authenticate = function (client, username, password, callback) {
-    let authorized = (username === 'c' && String(password) === 'aUoia6vvXPwMomnUmXNKMQiA')
+    let authorized = (username === process.env.MQTT_USERNAME && String(password) === process.env.MQTT_PASSWORD)
     if (authorized) {
       client.user = username
       callback(null, authorized)
