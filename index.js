@@ -32,7 +32,7 @@ board.on('ready', function () {
     bundledStates.timestamp = Date.now()
     publishToTangle(JSON.stringify(bundledStates))
     client.publish(iotaMamTopic, JSON.stringify(bundledStates))
-    console.log(JSON.stringify(bundledStates))
+    console.log('published on mqtt', JSON.stringify(bundledStates))
   }, 5000)
 
   const iotaProvider = new IOTA({ provider: 'https://field.deviota.com:443' })
@@ -79,7 +79,7 @@ board.on('ready', function () {
 
   /* States and MQTT topics setup */
   const iotaMamTopic = 'utils/iota-mam'
-  
+
   const lightTopic = 'actor/light'
   let lightState = true
 
