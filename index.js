@@ -28,7 +28,7 @@ board.on('ready', function () {
 
   let bundledStates = {}
 
-  setInterval((bundledStates) => {
+  setInterval(() => {
     bundledStates.timestamp = Date.now()
     publishToTangle(JSON.stringify(bundledStates))
     bundledStates = {}
