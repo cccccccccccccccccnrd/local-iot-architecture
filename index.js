@@ -31,6 +31,7 @@ board.on('ready', function () {
   setInterval(() => {
     bundledStates.timestamp = Date.now()
     publishToTangle(JSON.stringify(bundledStates))
+    client.publish(iotaMamTopic, JSON.stringify(bundledStates))
     console.log(JSON.stringify(bundledStates))
   }, 5000)
 
@@ -44,15 +45,12 @@ board.on('ready', function () {
 
     mamState = message.state
 
-    console.log('Root: ', message.root)
-    console.log('Address: ', message.address)
+    console.log('iota-mam-root: ', message.root)
+    console.log('iota-mam-address: ', message.address)
     await MAM.attach(message.payload, message.address)
       .then((error) => {
         console.log(error)
       })
-
-    const resp = await MAM.fetch(message.root, 'public', null, console.log)
-    console.log(resp)
   }
 
   dht11 = new five.Multi({
@@ -80,6 +78,8 @@ board.on('ready', function () {
   const additionalArduino = additionalArduinoPort.pipe(new Readline())
 
   /* States and MQTT topics setup */
+  const iotaMamTopic = 'utils/iota-mam'
+  
   const lightTopic = 'actor/light'
   let lightState = true
 
