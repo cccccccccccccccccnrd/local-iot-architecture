@@ -32,7 +32,6 @@ board.on('ready', function () {
     bundledStates.timestamp = Date.now()
     publishToTangle(JSON.stringify(bundledStates))
     console.log(JSON.stringify(bundledStates))
-    bundledStates = {}
   }, 5000)
 
   const iotaProvider = new IOTA({ provider: 'http://188.68.60.136:14265' })
