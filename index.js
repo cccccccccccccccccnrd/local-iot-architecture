@@ -147,7 +147,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
-    if (!bundledStates.temperature) bundledStates.temperature = temperatureState
+    bundledStates.temperature = temperatureState
     console.log(JSON.stringify(temperatureState))
 
     humidityState = {
@@ -156,7 +156,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(humidityTopic, JSON.stringify(humidityState))
-    if (!bundledStates.humidity) bundledStates.humidity = humidityState
+    bundledStates.humidity = humidityState
     console.log(JSON.stringify(humidityState))
   })
 
@@ -167,7 +167,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
-    if (!bundledStates.lightIntensity) bundledStates.lightIntensity = lightIntensityState
+    bundledStates.lightIntensity = lightIntensityState
     console.log(JSON.stringify(lightIntensityState))
   })
 
@@ -180,7 +180,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
-    if (!bundledStates.waterTemperature) bundledStates.waterTemperature = waterTemperatureState
+    bundledStates.waterTemperature = waterTemperatureState
     console.log(JSON.stringify(waterTemperatureState))
 
     waterElectricalConductivityState = {
@@ -189,7 +189,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
-    if (!bundledStates.waterElectricalConductivity) bundledStates.waterElectricalConductivity = waterElectricalConductivityState
+    bundledStates.waterElectricalConductivity = waterElectricalConductivityState
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
