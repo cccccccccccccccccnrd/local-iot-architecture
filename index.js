@@ -14,7 +14,7 @@ require('events').EventEmitter.defaultMaxListeners = 12
 /* HTTP server setup */
 const httpServerSettings = {
   port: 3000,
-  staticPath: 'public'
+  staticPath: __dirname + 'public'
 }
 const httpServer = express()
 
