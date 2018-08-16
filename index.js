@@ -34,7 +34,7 @@ board.on('ready', function () {
     bundledStates = {}
   }, 5000)
 
-  const iotaProvider = new IOTA({ provider: 'https://wallet2.iota.town:443' })
+  const iotaProvider = new IOTA({ provider: 'http://188.68.60.136:14265' })
   const iotaSeed = process.env.IOTA_SEED
 
   let mamState = MAM.init(iotaProvider, iotaSeed)
