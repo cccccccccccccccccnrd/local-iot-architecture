@@ -26,6 +26,32 @@ const board = new five.Board({
 
 board.on('ready', function () {
 
+  let bundledStates
+
+  setInterval((bundledStates) => {
+    bundledStates.timestamp = Date.now()
+    publishToTangle(JSON.stringify(bundledStates))
+    bundledStates = {}
+  }, 5000)
+
+  const iotaProvider = new IOTA({ provider: 'https://wallet2.iota.town:443' })
+  const iotaSeed = process.env.IOTA_SEED
+
+  let mamState = MAM.init(iotaProvider, iotaSeed)
+
+  async function publishToTangle (data) {
+    const message = MAM.create(mamState, data)
+
+    mamState = message.state
+
+    console.log('Root: ', message.root)
+    console.log('Address: ', message.address)
+    await MAM.attach(message.payload, message.address)
+
+    const resp = await MAM.fetch(message.root, 'public', null, console.log)
+    console.log(resp)
+  }
+
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
@@ -225,30 +251,4 @@ board.on('ready', function () {
       console.log('invalid topic')
     }
   })
-
-  let bundledStates
-
-  setInterval((bundledStates) => {
-    bundledStates.timestamp = Date.now()
-    publishToTangle(JSON.stringify(bundledStates))
-    bundledStates = {}
-  }, 5000)
-
-  const iotaProvider = new IOTA({ provider: 'https://wallet2.iota.town:443' })
-  const iotaSeed = process.env.IOTA_SEED
-
-  let mamState = MAM.init(iotaProvider, iotaSeed)
-
-  async function publishToTangle (data) {
-    const message = MAM.create(mamState, data)
-
-    mamState = message.state
-
-    console.log('Root: ', message.root)
-    console.log('Address: ', message.address)
-    await MAM.attach(message.payload, message.address)
-
-    const resp = await MAM.fetch(message.root, 'public', null, console.log)
-    console.log(resp)
-  }
 })
