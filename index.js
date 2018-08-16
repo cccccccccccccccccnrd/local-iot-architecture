@@ -26,7 +26,7 @@ const board = new five.Board({
 
 board.on('ready', function () {
 
-  let bundledStates
+  let bundledStates = {}
 
   setInterval((bundledStates) => {
     bundledStates.timestamp = Date.now()
