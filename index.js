@@ -47,6 +47,9 @@ board.on('ready', function () {
     console.log('Root: ', message.root)
     console.log('Address: ', message.address)
     await MAM.attach(message.payload, message.address)
+      .then((error) => {
+        console.log(error)
+      })
 
     const resp = await MAM.fetch(message.root, 'public', null, console.log)
     console.log(resp)
