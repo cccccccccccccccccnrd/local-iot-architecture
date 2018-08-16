@@ -3,13 +3,7 @@ const mqtt = require('mqtt')
 const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
-const Oled = require('oled-js')
-const font = require('oled-font-5x7')
-const NodeWebcam = require('node-webcam')
-const fs = require('fs')
 const express = require('express')
-
-require('events').EventEmitter.defaultMaxListeners = 12
 
 /* HTTP server setup */
 const httpServerSettings = {
@@ -28,14 +22,6 @@ const board = new five.Board({
 })
 
 board.on('ready', function () {
-
-  oled = new Oled(board, five, {
-    width: 128,
-    height: 64,
-    address: 0x3C
-  })
-  oled.clearDisplay()
-  oled.update()
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
@@ -61,19 +47,6 @@ board.on('ready', function () {
   })
   const additionalArduino = additionalArduinoPort.pipe(new Readline())
 
-  /* Webcam setup */
-  const webcam = NodeWebcam.create({
-    width: 1280,
-    height: 720,
-    quality: 100,
-    delay: 0,
-    saveShots: true,
-    output: 'jpeg',
-    device: '/dev/video0',
-    callbackReturn: 'location',
-    verbose: false
-  })
-
   /* States and MQTT topics setup */
   const lightTopic = 'actor/light'
   let lightState = true
@@ -95,35 +68,6 @@ board.on('ready', function () {
 
   const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
   let waterElectricalConductivityState
-
-  const webcamTopic = 'sensor/webcam'
-  let webcamState = [{
-    counter: 1
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }, {
-    timestamp: null,
-  }]
 
   /* Mosca websocket server setup */
   const moscaServerSettings = {
@@ -173,8 +117,6 @@ board.on('ready', function () {
       'value': this.thermometer.celsius,
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 0)
-    oled.writeString(font, 1, 'temperature: ' + temperatureState.value + ' C', 1, true, 2)
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
     console.log(JSON.stringify(temperatureState))
 
@@ -183,8 +125,6 @@ board.on('ready', function () {
       'value': this.hygrometer.relativeHumidity,
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 12)
-    oled.writeString(font, 1, 'humidity: ' + humidityState.value + ' %', 1, true, 2)
     client.publish(humidityTopic, JSON.stringify(humidityState))
     console.log(JSON.stringify(humidityState))
   })
@@ -195,8 +135,6 @@ board.on('ready', function () {
       'value': Math.floor(100 - this.level * 100),
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 24)
-    oled.writeString(font, 1, 'light: ' + lightIntensityState.value + ' %', 1, false, 2)
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
     console.log(JSON.stringify(lightIntensityState))
   })
@@ -209,8 +147,6 @@ board.on('ready', function () {
       'value': Math.floor(JSON.parse(data.toString()).temperature),
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 43)
-    oled.writeString(font, 1, 'w-temp: ' + waterTemperatureState.value + ' C', 1, false, 2)
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterTemperatureState))
 
@@ -219,8 +155,6 @@ board.on('ready', function () {
       'value': Math.floor(JSON.parse(data.toString()).ec),
       'timestamp': Date.now()
     }
-    oled.setCursor(0, 54)
-    oled.writeString(font, 1, 'w-ec: ' + waterElectricalConductivityState.value + ' uS/cm             ', 1, true, 2)
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
@@ -233,21 +167,6 @@ board.on('ready', function () {
       // cool
     }
   }, 60000)
-
-  /* Interval MQTT publish handeling */
-  setInterval(() => {
-    if (webcamState[0].counter > 12) webcamState[0].counter = 1
-  
-    webcam.capture('public/logs/cat-log-' + webcamState[0].counter + '.jpg', (err, data) => {
-      if (err) return console.log(err)
-  
-      webcamState[webcamState[0].counter].timestamp = new Date()
-      client.publish(webcamTopic, JSON.stringify(webcamState))
-  
-      console.log('saved image at', data)
-      webcamState[0].counter++
-    })
-  }, 60000 * 10)
 
   /* MQTT subscribe handeling */
   client.on('message', function (topic, message) {

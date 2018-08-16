@@ -71,7 +71,7 @@ textarea {
   transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-#visualization, #webcam-logs {
+#visualization {
   box-sizing: border-box;
   position: fixed;
   top: 0;
@@ -113,36 +113,6 @@ textarea {
   color: white;
 }
 
-.webcam-logs {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-#webcam-logs h1 {
-  margin: 0.75em;
-  font-size: 5em;
-  text-align: center;
-}
-
-.webcam-logs span {
-  position: relative;
-}
-
-.webcam-logs img {
-  align-self: center;
-  max-width: 700px;
-  width: 100%;
-  height: auto;
-}
-
-.webcam-image-timestap {
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-  color: blue;
-}
-
 .status-bar {
   box-sizing: border-box;
   position: fixed;
@@ -162,10 +132,4 @@ textarea {
 #status-bar-right {
   float: right;
   color: blue;
-}
-
-#webcam-logs-link {
-  display: none;
-  text-align: center;
-  cursor: pointer;
 }
