@@ -231,6 +231,7 @@ board.on('ready', function () {
   setInterval((bundledStates) => {
     bundledStates.timestamp = Date.now()
     publishToTangle(JSON.stringify(bundledStates))
+    bundledStates = {}
   }, 5000)
 
   const iotaProvider = new IOTA({ provider: 'https://wallet2.iota.town:443' })
