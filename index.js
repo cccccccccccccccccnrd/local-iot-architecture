@@ -121,7 +121,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
-    publishToTangle(JSON.stringify(temperatureState))
+    if (!bundledStates.temperature) bundledStates.temperature = temperatureState
     console.log(JSON.stringify(temperatureState))
 
     humidityState = {
@@ -130,7 +130,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(humidityTopic, JSON.stringify(humidityState))
-    publishToTangle(JSON.stringify(humidityState))
+    if (!bundledStates.humidity) bundledStates.humidity = humidityState
     console.log(JSON.stringify(humidityState))
   })
 
@@ -141,7 +141,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
-    publishToTangle(JSON.stringify(lightIntensityState))
+    if (!bundledStates.lightIntensity) bundledStates.lightIntensity = lightIntensityState
     console.log(JSON.stringify(lightIntensityState))
   })
 
@@ -154,7 +154,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
-    publishToTangle(JSON.stringify(waterTemperatureState))
+    if (!bundledStates.waterTemperature) bundledStates.waterTemperature = waterTemperatureState
     console.log(JSON.stringify(waterTemperatureState))
 
     waterElectricalConductivityState = {
@@ -163,7 +163,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
-    publishToTangle(JSON.stringify(waterElectricalConductivityState))
+    if (!bundledStates.waterElectricalConductivity) bundledStates.waterElectricalConductivity = waterElectricalConductivityState
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
@@ -225,6 +225,14 @@ board.on('ready', function () {
       console.log('invalid topic')
     }
   })
+
+  let bundledStates = {
+    timestamp: new Date.now()
+  }
+
+  setInterval((bundledStates) => {
+    publishToTangle(JSON.stringify(bundledStates))
+  }, 5000)
 
   const iotaProvider = new IOTA({ provider: 'https://wallet2.iota.town:443' })
   const iotaSeed = process.env.IOTA_SEED
