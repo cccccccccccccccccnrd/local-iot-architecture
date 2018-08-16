@@ -267,7 +267,7 @@ connectButton.onclick = function () {
     } else if (topic === iotaMamTopic) {
       iotaMamState = String(message)
       logToTextarea(iotaMamState)
-      console.log(iotaMamState)
+      console.log(String(message))
     }
   })
 }
