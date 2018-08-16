@@ -226,11 +226,10 @@ board.on('ready', function () {
     }
   })
 
-  let bundledStates = {
-    timestamp: new Date.now()
-  }
+  let bundledStates
 
   setInterval((bundledStates) => {
+    bundledStates.timestamp = Date.now()
     publishToTangle(JSON.stringify(bundledStates))
   }, 5000)
 
