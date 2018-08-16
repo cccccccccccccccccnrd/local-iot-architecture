@@ -227,8 +227,9 @@ board.on('ready', function () {
   })
 
   const iotaProvider = new IOTA({ provider: 'https://wallet2.iota.town:443' })
+  const iotaSeed = process.env.IOTA_SEED
 
-  let mamState = MAM.init(iotaProvider)
+  let mamState = MAM.init(iotaProvider, iotaSeed)
 
   async function publishToTangle (data) {
     const message = MAM.create(mamState, data)
