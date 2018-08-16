@@ -5,7 +5,7 @@ const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const express = require('express')
-const MAM = require('../includes/mam.client.js')
+const MAM = require('./includes/mam.client.js')
 const IOTA = require('iota.lib.js')
 
 /* HTTP server setup */
