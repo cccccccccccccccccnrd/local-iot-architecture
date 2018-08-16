@@ -5,6 +5,8 @@ const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const express = require('express')
+const MAM = require('../includes/mam.client.js')
+const IOTA = require('iota.lib.js')
 
 /* HTTP server setup */
 const httpServerSettings = {
@@ -102,8 +104,8 @@ board.on('ready', function () {
   /* MQTT client setup */
   const options = {
     clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
-    username: 'c',
-    password: 'aUoia6vvXPwMomnUmXNKMQiA'
+    username: process.env.MQTT_USERNAME,
+    password: process.env.MQTT_PASSWORD
   }
   const client = mqtt.connect('mqtt://127.0.0.1', options)
 
@@ -119,6 +121,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
+    publishToTangle(JSON.stringify(temperatureState))
     console.log(JSON.stringify(temperatureState))
 
     humidityState = {
@@ -127,6 +130,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(humidityTopic, JSON.stringify(humidityState))
+    publishToTangle(JSON.stringify(humidityState))
     console.log(JSON.stringify(humidityState))
   })
 
@@ -137,6 +141,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
+    publishToTangle(JSON.stringify(lightIntensityState))
     console.log(JSON.stringify(lightIntensityState))
   })
 
@@ -149,6 +154,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
+    publishToTangle(JSON.stringify(waterTemperatureState))
     console.log(JSON.stringify(waterTemperatureState))
 
     waterElectricalConductivityState = {
@@ -157,6 +163,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
+    publishToTangle(JSON.stringify(waterElectricalConductivityState))
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
@@ -218,4 +225,21 @@ board.on('ready', function () {
       console.log('invalid topic')
     }
   })
+
+  const iotaProvider = new IOTA({ provider: 'https://wallet2.iota.town:443' })
+
+  let mamState = MAM.init(iotaProvider)
+
+  async function publishToTangle (data) {
+    const message = MAM.create(mamState, data)
+
+    mamState = message.state
+
+    console.log('Root: ', message.root)
+    console.log('Address: ', message.address)
+    await MAM.attach(message.payload, message.address)
+
+    const resp = await MAM.fetch(message.root, 'public', null, console.log)
+    console.log(resp)
+  }
 })
