@@ -72,6 +72,11 @@ board.on('ready', function () {
     type: 'NC'
   })
 
+  relayOxygenpump = new five.Relay({
+    pin: 5,
+    type: 'NC'
+  })
+
   const additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
     baudRate: 115200
   })
@@ -85,6 +90,9 @@ board.on('ready', function () {
 
   const waterpumpTopic = 'actor/waterpump'
   let waterpumpState = false
+
+  const oxygenpumpTopic = 'actor/oxygenpump'
+  let oxygenpumpState = false
 
   const temperatureTopic = 'sensor/temperature'
   let temperatureState
@@ -200,8 +208,14 @@ board.on('ready', function () {
   setInterval(() => {
     const now = new Date()
 
-    if (now.getHours() === 8 && now.getMinutes() === 0) {
-      // cool
+    if (now.getHours() === 12-2 && now.getMinutes() === 26) {
+      relayOxygenpump.open()
+          console.log('oxygenpump:', oxygenpumpState)
+          setTimeout(() => {
+            oxygenpumpState = !oxygenpumpState
+            relayOxygenpump.close()
+            console.log('oxygenpump:', oxygenpumpState)
+          }, 5 * 60000)
     }
   }, 60000)
 
