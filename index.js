@@ -208,7 +208,7 @@ board.on('ready', function () {
   setInterval(() => {
     const now = new Date()
 
-    if (now.getHours() === 12-2 && now.getMinutes() === 00 || now.getHours() === 18-2 && now.getMinutes() === 00) {
+    if (now.getHours() === 12-2 && now.getMinutes() === 00 || now.getHours() === 18-2 && now.getMinutes() === 30) {
       relayOxygenpump.open()
           console.log('oxygenpump:', oxygenpumpState)
           setTimeout(() => {
