@@ -5,8 +5,8 @@ const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const express = require('express')
-const MAM = require('./includes/mam.client.js')
-const IOTA = require('iota.lib.js')
+//const MAM = require('./includes/mam.client.js')
+//const IOTA = require('iota.lib.js')
 
 /* HTTP server setup */
 const httpServerSettings = {
@@ -26,7 +26,7 @@ const board = new five.Board({
 
 board.on('ready', function () {
 
-  let bundledStates = {}
+/*   let bundledStates = {}
 
   setInterval(() => {
     bundledStates.timestamp = Date.now()
@@ -51,7 +51,7 @@ board.on('ready', function () {
       .then((error) => {
         console.log(error)
       })
-  }
+  } */
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
