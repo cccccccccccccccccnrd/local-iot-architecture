@@ -207,6 +207,7 @@ board.on('ready', function () {
   /* Timed actors handeling */
   setInterval(() => {
     const now = new Date()
+    console.log(now.getHours() + ':' + now.getMinutes())
 
     if ((now.getHours() === 12 && now.getMinutes() === 13) || (now.getHours() === 18 && now.getMinutes() === 00)) {
       relayOxygenpump.open()
