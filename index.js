@@ -5,8 +5,8 @@ const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const express = require('express')
-//const MAM = require('./includes/mam.client.js')
-//const IOTA = require('iota.lib.js')
+const MAM = require('./includes/mam.client.js')
+const IOTA = require('iota.lib.js')
 
 /* HTTP server setup */
 const httpServerSettings = {
@@ -21,12 +21,12 @@ console.log('http server is running on http://localhost:' + httpServerSettings.p
 
 /* Microcontroller and sensor setup */
 const board = new five.Board({
-  port: '/dev/ttyACM1'
+  port: '/dev/ttyACM0'
 })
 
 board.on('ready', function () {
 
-/*   let bundledStates = {}
+  let bundledStates = {}
 
   setInterval(() => {
     bundledStates.timestamp = Date.now()
@@ -51,7 +51,7 @@ board.on('ready', function () {
       .then((error) => {
         console.log(error)
       })
-  } */
+  }
 
   dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
@@ -77,7 +77,7 @@ board.on('ready', function () {
     type: 'NC'
   })
 
-  const additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
+  const additionalArduinoPort = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
   })
   const additionalArduino = additionalArduinoPort.pipe(new Readline())
