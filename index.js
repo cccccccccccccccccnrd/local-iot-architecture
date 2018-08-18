@@ -204,11 +204,11 @@ board.on('ready', function () {
     console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
-  /* Timed MQTT publish handeling */
+  /* Timed actors handeling */
   setInterval(() => {
     const now = new Date()
 
-    if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
+    if ((now.getHours() === 12 && now.getMinutes() === 10) || (now.getHours() === 18 && now.getMinutes() === 00)) {
       relayOxygenpump.open()
           console.log('oxygenpump:', oxygenpumpState)
           setTimeout(() => {
@@ -246,6 +246,7 @@ board.on('ready', function () {
         if (waterpumpState) {
           relayWaterpump.open()
           console.log('waterpump:', waterpumpState)
+
           setTimeout(() => {
             waterpumpState = !waterpumpState
             relayWaterpump.close()
@@ -257,6 +258,7 @@ board.on('ready', function () {
         if (waterpumpState) {
           relayWaterpump.open()
           console.log(`waterpump: ${waterpumpState} open for ${Number(message)}`)
+          
           setTimeout(() => {
             waterpumpState = !waterpumpState
             relayWaterpump.close()
