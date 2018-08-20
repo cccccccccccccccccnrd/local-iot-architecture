@@ -33,7 +33,7 @@ board.on('ready', function () {
     publishToTangle(JSON.stringify(bundledStates))
     client.publish(iotaMamTopic, JSON.stringify(bundledStates))
     console.log(JSON.stringify(bundledStates))
-  }, 5000)
+  }, 60000 * 5)
 
   const iotaProvider = new IOTA({ provider: 'https://field.deviota.com:443' })
   const iotaSeed = process.env.IOTA_SEED
