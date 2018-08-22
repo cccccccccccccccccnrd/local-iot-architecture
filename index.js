@@ -159,7 +159,6 @@ board.on('ready', function () {
     }
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
     bundledStates.temperature = temperatureState
-    console.log(JSON.stringify(temperatureState))
 
     humidityState = {
       'type': 'humidity',
@@ -168,7 +167,6 @@ board.on('ready', function () {
     }
     client.publish(humidityTopic, JSON.stringify(humidityState))
     bundledStates.humidity = humidityState
-    console.log(JSON.stringify(humidityState))
   })
 
   photocell.on('data', function () {
@@ -179,7 +177,6 @@ board.on('ready', function () {
     }
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
     bundledStates.lightIntensity = lightIntensityState
-    console.log(JSON.stringify(lightIntensityState))
   })
 
   additionalArduino.on('data', function (data) {
@@ -192,7 +189,6 @@ board.on('ready', function () {
     }
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
     bundledStates.waterTemperature = waterTemperatureState
-    console.log(JSON.stringify(waterTemperatureState))
 
     waterElectricalConductivityState = {
       'type': 'electrical-conductivity',
@@ -201,7 +197,6 @@ board.on('ready', function () {
     }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
     bundledStates.waterElectricalConductivity = waterElectricalConductivityState
-    console.log(JSON.stringify(waterElectricalConductivityState))
   })
 
   /* Timed actors handeling */
