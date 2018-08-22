@@ -30,10 +30,10 @@ board.on('ready', function () {
 
   setInterval(() => {
     bundledStates.timestamp = Date.now()
-    publishToTangle(JSON.stringify(bundledStates))
+    // publishToTangle(JSON.stringify(bundledStates))
     client.publish(iotaMamTopic, JSON.stringify(bundledStates))
     console.log(JSON.stringify(bundledStates))
-  }, 60000 * 5)
+  }, 60000 * 1)
 
   const iotaProvider = new IOTA({ provider: 'https://field.deviota.com:443' })
   const iotaSeed = process.env.IOTA_SEED
