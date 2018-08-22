@@ -114,7 +114,7 @@ board.on('ready', function () {
     http: {
       port: 3001,
       bundle: true,
-      static:  __dirname + './'
+      static:  __dirname
     }
   }
   const moscaServer = new mosca.Server(moscaServerSettings)
