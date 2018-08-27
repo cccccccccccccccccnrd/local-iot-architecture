@@ -26,13 +26,17 @@ const board = new five.Board({
 
 board.on('ready', function () {
 
-  let bundledStates = {}
+  let latestReadings = {}
 
   setInterval(() => {
-    bundledStates.timestamp = Date.now()
-    // publishToTangle(JSON.stringify(bundledStates))
-    client.publish(iotaMamTopic, JSON.stringify(bundledStates))
-    console.log(JSON.stringify(bundledStates))
+    let bundledReadings = {}
+    bundledReadings.readings = Object.values(latestReadings)
+    bundledReadings.image = 'base64-string'
+    bundledReadings.timestamp = Date.now()
+    
+    // publishToTangle(JSON.stringify(latestReadings))
+    client.publish(iotaMamTopic, JSON.stringify(bundledReadings))
+    console.log(JSON.stringify(bundledReadings))
   }, 60000 * 1)
 
   const iotaProvider = new IOTA({ provider: 'https://field.deviota.com:443' })
@@ -158,7 +162,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(temperatureTopic, JSON.stringify(temperatureState))
-    bundledStates.temperature = temperatureState
+    latestReadings.temperature = temperatureState
 
     humidityState = {
       'type': 'humidity',
@@ -166,7 +170,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(humidityTopic, JSON.stringify(humidityState))
-    bundledStates.humidity = humidityState
+    latestReadings.humidity = humidityState
   })
 
   photocell.on('data', function () {
@@ -176,7 +180,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(lightIntensityTopic, JSON.stringify(lightIntensityState))
-    bundledStates.lightIntensity = lightIntensityState
+    latestReadings.lightIntensity = lightIntensityState
   })
 
   additionalArduino.on('data', function (data) {
@@ -188,7 +192,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterTemperatureTopic, JSON.stringify(waterTemperatureState))
-    bundledStates.waterTemperature = waterTemperatureState
+    latestReadings.waterTemperature = waterTemperatureState
 
     waterElectricalConductivityState = {
       'type': 'electrical-conductivity',
@@ -196,7 +200,7 @@ board.on('ready', function () {
       'timestamp': Date.now()
     }
     client.publish(waterElectricalConductivityTopic, JSON.stringify(waterElectricalConductivityState))
-    bundledStates.waterElectricalConductivity = waterElectricalConductivityState
+    latestReadings.waterElectricalConductivity = waterElectricalConductivityState
   })
 
   /* Timed actors handeling */
