@@ -202,14 +202,15 @@ board.on('ready', function () {
   setInterval(() => {
     const now = new Date()
 
-    if ((now.getHours() === 12-2 && now.getMinutes() === 45) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
+    if ((now.getHours() === 12-2 && now.getMinutes() === 48) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
+      oxygenpumpState = !oxygenpumpState
       relayOxygenpump.open()
+        console.log('oxygenpump:', oxygenpumpState)
+        setTimeout(() => {
+          oxygenpumpState = !oxygenpumpState
+          relayOxygenpump.close()
           console.log('oxygenpump:', oxygenpumpState)
-          setTimeout(() => {
-            oxygenpumpState = !oxygenpumpState
-            relayOxygenpump.close()
-            console.log('oxygenpump:', oxygenpumpState)
-          }, 5 * 60000)
+        }, 5 * 60000)
     }
   }, 60000)
 
