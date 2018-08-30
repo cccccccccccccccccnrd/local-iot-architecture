@@ -33,7 +33,7 @@ board.on('ready', function () {
     bundledReadings.readings = Object.values(latestReadings)
     bundledReadings.image = 'base64-string'
     bundledReadings.timestamp = Date.now()
-    
+
     // publishToTangle(JSON.stringify(latestReadings))
     client.publish(iotaMamTopic, JSON.stringify(bundledReadings))
     console.log(JSON.stringify(bundledReadings))
@@ -66,18 +66,13 @@ board.on('ready', function () {
     freq: 2000
   })
 
-  relayLight = new five.Relay({
-    pin: 7,
-    type: 'NC'
-  })
-
   relayWaterpump = new five.Relay({
     pin: 6,
     type: 'NC'
   })
 
   relayOxygenpump = new five.Relay({
-    pin: 5,
+    pin: 7,
     type: 'NC'
   })
 
@@ -118,7 +113,7 @@ board.on('ready', function () {
     http: {
       port: 3001,
       bundle: true,
-      static:  __dirname
+      static: __dirname
     }
   }
   const moscaServer = new mosca.Server(moscaServerSettings)
@@ -207,7 +202,7 @@ board.on('ready', function () {
   setInterval(() => {
     const now = new Date()
 
-    if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
+    if ((now.getHours() === 12-2 && now.getMinutes() === 45) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
       relayOxygenpump.open()
           console.log('oxygenpump:', oxygenpumpState)
           setTimeout(() => {
