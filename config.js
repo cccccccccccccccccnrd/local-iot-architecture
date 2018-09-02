@@ -58,6 +58,7 @@ let waterElectricalConductivityState = 000
 
 module.exports = {
   init,
+  get,
   board,
   additionalArduino,
   devices,
