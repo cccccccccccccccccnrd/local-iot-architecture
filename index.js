@@ -9,6 +9,10 @@ mqttServer.serve(3001)
 setup.board.on('ready', function () {
   setup.init()
 
+  setup.devices.dht11 = new five.Multi({
+    controller: 'DHT11_I2C_NANO_BACKPACK'
+  })
+
   let latestReadings = {}
 
   setInterval(() => {
