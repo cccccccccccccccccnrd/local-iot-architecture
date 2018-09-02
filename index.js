@@ -2,17 +2,13 @@ const setup = require('./config')
 const httpServer = require('./http-server')
 const mqttServer = require('./mqtt-server')
 const iotaMam = require('./iota-mam')
-const five = require('johnny-five')
 
 httpServer.serve(3000)
 mqttServer.serve(3001)
 
 setup.board.on('ready', function () {
+  setTimeout(() => {
   setup.init()
-
-  setup.devices.dht11 = new five.Multi({
-    controller: 'DHT11_I2C_NANO_BACKPACK'
-  })
 
   let latestReadings = {}
 
@@ -121,4 +117,5 @@ setup.board.on('ready', function () {
       }
     } else console.log('invalid topic')
   })
+}, 5000)
 })
