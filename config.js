@@ -18,6 +18,8 @@ function init () {
     pin: 7,
     type: 'NC'
   })
+
+  console.log(devices.dht11.isReady)
 }
 
 const board = new five.Board({
