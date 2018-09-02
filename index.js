@@ -8,7 +8,6 @@ mqttServer.serve(3001)
 
 setup.board.on('ready', function () {
   setup.init()
-  setTimeout(() => {
 
   let latestReadings = {}
 
@@ -117,5 +116,4 @@ setup.board.on('ready', function () {
       }
     } else console.log('invalid topic')
   })
-}, 5000)
 })
