@@ -21,9 +21,7 @@ function init () {
 }
 
 function get (device) {
-  if (device == 'dht11') {
-    return devices.dht11
-  }
+  return devices.device
 }
 
 const board = new five.Board({
