@@ -9,6 +9,7 @@ mqttServer.serve(3001)
 setup.board.on('ready', function () {
   console.log(setup.devices)
   setup.init()
+  const { devices } = require('./config')
 
   let latestReadings = {}
 
@@ -25,7 +26,7 @@ setup.board.on('ready', function () {
 
   /* MQTT publish handeling */
   console.log(setup.devices.dht11)
-  setup.devices.dht11.on('change', function () {
+  devices.dht11.on('change', function () {
     setup.temperatureState = {
       'type': 'temperature',
       'value': this.thermometer.celsius,
