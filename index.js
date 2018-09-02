@@ -18,13 +18,13 @@ setup.board.on('ready', function () {
     bundledReadings.image = 'base64-string'
     bundledReadings.timestamp = Date.now()
 
-    // iotaMam.publishToTangle(JSON.stringify(latestReadings))
-    mqttServer.client.publish(iotaMamTopic, JSON.stringify(bundledReadings))
+    // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
+    mqttServer.client.publish(setup.iotaMamTopic, JSON.stringify(bundledReadings))
     console.log(JSON.stringify(bundledReadings))
   }, 60000 * 1)
 
   /* MQTT publish handeling */
-  console.log(setup.devices)
+  console.log(setup.devices.dht11)
   setup.devices.dht11.on('change', function () {
     setup.temperatureState = {
       'type': 'temperature',
@@ -94,6 +94,7 @@ setup.board.on('ready', function () {
     if (topic === setup.oxygenpumpTopic) {
       if (message == 'toggle') {
         setup.oxygenpumpState = !setup.oxygenpumpState
+
         if (setup.oxygenpumpState) {
           setup.relayOxygenpump.open()
           console.log('oxygenpump:', setup.oxygenpumpState)
@@ -103,6 +104,7 @@ setup.board.on('ready', function () {
         }
       } else if (Number.isInteger(Number(message))) {
         setup.oxygenpumpState = !setup.oxygenpumpState
+
         if (setup.oxygenpumpState) {
           setup.relayOxygenpump.open()
           console.log(`oxygenpump: ${setup.oxygenpumpState} open for ${Number(message)}`)
