@@ -18,6 +18,8 @@ function init () {
     pin: 7,
     type: 'NC'
   })
+
+  return dht11
 }
 
 const board = new five.Board({
