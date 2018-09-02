@@ -64,7 +64,6 @@ module.exports = {
   init,
   get,
   board,
-  additionalArduino,
   devices,
   iotaMamTopic,
   oxygenpumpTopic,
