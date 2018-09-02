@@ -46,8 +46,15 @@ function serve (port) {
   })
 }
 
+function get (clientOrServer) {
+  if (clientOrServer == 'server') return server
+  if (clientOrServer == 'client') return client
+  else {
+    throw Error(`Could not find ${clientOrServer}`)
+  }
+}
+
 module.exports = {
   serve,
-  server,
-  client
+  get
 }

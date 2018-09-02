@@ -64,7 +64,6 @@ module.exports = {
   init,
   get,
   board,
-  devices,
   iotaMamTopic,
   oxygenpumpTopic,
   oxygenpumpState,
