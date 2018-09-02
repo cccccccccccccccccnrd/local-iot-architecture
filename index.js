@@ -2,6 +2,7 @@ const setup = require('./config')
 const httpServer = require('./http-server')
 const mqttServer = require('./mqtt-server')
 const iotaMam = require('./iota-mam')
+const five = require('johnny-five')
 
 httpServer.serve(3000)
 mqttServer.serve(3001)
