@@ -8,6 +8,8 @@ mqttServer.serve(3001)
 
 setup.board.on('ready', function () {
 
+  setup.init()
+
   let latestReadings = {}
 
   setInterval(() => {
