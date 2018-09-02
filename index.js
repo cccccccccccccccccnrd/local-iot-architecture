@@ -6,12 +6,8 @@ const iotaMam = require('./iota-mam')
 httpServer.serve(3000)
 mqttServer.serve(3001)
 
-console.log(setup.dht11)
-
 setup.board.on('ready', function () {
   setup.init()
-
-  console.log(setup.init())
 
   let latestReadings = {}
 
