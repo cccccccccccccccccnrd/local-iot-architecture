@@ -4,7 +4,11 @@ const Readline = require('@serialport/parser-readline')
 
 let devices = {}
 
-function init () {
+const board = new five.Board({
+  port: '/dev/ttyACM1'
+})
+
+board.on('ready', function () {
   devices.dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
@@ -18,10 +22,6 @@ function init () {
     pin: 7,
     type: 'NC'
   })
-}
-
-const board = new five.Board({
-  port: '/dev/ttyACM1'
 })
 
 const additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
@@ -51,10 +51,8 @@ const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
 let waterElectricalConductivityState = 000
 
 module.exports = {
-  init,
-  board,
-  additionalArduino,
   devices,
+  additionalArduino,
   iotaMamTopic,
   oxygenpumpTopic,
   oxygenpumpState,
