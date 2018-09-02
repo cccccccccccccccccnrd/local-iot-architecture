@@ -7,8 +7,8 @@ httpServer.serve(3000)
 mqttServer.serve(3001)
 
 setup.board.on('ready', function () {
-  setTimeout(() => {
   setup.init()
+  setTimeout(() => {
 
   let latestReadings = {}
 
