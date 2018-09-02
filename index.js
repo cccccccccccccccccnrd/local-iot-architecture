@@ -6,108 +6,112 @@ const iotaMam = require('./iota-mam')
 httpServer.serve(3000)
 mqttServer.serve(3001)
 
-let latestReadings = {}
+setup.board.on('ready', function () {
+  const devices = setup.init()
 
-setInterval(() => {
-  let bundledReadings = {}
-  bundledReadings.readings = Object.values(latestReadings)
-  bundledReadings.image = 'base64-string'
-  bundledReadings.timestamp = Date.now()
+  let latestReadings = {}
 
-  // iotaMam.publishToTangle(JSON.stringify(latestReadings))
-  mqttServer.client.publish(iotaMamTopic, JSON.stringify(bundledReadings))
-  console.log(JSON.stringify(bundledReadings))
-}, 60000 * 1)
+  setInterval(() => {
+    let bundledReadings = {}
+    bundledReadings.readings = Object.values(latestReadings)
+    bundledReadings.image = 'base64-string'
+    bundledReadings.timestamp = Date.now()
 
-/* MQTT publish handeling */
-setup.devices.dht11.on('change', function () {
-  setup.temperatureState = {
-    'type': 'temperature',
-    'value': this.thermometer.celsius,
-    'timestamp': Date.now()
-  }
-  mqttServer.client.publish(setup.temperatureTopic, JSON.stringify(setup.temperatureState))
-  latestReadings.temperature = setup.temperatureState
+    // iotaMam.publishToTangle(JSON.stringify(latestReadings))
+    mqttServer.client.publish(iotaMamTopic, JSON.stringify(bundledReadings))
+    console.log(JSON.stringify(bundledReadings))
+  }, 60000 * 1)
 
-  setup.humidityState = {
-    'type': 'humidity',
-    'value': this.hygrometer.relativeHumidity,
-    'timestamp': Date.now()
-  }
-  mqttServer.client.publish(setup.humidityTopic, JSON.stringify(setup.humidityState))
-  latestReadings.humidity = setup.humidityState
-})
+  /* MQTT publish handeling */
+  devices.dht11.on('change', function () {
+    setup.temperatureState = {
+      'type': 'temperature',
+      'value': this.thermometer.celsius,
+      'timestamp': Date.now()
+    }
+    mqttServer.client.publish(setup.temperatureTopic, JSON.stringify(setup.temperatureState))
+    latestReadings.temperature = setup.temperatureState
 
-setup.photocell.on('data', function () {
-  setup.lightIntensityState = {
-    'type': 'light-intensity',
-    'value': Math.floor(100 - this.level * 100),
-    'timestamp': Date.now()
-  }
-  mqttServer.client.publish(setup.lightIntensityTopic, JSON.stringify(setup.lightIntensityState))
-  latestReadings.lightIntensity = setup.lightIntensityState
-})
+    setup.humidityState = {
+      'type': 'humidity',
+      'value': this.hygrometer.relativeHumidity,
+      'timestamp': Date.now()
+    }
+    mqttServer.client.publish(setup.humidityTopic, JSON.stringify(setup.humidityState))
+    latestReadings.humidity = setup.humidityState
+  })
 
-setup.additionalArduino.on('data', function (data) {
-  if (!data.startsWith('{')) return
+  setup.photocell.on('data', function () {
+    setup.lightIntensityState = {
+      'type': 'light-intensity',
+      'value': Math.floor(100 - this.level * 100),
+      'timestamp': Date.now()
+    }
+    mqttServer.client.publish(setup.lightIntensityTopic, JSON.stringify(setup.lightIntensityState))
+    latestReadings.lightIntensity = setup.lightIntensityState
+  })
 
-  setup.waterTemperatureState = {
-    'type': 'water-temperature',
-    'value': Math.floor(JSON.parse(data.toString()).temperature),
-    'timestamp': Date.now()
-  }
-  mqttServer.client.publish(setup.waterTemperatureTopic, JSON.stringify(setup.waterTemperatureState))
-  latestReadings.waterTemperature = setup.waterTemperatureState
+  setup.additionalArduino.on('data', function (data) {
+    if (!data.startsWith('{')) return
 
-  setup.waterElectricalConductivityState = {
-    'type': 'electrical-conductivity',
-    'value': Math.floor(JSON.parse(data.toString()).ec),
-    'timestamp': Date.now()
-  }
-  mqttServer.client.publish(setup.waterElectricalConductivityTopic, JSON.stringify(setup.waterElectricalConductivityState))
-  latestReadings.waterElectricalConductivity = setup.waterElectricalConductivityState
-})
+    setup.waterTemperatureState = {
+      'type': 'water-temperature',
+      'value': Math.floor(JSON.parse(data.toString()).temperature),
+      'timestamp': Date.now()
+    }
+    mqttServer.client.publish(setup.waterTemperatureTopic, JSON.stringify(setup.waterTemperatureState))
+    latestReadings.waterTemperature = setup.waterTemperatureState
 
-/* Timed actors handeling */
-setInterval(() => {
-  const now = new Date()
+    setup.waterElectricalConductivityState = {
+      'type': 'electrical-conductivity',
+      'value': Math.floor(JSON.parse(data.toString()).ec),
+      'timestamp': Date.now()
+    }
+    mqttServer.client.publish(setup.waterElectricalConductivityTopic, JSON.stringify(setup.waterElectricalConductivityState))
+    latestReadings.waterElectricalConductivity = setup.waterElectricalConductivityState
+  })
 
-  if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
-    setup.oxygenpumpState = !setup.oxygenpumpState
-    setup.relayOxygenpump.open()
-      console.log('oxygenpump:', setup.oxygenpumpState)
-      setTimeout(() => {
-        setup.oxygenpumpState = !setup.oxygenpumpState
-        setup.relayOxygenpump.close()
-        console.log('oxygenpump:', setup.oxygenpumpState)
-      }, 5 * 60000)
-  }
-}, 60000)
+  /* Timed actors handeling */
+  setInterval(() => {
+    const now = new Date()
 
-/* MQTT subscribe handeling */
-mqttServer.client.on('message', function (topic, message) {
-  if (topic === setup.oxygenpumpTopic) {
-    if (message == 'toggle') {
+    if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
       setup.oxygenpumpState = !setup.oxygenpumpState
-      if (setup.oxygenpumpState) {
-        setup.relayOxygenpump.open()
+      setup.relayOxygenpump.open()
         console.log('oxygenpump:', setup.oxygenpumpState)
-      } else {
-        setup.relayOxygenpump.close()
-        console.log('oxygenpump:', setup.oxygenpumpState)
-      }
-    } else if (Number.isInteger(Number(message))) {
-      setup.oxygenpumpState = !setup.oxygenpumpState
-      if (setup.oxygenpumpState) {
-        setup.relayOxygenpump.open()
-        console.log(`oxygenpump: ${setup.oxygenpumpState} open for ${Number(message)}`)
-        
         setTimeout(() => {
           setup.oxygenpumpState = !setup.oxygenpumpState
           setup.relayOxygenpump.close()
-          console.log(`oxygenpump: ${setup.oxygenpumpState}`)
-        }, String(message))
-      }
+          console.log('oxygenpump:', setup.oxygenpumpState)
+        }, 5 * 60000)
     }
-  } else console.log('invalid topic')
+  }, 60000)
+
+  /* MQTT subscribe handeling */
+  mqttServer.client.on('message', function (topic, message) {
+    if (topic === setup.oxygenpumpTopic) {
+      if (message == 'toggle') {
+        setup.oxygenpumpState = !setup.oxygenpumpState
+        if (setup.oxygenpumpState) {
+          setup.relayOxygenpump.open()
+          console.log('oxygenpump:', setup.oxygenpumpState)
+        } else {
+          setup.relayOxygenpump.close()
+          console.log('oxygenpump:', setup.oxygenpumpState)
+        }
+      } else if (Number.isInteger(Number(message))) {
+        setup.oxygenpumpState = !setup.oxygenpumpState
+        if (setup.oxygenpumpState) {
+          setup.relayOxygenpump.open()
+          console.log(`oxygenpump: ${setup.oxygenpumpState} open for ${Number(message)}`)
+          
+          setTimeout(() => {
+            setup.oxygenpumpState = !setup.oxygenpumpState
+            setup.relayOxygenpump.close()
+            console.log(`oxygenpump: ${setup.oxygenpumpState}`)
+          }, String(message))
+        }
+      }
+    } else console.log('invalid topic')
+  })
 })
