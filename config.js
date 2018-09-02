@@ -18,8 +18,6 @@ function init () {
     pin: 7,
     type: 'NC'
   })
-
-  return devices
 }
 
 const board = new five.Board({
