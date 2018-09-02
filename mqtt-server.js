@@ -2,6 +2,8 @@ require('dotenv').config()
 const mosca = require('mosca')
 const mqtt = require('mqtt')
 
+let server, client
+
 function serve (port) {
   const settings = {
     http: {
@@ -10,7 +12,7 @@ function serve (port) {
       static: __dirname
     }
   }
-  const server = new mosca.Server(settings)
+  server = new mosca.Server(settings)
 
   let authenticate = function (client, username, password, callback) {
     let authorized = (username === process.env.MQTT_USERNAME && String(password) === process.env.MQTT_PASSWORD)
@@ -37,18 +39,15 @@ function serve (port) {
     username: process.env.MQTT_USERNAME,
     password: process.env.MQTT_PASSWORD
   }
-  const client = mqtt.connect('mqtt://127.0.0.1', clientSettings)
+  client = mqtt.connect('mqtt://127.0.0.1', clientSettings)
   
   client.on('connect', function () {
     client.subscribe('actor/#')
   })
-
-  module.exports = {
-    server,
-    client
-  }
 }
 
 module.exports = {
-  serve
+  serve,
+  server,
+  client
 }

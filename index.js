@@ -6,6 +6,8 @@ const iotaMam = require('./iota-mam')
 httpServer.serve(3000)
 mqttServer.serve(3001)
 
+console.log(setup.dht11)
+
 setup.board.on('ready', function () {
 
   setup.init()
@@ -24,8 +26,7 @@ setup.board.on('ready', function () {
   }, 60000 * 1)
 
   /* MQTT publish handeling */
-  console.log(setup.dht11)
-  setup.init.dht11.on('change', function () {
+  setup.dht11.on('change', function () {
     setup.temperatureState = {
       'type': 'temperature',
       'value': this.thermometer.celsius,

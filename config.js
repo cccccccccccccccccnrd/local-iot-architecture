@@ -2,26 +2,22 @@ const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 
+let dht11, photocell, relayOxygenpump
+
 function init () {
-  const dht11 = new five.Multi({
+  dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
   
-  const photocell = new five.Light({
+  photocell = new five.Light({
     pin: 'A3',
     freq: 2000
   })
   
-  const relayOxygenpump = new five.Relay({
+  relayOxygenpump = new five.Relay({
     pin: 7,
     type: 'NC'
   })
-
-  module.exports = {
-    dht11,
-    photocell,
-    relayOxygenpump
-  }
 }
 
 const board = new five.Board({
@@ -57,8 +53,10 @@ let waterElectricalConductivityState = 000
 module.exports = {
   init,
   board,
-  additionalArduinoPort,
   additionalArduino,
+  dht11,
+  photocell,
+  relayOxygenpump,
   iotaMamTopic,
   oxygenpumpTopic,
   oxygenpumpState,
