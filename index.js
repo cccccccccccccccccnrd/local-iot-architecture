@@ -25,7 +25,7 @@ setup.board.on('ready', function () {
 
   /* MQTT publish handeling */
   console.log(setup.dht11)
-  setup.dht11.on('change', function () {
+  setup.init.dht11.on('change', function () {
     setup.temperatureState = {
       'type': 'temperature',
       'value': this.thermometer.celsius,
