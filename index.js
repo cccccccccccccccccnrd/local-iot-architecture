@@ -11,6 +11,23 @@ setup.board.on('ready', function () {
 
   let latestReadings = {}
 
+  /* Timed actors */
+  setInterval(() => {
+    const now = new Date()
+
+    if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
+      setup.oxygenpumpState = !setup.oxygenpumpState
+      setup.get('relayOxygenpump').open()
+        console.log('oxygenpump:', setup.oxygenpumpState)
+        setTimeout(() => {
+          setup.oxygenpumpState = !setup.oxygenpumpState
+          setup.get('relayOxygenpump').close()
+          console.log('oxygenpump:', setup.oxygenpumpState)
+        }, 5 * 60000)
+    }
+  }, 60000)
+
+  /* Interval MQTT publish */
   setInterval(() => {
     let bundledReadings = {}
     bundledReadings.readings = Object.values(latestReadings)
@@ -22,7 +39,7 @@ setup.board.on('ready', function () {
     console.log(JSON.stringify(bundledReadings))
   }, 60000 * 1)
 
-  /* MQTT publish handeling */
+  /* MQTT publish */
   setup.get('dht11').on('change', function () {
     setup.temperatureState = {
       'type': 'temperature',
@@ -71,23 +88,7 @@ setup.board.on('ready', function () {
     latestReadings.waterElectricalConductivity = setup.waterElectricalConductivityState
   })
 
-  /* Timed actors handeling */
-  setInterval(() => {
-    const now = new Date()
-
-    if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
-      setup.oxygenpumpState = !setup.oxygenpumpState
-      setup.get('relayOxygenpump').open()
-        console.log('oxygenpump:', setup.oxygenpumpState)
-        setTimeout(() => {
-          setup.oxygenpumpState = !setup.oxygenpumpState
-          setup.get('relayOxygenpump').close()
-          console.log('oxygenpump:', setup.oxygenpumpState)
-        }, 5 * 60000)
-    }
-  }, 60000)
-
-  /* MQTT subscribe handeling */
+  /* MQTT subscribe */
   mqttServer.get('client').on('message', function (topic, message) {
     if (topic === setup.oxygenpumpTopic) {
       if (message == 'toggle') {
