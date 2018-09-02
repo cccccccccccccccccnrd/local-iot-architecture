@@ -24,7 +24,7 @@ function serve (port) {
   
   server.on('ready', function () {
     server.authenticate = authenticate
-    console.log('mqtt-server is running on port', moscaServerSettings.http.port)
+    console.log('mqtt-server is running on port', settings.http.port)
   })
   
   server.on('clientConnected', function (client) {
