@@ -41,7 +41,7 @@ setup.board.on('ready', function () {
     latestReadings.humidity = setup.humidityState
   })
 
-  setup.photocell.on('data', function () {
+  setup.get('photocell').on('data', function () {
     setup.lightIntensityState = {
       'type': 'light-intensity',
       'value': Math.floor(100 - this.level * 100),
@@ -51,7 +51,7 @@ setup.board.on('ready', function () {
     latestReadings.lightIntensity = setup.lightIntensityState
   })
 
-  setup.additionalArduino.on('data', function (data) {
+  setup.get('additionalArduino').on('data', function (data) {
     if (!data.startsWith('{')) return
 
     setup.waterTemperatureState = {
@@ -77,11 +77,11 @@ setup.board.on('ready', function () {
 
     if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
       setup.oxygenpumpState = !setup.oxygenpumpState
-      setup.relayOxygenpump.open()
+      setup.get('relayOxygenpump').open()
         console.log('oxygenpump:', setup.oxygenpumpState)
         setTimeout(() => {
           setup.oxygenpumpState = !setup.oxygenpumpState
-          setup.relayOxygenpump.close()
+          setup.get('relayOxygenpump').close()
           console.log('oxygenpump:', setup.oxygenpumpState)
         }, 5 * 60000)
     }
@@ -94,22 +94,22 @@ setup.board.on('ready', function () {
         setup.oxygenpumpState = !setup.oxygenpumpState
 
         if (setup.oxygenpumpState) {
-          setup.relayOxygenpump.open()
+          setup.get('relayOxygenpump').open()
           console.log('oxygenpump:', setup.oxygenpumpState)
         } else {
-          setup.relayOxygenpump.close()
+          setup.get('relayOxygenpump').close()
           console.log('oxygenpump:', setup.oxygenpumpState)
         }
       } else if (Number.isInteger(Number(message))) {
         setup.oxygenpumpState = !setup.oxygenpumpState
 
         if (setup.oxygenpumpState) {
-          setup.relayOxygenpump.open()
+          setup.get('relayOxygenpump').open()
           console.log(`oxygenpump: ${setup.oxygenpumpState} open for ${Number(message)}`)
           
           setTimeout(() => {
             setup.oxygenpumpState = !setup.oxygenpumpState
-            setup.relayOxygenpump.close()
+            setup.get('relayOxygenpump').close()
             console.log(`oxygenpump: ${setup.oxygenpumpState}`)
           }, String(message))
         }
