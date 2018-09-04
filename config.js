@@ -9,6 +9,9 @@ const iotaMamTopic = 'utils/iota-mam'
 const oxygenpumpTopic = 'actor/oxygenpump'
 let oxygenpumpState = false
 
+const waterpumpTopic = 'actor/waterpump'
+let waterpumpState = false
+
 const temperatureTopic = 'sensor/temperature'
 let temperatureState = 000
 
@@ -47,6 +50,11 @@ function init () {
     type: 'NC'
   })
 
+  devices.relayWaterpump = new five.Relay({
+    pin: 6,
+    type: 'NC'
+  })
+
   devices.additionalArduino = additionalArduinoPort.pipe(new Readline())
 }
 
@@ -54,6 +62,7 @@ function get (device) {
   if (device == 'dht11') return devices.dht11
   if (device == 'photocell') return devices.photocell
   if (device == 'relayOxygenpump') return devices.relayOxygenpump
+  if (device == 'relayWaterpump') return devices.relayWaterpump
   if (device == 'additionalArduino') return devices.additionalArduino
   else {
     throw Error(`Could not find ${device}`)
@@ -67,6 +76,8 @@ module.exports = {
   iotaMamTopic,
   oxygenpumpTopic,
   oxygenpumpState,
+  waterpumpTopic,
+  waterpumpState,
   temperatureTopic,
   temperatureState,
   humidityTopic,

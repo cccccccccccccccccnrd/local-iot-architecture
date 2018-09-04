@@ -16,16 +16,31 @@ setup.board.on('ready', function () {
   setInterval(() => {
     const now = new Date()
 
-    if ((now.getHours() === 12-2 && now.getMinutes() === 00) || (now.getHours() === 18-2 && now.getMinutes() === 00)) {
+    if ((now.getHours() === 9-2 && now.getMinutes() === 55) ||
+        (now.getHours() === 15-2 && now.getMinutes() === 55) ||
+        (now.getHours() === 21-2 && now.getMinutes() === 55)) {
       setup.oxygenpumpState = !setup.oxygenpumpState
       setup.get('relayOxygenpump').open()
+      console.log('oxygenpump:', setup.oxygenpumpState)
+      setTimeout(() => {
+        setup.oxygenpumpState = !setup.oxygenpumpState
+        setup.get('relayOxygenpump').close()
         console.log('oxygenpump:', setup.oxygenpumpState)
-        setTimeout(() => {
-          setup.oxygenpumpState = !setup.oxygenpumpState
-          setup.get('relayOxygenpump').close()
-          console.log('oxygenpump:', setup.oxygenpumpState)
-        }, 5 * 60000)
+      }, 5 * 60000)
     }
+
+    if ((now.getHours() === 10-2 && now.getMinutes() === 00) ||
+        (now.getHours() === 16-2 && now.getMinutes() === 00) ||
+        (now.getHours() === 22-2 && now.getMinutes() === 00)) {
+      setup.waterpumpState = !setup.waterpumpState
+      setup.get('relayWaterpump').open()
+      console.log('waterpump:', setup.waterpumpState)
+      setTimeout(() => {
+        setup.waterpumpState = !setup.waterpumpState
+        setup.get('relayWaterpump').close()
+        console.log('waterpump:', setup.waterpumpState)
+      }, 1 * 60000)
+}
   }, 60000)
 
   /* Interval MQTT publish */
@@ -114,6 +129,21 @@ setup.board.on('ready', function () {
             setup.get('relayOxygenpump').close()
             console.log(`oxygenpump: ${setup.oxygenpumpState}`)
           }, String(message))
+        }
+      }
+    } else if (topic === setup.waterpumpTopic) {
+      if (message == 'flushlol') {
+        setup.waterpumpState = !setup.waterpumpState
+
+        if (setup.waterpumpState) {
+          setup.get('relayWaterpump').open()
+          console.log(`waterpump got flushed lol: ${setup.waterpumpState}`)
+          
+          setTimeout(() => {
+            setup.waterpumpState = !setup.waterpumpState
+            setup.get('relayWaterpump').close()
+            console.log(`waterpump: ${setup.waterpumpState}`)
+          }, 1 * 60000)
         }
       }
     } else console.log('invalid topic')
