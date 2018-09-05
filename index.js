@@ -2,7 +2,7 @@ const chalk = require('chalk')
 const setup = require('./config')
 const httpServer = require('./http-server')
 const mqttServer = require('./mqtt-server')
-const iotaMam = require('./iota-mam')
+// const iotaMam = require('./iota-mam')
 
 httpServer.serve(3000)
 mqttServer.serve(3001)
