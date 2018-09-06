@@ -1,4 +1,3 @@
-const chalk = require('chalk')
 const setup = require('./config')
 const httpServer = require('./http-server')
 const mqttServer = require('./mqtt-server')
@@ -52,7 +51,7 @@ setup.board.on('ready', function () {
 
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
     mqttServer.get('client').publish(setup.iotaMamTopic, JSON.stringify(bundledReadings))
-    console.log(`READINGS / ${bundledReadings.timestamp}: ${chalk.inverse(JSON.stringify(bundledReadings))}`)
+    console.log(JSON.stringify(bundledReadings))
   }, 60000 * 1)
 
   /* MQTT publish */
