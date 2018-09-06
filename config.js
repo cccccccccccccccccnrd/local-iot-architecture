@@ -82,7 +82,6 @@ module.exports = {
   init,
   get,
   board,
-  camera,
   iotaMamTopic,
   oxygenpumpTopic,
   oxygenpumpState,
