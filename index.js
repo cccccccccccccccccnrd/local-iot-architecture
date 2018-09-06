@@ -44,7 +44,7 @@ setup.board.on('ready', function () {
       }, 1 * 60000)
     }
 
-    if ((now.getHours() === 19 && now.getMinutes() === 6) ||
+    if ((now.getHours() === 10 && now.getMinutes() === 00) ||
         (now.getHours() === 22 && now.getMinutes() === 00)) {
       const timestamp = Date.now()
 
