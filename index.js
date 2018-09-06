@@ -11,9 +11,8 @@ setup.board.on('ready', function () {
 
   const now = new Date()
 
-  setup.get('camera')
-    .set('output', `${__dirname}/public/logs/${now}.jpg`)
-    .snap()
+  setup.get('camera').set('output', `${__dirname}/public/logs/${now}.jpg`)
+  setup.get('camera').snap()
     .then(result => {
       console.log(result)
     })
