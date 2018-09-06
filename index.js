@@ -1,3 +1,4 @@
+const fs = require('fs')
 const setup = require('./config')
 const httpServer = require('./http-server')
 const mqttServer = require('./mqtt-server')
@@ -8,15 +9,6 @@ mqttServer.serve(3001)
 
 setup.board.on('ready', function () {
   setup.init()
-
-  setup.get('camera').set('output', `${__dirname}/public/logs/${Date.now()}.jpg`)
-  setup.get('camera').snap()
-    .then(result => {
-      console.log(result)
-    })
-    .catch(error => {
-      console.log(error)
-    })
 
   let latestReadings = {}
 
@@ -51,13 +43,32 @@ setup.board.on('ready', function () {
         console.log('waterpump:', setup.waterpumpState)
       }, 1 * 60000)
     }
+
+    if ((now.getHours() === 18 && now.getMinutes() === 33) ||
+        (now.getHours() === 22 && now.getMinutes() === 00)) {
+      const timestamp = Date.now()
+
+      let bundledReadings = {}
+      bundledReadings.readings = Object.values(latestReadings)
+      bundledReadings.timestamp = timestamp
+
+      fs.writeFileSync(`${process.env.LOGS_PATH}/${timestamp}.json`, JSON.stringify(bundledReadings, null, 2))
+
+      setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
+      setup.get('camera').snap()
+        .then(result => {
+          console.log(`logs ${timestamp} saved`)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }, 60000)
 
   /* Interval MQTT publish */
   setInterval(() => {
     let bundledReadings = {}
     bundledReadings.readings = Object.values(latestReadings)
-    bundledReadings.image = 'base64-string'
     bundledReadings.timestamp = Date.now()
 
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
