@@ -9,6 +9,18 @@ mqttServer.serve(3001)
 setup.board.on('ready', function () {
   setup.init()
 
+  const now = new Date()
+
+  setup.get('camera')
+    .set(output, `${__dirname}/public/logs/${now}.jpg`)
+    .snap()
+    .then(result => {
+      console.log(result)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
   let latestReadings = {}
 
   /* Timed actors */
@@ -21,6 +33,7 @@ setup.board.on('ready', function () {
       setup.oxygenpumpState = !setup.oxygenpumpState
       setup.get('relayOxygenpump').open()
       console.log('oxygenpump:', setup.oxygenpumpState)
+
       setTimeout(() => {
         setup.oxygenpumpState = !setup.oxygenpumpState
         setup.get('relayOxygenpump').close()
@@ -34,6 +47,7 @@ setup.board.on('ready', function () {
       setup.waterpumpState = !setup.waterpumpState
       setup.get('relayWaterpump').open()
       console.log('waterpump:', setup.waterpumpState)
+      
       setTimeout(() => {
         setup.waterpumpState = !setup.waterpumpState
         setup.get('relayWaterpump').close()

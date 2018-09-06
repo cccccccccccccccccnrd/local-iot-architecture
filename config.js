@@ -1,6 +1,7 @@
 const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
+const PiCamera = require('pi-camera')
 
 let devices = {}
 
@@ -56,6 +57,13 @@ function init () {
   })
 
   devices.additionalArduino = additionalArduinoPort.pipe(new Readline())
+
+  devices.camera = new PiCamera({
+    mode: 'photo',
+    width: 1640,
+    height: 1232,
+    nopreview: true,
+  })
 }
 
 function get (device) {
@@ -64,6 +72,7 @@ function get (device) {
   if (device == 'relayOxygenpump') return devices.relayOxygenpump
   if (device == 'relayWaterpump') return devices.relayWaterpump
   if (device == 'additionalArduino') return devices.additionalArduino
+  if (device == 'camera') return devices.camera
   else {
     throw Error(`Could not find ${device}`)
   }
@@ -73,6 +82,7 @@ module.exports = {
   init,
   get,
   board,
+  camera,
   iotaMamTopic,
   oxygenpumpTopic,
   oxygenpumpState,
