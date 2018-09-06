@@ -16,9 +16,9 @@ setup.board.on('ready', function () {
   setInterval(() => {
     const now = new Date()
 
-    if ((now.getHours() === 8-2 && now.getMinutes() === 55) ||
-        (now.getHours() === 14-2 && now.getMinutes() === 55) ||
-        (now.getHours() === 22-2 && now.getMinutes() === 55)) {
+    if ((now.getHours() === 8 && now.getMinutes() === 55) ||
+        (now.getHours() === 14 && now.getMinutes() === 55) ||
+        (now.getHours() === 22 && now.getMinutes() === 55)) {
       setup.oxygenpumpState = !setup.oxygenpumpState
       setup.get('relayOxygenpump').open()
       console.log('oxygenpump:', setup.oxygenpumpState)
@@ -29,9 +29,9 @@ setup.board.on('ready', function () {
       }, 5 * 60000)
     }
 
-    if ((now.getHours() === 9-2 && now.getMinutes() === 00) ||
-        (now.getHours() === 15-2 && now.getMinutes() === 00) ||
-        (now.getHours() === 23-2 && now.getMinutes() === 00)) {
+    if ((now.getHours() === 9 && now.getMinutes() === 00) ||
+        (now.getHours() === 15 && now.getMinutes() === 00) ||
+        (now.getHours() === 23 && now.getMinutes() === 00)) {
       setup.waterpumpState = !setup.waterpumpState
       setup.get('relayWaterpump').open()
       console.log('waterpump:', setup.waterpumpState)
