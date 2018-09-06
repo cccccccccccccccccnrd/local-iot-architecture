@@ -9,9 +9,7 @@ mqttServer.serve(3001)
 setup.board.on('ready', function () {
   setup.init()
 
-  const now = new Date()
-
-  setup.get('camera').set('output', `${__dirname}/public/logs/${now}.jpg`)
+  setup.get('camera').set('output', `${__dirname}/public/logs/${Date.now()}.jpg`)
   setup.get('camera').snap()
     .then(result => {
       console.log(result)
