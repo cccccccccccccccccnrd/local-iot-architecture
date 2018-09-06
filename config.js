@@ -28,10 +28,10 @@ const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
 let waterElectricalConductivityState = 000
 
 const board = new five.Board({
-  port: '/dev/ttyACM1'
+  port: '/dev/arduino01'
 })
 
-const additionalArduinoPort = new SerialPort('/dev/ttyACM0', {
+const additionalArduinoPort = new SerialPort('/dev/arduino02', {
   baudRate: 115200
 })
 
