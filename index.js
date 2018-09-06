@@ -12,7 +12,7 @@ setup.board.on('ready', function () {
   const now = new Date()
 
   setup.get('camera')
-    .set(output, `${__dirname}/public/logs/${now}.jpg`)
+    .set('output', `${__dirname}/public/logs/${now}.jpg`)
     .snap()
     .then(result => {
       console.log(result)
