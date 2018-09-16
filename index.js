@@ -30,13 +30,13 @@ setup.board.on('ready', function () {
       }, 5 * 60000)
     }
 
-    if ((now.getHours() === 9 && now.getMinutes() === 00) ||
-        (now.getHours() === 15 && now.getMinutes() === 00) ||
-        (now.getHours() === 23 && now.getMinutes() === 00)) {
+    if ((now.getHours() === 9 && now.getMinutes() === 0) ||
+        (now.getHours() === 15 && now.getMinutes() === 0) ||
+        (now.getHours() === 23 && now.getMinutes() === 0)) {
       setup.waterpumpState = !setup.waterpumpState
       setup.get('relayWaterpump').open()
       console.log('waterpump:', setup.waterpumpState)
-      
+
       setTimeout(() => {
         setup.waterpumpState = !setup.waterpumpState
         setup.get('relayWaterpump').close()
@@ -44,8 +44,8 @@ setup.board.on('ready', function () {
       }, 1 * 60000)
     }
 
-    if ((now.getHours() === 10 && now.getMinutes() === 00) ||
-        (now.getHours() === 22 && now.getMinutes() === 00)) {
+    if ((now.getHours() === 10 && now.getMinutes() === 0) ||
+        (now.getHours() === 22 && now.getMinutes() === 0)) {
       const timestamp = Date.now()
 
       let bundledReadings = {}
@@ -72,7 +72,7 @@ setup.board.on('ready', function () {
     bundledReadings.timestamp = Date.now()
 
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
-    mqttServer.get('client').publish(setup.iotaMamTopic, JSON.stringify(bundledReadings))
+    mqttServer.get('client').publish(setup.bundledReadingsTopic, JSON.stringify(bundledReadings))
     console.log(JSON.stringify(bundledReadings))
   }, 60000 * 1)
 
@@ -128,7 +128,7 @@ setup.board.on('ready', function () {
   /* MQTT subscribe */
   mqttServer.get('client').on('message', function (topic, message) {
     if (topic === setup.oxygenpumpTopic) {
-      if (message == 'toggle') {
+      if (message === 'toggle') {
         setup.oxygenpumpState = !setup.oxygenpumpState
 
         if (setup.oxygenpumpState) {
@@ -144,7 +144,7 @@ setup.board.on('ready', function () {
         if (setup.oxygenpumpState) {
           setup.get('relayOxygenpump').open()
           console.log(`oxygenpump: ${setup.oxygenpumpState} open for ${Number(message)}`)
-          
+
           setTimeout(() => {
             setup.oxygenpumpState = !setup.oxygenpumpState
             setup.get('relayOxygenpump').close()
@@ -153,13 +153,13 @@ setup.board.on('ready', function () {
         }
       }
     } else if (topic === setup.waterpumpTopic) {
-      if (message == 'flushlol') {
+      if (message === 'flushlol') {
         setup.waterpumpState = !setup.waterpumpState
 
         if (setup.waterpumpState) {
           setup.get('relayWaterpump').open()
           console.log(`waterpump got flushed lol: ${setup.waterpumpState}`)
-          
+
           setTimeout(() => {
             setup.waterpumpState = !setup.waterpumpState
             setup.get('relayWaterpump').close()

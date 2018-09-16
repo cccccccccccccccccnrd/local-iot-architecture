@@ -23,16 +23,16 @@ function serve (port) {
       console.log('not authorized username ' + username + ' tried to connect')
     }
   }
-  
+
   server.on('ready', function () {
     server.authenticate = authenticate
     console.log('mqtt-server is running on port', settings.http.port)
   })
-  
+
   server.on('clientConnected', function (client) {
     console.log('client connected', client.id)
   })
-  
+
   /* MQTT client setup */
   const clientSettings = {
     clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
@@ -40,15 +40,15 @@ function serve (port) {
     password: process.env.MQTT_PASSWORD
   }
   client = mqtt.connect('mqtt://127.0.0.1', clientSettings)
-  
+
   client.on('connect', function () {
     client.subscribe('actor/#')
   })
 }
 
 function get (clientOrServer) {
-  if (clientOrServer == 'server') return server
-  if (clientOrServer == 'client') return client
+  if (clientOrServer === 'server') return server
+  if (clientOrServer === 'client') return client
   else {
     throw Error(`Could not find ${clientOrServer}`)
   }

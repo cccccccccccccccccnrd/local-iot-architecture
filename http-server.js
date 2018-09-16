@@ -1,9 +1,10 @@
+const path = require('path')
 const express = require('express')
 
 function serve (port) {
   const settings = {
     port,
-    staticPath: __dirname + '/public'
+    staticPath: path.join(__dirname, '/public')
   }
   const server = express()
 
