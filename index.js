@@ -45,7 +45,7 @@ setup.board.on('ready', function () {
     }
 
     if ((now.getHours() === 10 && now.getMinutes() === 0) ||
-        (now.getHours() === 12 && now.getMinutes() === 12)) {
+        (now.getHours() === 12 && now.getMinutes() === 15)) {
       const timestamp = Date.now()
 
       let bundledReadings = {}
