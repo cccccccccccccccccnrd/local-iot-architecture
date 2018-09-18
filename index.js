@@ -86,7 +86,7 @@ setup.board.on('ready', function () {
       if (error) {
         console.error(error)
       }
-      console.log(allReadings)
+      console.log(JSON.stringify(allReadings))
       mqttServer.get('client').publish(setup.historyTopic, JSON.stringify(allReadings))
     })
   }, 60000 * 1)
