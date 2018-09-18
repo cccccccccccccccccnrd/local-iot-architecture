@@ -1,11 +1,15 @@
+require('dotenv').config()
 const five = require('johnny-five')
 const SerialPort = require('serialport')
 const Readline = require('@serialport/parser-readline')
 const PiCamera = require('pi-camera')
+const Datastore = require('nedb')
 
 let devices = {}
 
 const bundledReadingsTopic = 'utils/bundled-readings'
+
+const historyTopic = 'utils/history'
 
 const oxygenpumpTopic = 'actor/oxygenpump'
 let oxygenpumpState = false
@@ -35,6 +39,8 @@ const board = new five.Board({
 const additionalArduinoPort = new SerialPort('/dev/arduino02', {
   baudRate: 115200
 })
+
+const db = new Datastore({ filename: `${process.env.LOGS_PATH}/db`, autoload: true })
 
 function init () {
   devices.dht11 = new five.Multi({
@@ -73,6 +79,7 @@ function get (device) {
   if (device === 'relayWaterpump') return devices.relayWaterpump
   if (device === 'additionalArduino') return devices.additionalArduino
   if (device === 'camera') return devices.camera
+  if (device === 'db') return db
   else {
     throw Error(`Could not find ${device}`)
   }
@@ -83,6 +90,7 @@ module.exports = {
   get,
   board,
   bundledReadingsTopic,
+  historyTopic,
   oxygenpumpTopic,
   oxygenpumpState,
   waterpumpTopic,

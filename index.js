@@ -1,4 +1,4 @@
-const fs = require('fs')
+require('dotenv').config()
 const setup = require('./config')
 const httpServer = require('./http-server')
 const mqttServer = require('./mqtt-server')
@@ -52,7 +52,14 @@ setup.board.on('ready', function () {
       bundledReadings.readings = Object.values(latestReadings)
       bundledReadings.timestamp = timestamp
 
-      fs.writeFileSync(`${process.env.LOGS_PATH}/${timestamp}.json`, JSON.stringify(bundledReadings, null, 2))
+      setup.get('db').insert(bundledReadings)
+      setup.get('db').find({}, (error, docs) => {
+        if (error) {
+          console.error(error)
+        }
+
+        mqttServer.get('client').publish(setup.historyTopic, JSON.stringify(docs))
+      })
 
       setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
       setup.get('camera').snap()
