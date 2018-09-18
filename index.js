@@ -12,6 +12,14 @@ setup.board.on('ready', function () {
 
   let latestReadings = {}
 
+  setup.get('db').find({}, (error, docs) => {
+    if (error) {
+      console.error(error)
+    }
+
+    mqttServer.get('client').publish(setup.historyTopic, JSON.stringify(docs))
+  })
+
   /* Timed actors */
   setInterval(() => {
     const now = new Date()
@@ -45,7 +53,7 @@ setup.board.on('ready', function () {
     }
 
     if ((now.getHours() === 10 && now.getMinutes() === 0) ||
-        (now.getHours() === 12 && now.getMinutes() === 15)) {
+        (now.getHours() === 22 && now.getMinutes() === 0)) {
       const timestamp = Date.now()
 
       let bundledReadings = {}
