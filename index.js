@@ -81,14 +81,6 @@ setup.board.on('ready', function () {
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
     mqttServer.get('client').publish(setup.bundledReadingsTopic, JSON.stringify(bundledReadings))
     console.log(JSON.stringify(bundledReadings))
-
-    setup.get('db').find({}, (error, docs) => {
-      if (error) {
-        console.error(error)
-      }
-      console.log(JSON.stringify(docs))
-      mqttServer.get('client').publish(setup.historyTopic, JSON.stringify(docs))
-    })
   }, 60000 * 1)
 
   /* MQTT publish */
