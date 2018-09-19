@@ -58,6 +58,7 @@ setup.board.on('ready', function () {
           console.error(error)
         }
         mqttServer.get('client').publish(setup.historyTopic, JSON.stringify(allReadings), { retain: true })
+        console.log(JSON.stringify(allReadings))
       })
 
       setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
