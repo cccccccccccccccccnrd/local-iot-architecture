@@ -75,36 +75,56 @@ setup.board.on('ready', function () {
     bundledReadings.timestamp = Date.now()
 
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
-    mqttServer.get('client').publish(setup.bundledReadingsTopic, JSON.stringify(bundledReadings))
-    // console.log(JSON.stringify(bundledReadings))
+
+    mqttServer.get('server').publish({
+      topic: setup.bundledReadingsTopic,
+      payload: JSON.stringify(setup.bundledReadings)
+    })
+
+    console.log(JSON.stringify(bundledReadings))
   }, 60000 * 1)
 
   /* MQTT publish */
   setup.get('dht11').on('change', function () {
     setup.temperatureState = {
-      'type': 'temperature',
-      'value': this.thermometer.celsius,
-      'timestamp': Date.now()
+      type: 'temperature',
+      value: this.thermometer.celsius,
+      timestamp: Date.now()
     }
-    mqttServer.get('client').publish(setup.temperatureTopic, JSON.stringify(setup.temperatureState))
+
+    mqttServer.get('server').publish({
+      topic: setup.temperatureTopic,
+      payload: JSON.stringify(setup.temperatureState)
+    })
+
     latestReadings.temperature = setup.temperatureState
 
     setup.humidityState = {
-      'type': 'humidity',
-      'value': this.hygrometer.relativeHumidity,
-      'timestamp': Date.now()
+      type: 'humidity',
+      value: this.hygrometer.relativeHumidity,
+      timestamp: Date.now()
     }
-    mqttServer.get('client').publish(setup.humidityTopic, JSON.stringify(setup.humidityState))
+
+    mqttServer.get('server').publish({
+      topic: setup.humidityTopic,
+      payload: JSON.stringify(setup.humidityState)
+    })
+
     latestReadings.humidity = setup.humidityState
   })
 
   setup.get('photocell').on('data', function () {
     setup.lightIntensityState = {
-      'type': 'light-intensity',
-      'value': Math.floor(100 - this.level * 100),
-      'timestamp': Date.now()
+      type: 'light-intensity',
+      value: Math.floor(100 - this.level * 100),
+      timestamp: Date.now()
     }
-    mqttServer.get('client').publish(setup.lightIntensityTopic, JSON.stringify(setup.lightIntensityState))
+
+    mqttServer.get('server').publish({
+      topic: setup.lightIntensityTopic,
+      payload: JSON.stringify(setup.lightIntensityState)
+    })
+
     latestReadings.lightIntensity = setup.lightIntensityState
   })
 
@@ -112,19 +132,29 @@ setup.board.on('ready', function () {
     if (!data.startsWith('{')) return
 
     setup.waterTemperatureState = {
-      'type': 'water-temperature',
-      'value': Math.floor(JSON.parse(data.toString()).temperature),
-      'timestamp': Date.now()
+      type: 'water-temperature',
+      value: Math.floor(JSON.parse(data.toString()).temperature),
+      timestamp: Date.now()
     }
-    mqttServer.get('client').publish(setup.waterTemperatureTopic, JSON.stringify(setup.waterTemperatureState))
+
+    mqttServer.get('server').publish({
+      topic: setup.waterTemperatureTopic,
+      payload: JSON.stringify(setup.waterTemperatureState)
+    })
+
     latestReadings.waterTemperature = setup.waterTemperatureState
 
     setup.waterElectricalConductivityState = {
-      'type': 'electrical-conductivity',
-      'value': Math.floor(JSON.parse(data.toString()).ec),
-      'timestamp': Date.now()
+      type: 'electrical-conductivity',
+      value: Math.floor(JSON.parse(data.toString()).ec),
+      timestamp: Date.now()
     }
-    mqttServer.get('client').publish(setup.waterElectricalConductivityTopic, JSON.stringify(setup.waterElectricalConductivityState))
+
+    mqttServer.get('server').publish({
+      topic: setup.waterElectricalConductivityTopic,
+      payload: JSON.stringify(setup.waterElectricalConductivityState)
+    })
+
     latestReadings.waterElectricalConductivity = setup.waterElectricalConductivityState
   })
 
