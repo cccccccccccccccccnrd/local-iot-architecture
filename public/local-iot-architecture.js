@@ -20,8 +20,11 @@ let client
 let visualizationOpen = false, webcamLogsOpen = false
 
 /* States and MQTT topics setup */
-const iotaMamTopic = 'utils/iota-mam'
-let iotaMamState
+const bundledReadingsTopic = 'utils/bundled-readings'
+let bundledReadingsState
+
+const historyTopic = 'utils/history'
+let historyState
 
 const temperatureTopic = 'sensor/temperature'
 let temperatureState
@@ -264,9 +267,13 @@ connectButton.onclick = function () {
     } else if (topic === waterElectricalConductivityTopic) {
       waterElectricalConductivityState = String(message)
       updateUserInterface(waterElectricalConductivityState, waterElectricalConductivityChart, currentWaterElectricalConductivity)
-    } else if (topic === iotaMamTopic) {
-      iotaMamState = String(message)
-      logToTextarea(iotaMamState)
+    } else if (topic === bundledReadingsTopic) {
+      bundledReadingsState = String(message)
+      logToTextarea(bundledReadingsState)
+      console.log(String(message))
+    } else if (topic === historyTopic) {
+      historyTopic = String(message)
+      logToTextarea(historyTopic)
       console.log(String(message))
     }
   })
