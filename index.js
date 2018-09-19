@@ -57,8 +57,16 @@ setup.board.on('ready', function () {
         if (error) {
           console.error(error)
         }
-        mqttServer.get('client').publish(setup.historyTopic, JSON.stringify(allReadings), { retain: true })
-        console.log(JSON.stringify(allReadings))
+  
+        const allReadingsMessage = {
+          topic: setup.historyTopic,
+          payload: JSON.stringify(allReadings),
+          retain: true,
+        }
+  
+        mqttServer.get('server').publish(allReadingsMessage, () => {
+          console.log(JSON.stringify(allReadings))
+        })
       })
 
       setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
@@ -81,22 +89,6 @@ setup.board.on('ready', function () {
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
     mqttServer.get('client').publish(setup.bundledReadingsTopic, JSON.stringify(bundledReadings))
     // console.log(JSON.stringify(bundledReadings))
-
-    setup.get('db').find({}, (error, allReadings) => {
-      if (error) {
-        console.error(error)
-      }
-
-      const message = {
-        topic: setup.historyTopic,
-        payload: JSON.stringify(allReadings),
-        retain: true,
-      }
-
-      mqttServer.get('server').publish(message, () => {
-        console.log(JSON.stringify(allReadings))
-      })
-    })
   }, 60000 * 1)
 
   /* MQTT publish */
