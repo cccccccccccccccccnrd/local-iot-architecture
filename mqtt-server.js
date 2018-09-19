@@ -29,12 +29,12 @@ function serve (port) {
     console.log('mqtt-server is running on port', settings.http.port)
   })
 
-  server.on('clientConnected', function (client) {
-    console.log('client connected', client.id)
+  server.on('clientConnected', (client) => {
+    console.log(`${ Date.now() } client connected ${ client.id }`)
   })
 
-  server.on('clientDisconnected', function(client) {
-    console.log('client disconnected:', client.id)
+  server.on('clientDisconnected', (client) => {
+    console.log(`${ Date.now() } client disconnected ${ client.id }`)
   })
 
   /* MQTT client setup */
