@@ -43,6 +43,7 @@ function serve (port) {
     username: process.env.MQTT_USERNAME,
     password: process.env.MQTT_PASSWORD
   }
+  
   client = mqtt.connect('mqtt://127.0.0.1', clientSettings)
 
   client.on('connect', function () {
