@@ -10,6 +10,9 @@ function serve (port) {
       port,
       bundle: true,
       static: __dirname
+    },
+    persistence: {
+      factory: mosca.persistence.Memory
     }
   }
   server = new mosca.Server(settings)
