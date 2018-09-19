@@ -10,6 +10,8 @@ mqttServer.serve(3001)
 setup.board.on('ready', function () {
   setup.init()
 
+  publishAndRetainHistory()
+  
   let latestReadings = {}
 
   /* Timed actors */
@@ -53,21 +55,7 @@ setup.board.on('ready', function () {
       bundledReadings.timestamp = timestamp
 
       setup.get('db').insert(bundledReadings)
-      setup.get('db').find({}, (error, allReadings) => {
-        if (error) {
-          console.error(error)
-        }
-  
-        const allReadingsMessage = {
-          topic: setup.historyTopic,
-          payload: JSON.stringify(allReadings),
-          retain: true,
-        }
-  
-        mqttServer.get('server').publish(allReadingsMessage, () => {
-          console.log(JSON.stringify(allReadings))
-        })
-      })
+      publishAndRetainHistory()
 
       setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
       setup.get('camera').snap()
@@ -185,3 +173,21 @@ setup.board.on('ready', function () {
     } else console.log('invalid topic')
   })
 })
+
+function publishAndRetainHistory () {
+  setup.get('db').find({}, (error, history) => {
+    if (error) {
+      console.error(error)
+    }
+
+    const historyMessage = {
+      topic: setup.historyTopic,
+      payload: JSON.stringify(history),
+      retain: true,
+    }
+
+    mqttServer.get('server').publish(historyMessage, () => {
+      console.log(JSON.stringify(history))
+    })
+  })
+}
