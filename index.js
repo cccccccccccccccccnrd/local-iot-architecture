@@ -205,11 +205,11 @@ setup.board.on('ready', function () {
 })
 
 function publishAndRetainHistory () {
-  setup.get('db').find({}, (error, history) => {
+  setup.get('db').find({}).sort({ timestamp: 1 }).exec((error, history) => {
     if (error) {
       console.error(error)
     }
-    
+
     mqttServer.get('server').publish({ topic: setup.historyTopic, payload: JSON.stringify(history), retain: true }, () => {
       console.log(JSON.stringify(history))
     })
