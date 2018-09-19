@@ -33,6 +33,10 @@ function serve (port) {
     console.log('client connected', client.id)
   })
 
+  server.on('clientDisconnected', function(client) {
+    console.log('client disconnected:', client.id)
+  })
+
   /* MQTT client setup */
   const clientSettings = {
     clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
