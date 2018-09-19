@@ -75,7 +75,7 @@ setup.board.on('ready', function () {
     bundledReadings.timestamp = Date.now()
 
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
-
+    
     mqttServer.get('server').publish({
       topic: setup.bundledReadingsTopic,
       payload: JSON.stringify(setup.bundledReadings)
