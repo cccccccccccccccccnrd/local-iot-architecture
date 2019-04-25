@@ -7,7 +7,7 @@ const mqttServer = require('./mqtt-server')
 httpServer.serve(3000)
 mqttServer.serve(3001)
 
-setup.board.on('ready', function () {
+setup.board.on('ready', () => {
   setup.init()
 
   publishAndRetainHistory()
