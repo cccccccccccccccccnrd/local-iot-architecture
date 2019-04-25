@@ -35,7 +35,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | b
 Then we install the lastest node version
 
 ```shell
-nvm install latest
+nvm install node
 ```
 > If `nvm` isn't found run your `~/.bashrc` file once.
 
