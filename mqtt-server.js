@@ -20,10 +20,10 @@ server.on('ready', () => {
       client.user = username
       callback(null, authorized)
     } else {
-      console.log('not authorized username ' + username + ' tried to connect')
+      console.log(`not authorized username ${ username } tried to connect`)
     }
   }
-  console.log('mqtt-server is running on port', settings.http.port)
+  console.log('mqtt-server is running on port', 3001)
 })
 
 server.on('clientConnected', (client) => {
