@@ -76,22 +76,8 @@ function init () {
   })
 }
 
-function get (device) {
-  if (device === 'dht11') return devices.dht11
-  if (device === 'photocell') return devices.photocell
-  if (device === 'relayOxygenpump') return devices.relayOxygenpump
-  if (device === 'relayWaterpump') return devices.relayWaterpump
-  if (device === 'additionalArduino') return devices.additionalArduino
-  if (device === 'camera') return devices.camera
-  if (device === 'db') return db
-  else {
-    throw Error(`Could not find ${device}`)
-  }
-}
-
 module.exports = {
   init,
-  get,
   board,
   db,
   devices,

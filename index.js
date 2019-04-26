@@ -21,12 +21,12 @@ setup.board.on('ready', () => {
         (now.getHours() === 14 && now.getMinutes() === 55) ||
         (now.getHours() === 22 && now.getMinutes() === 55)) {
       setup.states.oxygenpump = !setup.states.oxygenpump
-      setup.get('relayOxygenpump').open()
+      setup.devices.relayOxygenpump.open()
       console.log('oxygenpump:', setup.states.oxygenpump)
 
       setTimeout(() => {
         setup.states.oxygenpump = !setup.states.oxygenpump
-        setup.get('relayOxygenpump').close()
+        setup.devices.relayOxygenpump.close()
         console.log('oxygenpump:', setup.states.oxygenpump)
       }, 5 * 60000)
     }
@@ -35,12 +35,12 @@ setup.board.on('ready', () => {
         (now.getHours() === 15 && now.getMinutes() === 0) ||
         (now.getHours() === 23 && now.getMinutes() === 0)) {
       setup.states.waterpump = !setup.states.waterpump
-      setup.get('relayWaterpump').open()
+      setup.devices.relayWaterpump.open()
       console.log('waterpump:', setup.states.waterpump)
 
       setTimeout(() => {
         setup.states.waterpump = !setup.states.waterpump
-        setup.get('relayWaterpump').close()
+        setup.devices.relayWaterpump.close()
         console.log('waterpump:', setup.states.waterpump)
       }, 1 * 60000)
     }
@@ -56,8 +56,8 @@ setup.board.on('ready', () => {
       setup.db.insert(bundledReadings)
       publishAndRetainHistory()
 
-      setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
-      setup.get('camera').snap()
+      setup.devices.camera.set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
+      setup.devices.camera.snap()
         .then(result => {
           console.log(`logs ${timestamp} saved`)
         })
@@ -84,7 +84,7 @@ setup.board.on('ready', () => {
   }, 60000 * 1)
 
   /* MQTT publish */
-  setup.get('dht11').on('change', function () {
+  setup.devices.dht11.on('change', function () {
     setup.states.temperature = {
       type: 'temperature',
       value: this.thermometer.celsius,
@@ -112,7 +112,7 @@ setup.board.on('ready', () => {
     latestReadings.humidity = setup.states.humidity
   })
 
-  setup.get('photocell').on('data', function () {
+  setup.devices.photocell.on('data', function () {
     setup.states.lightIntensity = {
       type: 'light-intensity',
       value: Math.floor(100 - this.level * 100),
@@ -127,7 +127,7 @@ setup.board.on('ready', () => {
     latestReadings.lightIntensity = setup.states.lightIntensity
   })
 
-  setup.get('additionalArduino').on('data', function (data) {
+  setup.devices.additionalArduino.on('data', function (data) {
     if (!data.startsWith('{')) return
 
     setup.states.waterTemperature = {
@@ -167,22 +167,22 @@ setup.board.on('ready', () => {
         setup.states.oxygenpump = !setup.states.oxygenpump
 
         if (setup.states.oxygenpump) {
-          setup.get('relayOxygenpump').open()
+          setup.devices.relayOxygenpump.open()
           console.log('oxygenpump:', setup.states.oxygenpump)
         } else {
-          setup.get('relayOxygenpump').close()
+          setup.devices.relayOxygenpump.close()
           console.log('oxygenpump:', setup.states.oxygenpump)
         }
       } else if (Number.isInteger(Number(message))) {
         setup.states.oxygenpump = !setup.states.oxygenpump
 
         if (setup.states.oxygenpump) {
-          setup.get('relayOxygenpump').open()
+          setup.devices.relayOxygenpump.open()
           console.log(`oxygenpump: ${setup.states.oxygenpump} open for ${Number(message)}`)
 
           setTimeout(() => {
             setup.states.oxygenpump = !setup.states.oxygenpump
-            setup.get('relayOxygenpump').close()
+            setup.devices.relayOxygenpump.close()
             console.log(`oxygenpump: ${setup.states.oxygenpump}`)
           }, String(message))
         }
@@ -192,7 +192,6 @@ setup.board.on('ready', () => {
         setup.states.waterpump = !setup.states.waterpump
 
         if (setup.states.waterpump) {
-          console.log(setup.devices)
           setup.devices.relayWaterpump.open()
           console.log(`waterpump got flushed lol: ${setup.states.waterpump}`)
 
