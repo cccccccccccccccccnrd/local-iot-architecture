@@ -159,6 +159,7 @@ setup.board.on('ready', () => {
   })
 
   /* MQTT subscribe */
+  console.log(mqttServer.client)
   mqttServer.client.on('message', (topicBuffer, messageBuffer) => {
     const topic = String(topicBuffer)
     const message = String(messageBuffer)
