@@ -2,7 +2,7 @@ require('dotenv').config()
 const mosca = require('mosca')
 const mqtt = require('mqtt')
 
-let server, client
+let server, client = 'cooli'
 
 function serve (port) {
   const settings = {
