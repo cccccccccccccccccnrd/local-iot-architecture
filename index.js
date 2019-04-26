@@ -42,7 +42,7 @@ setup.board.on('ready', () => {
         setup.states.waterpump = !setup.states.waterpump
         setup.devices.relayWaterpump.close()
         console.log('waterpump:', setup.states.waterpump)
-      }, 1 * 60000)
+      }, 2 * 60000)
     }
 
     if ((now.getHours() === 10 && now.getMinutes() === 0) ||
