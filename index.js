@@ -7,8 +7,6 @@ const mqttServer = require('./mqtt-server')
 httpServer.serve(3000)
 mqttServer.serve(3001)
 
-const db = new Datastore({ filename: `${process.env.LOGS_PATH}/readings`, autoload: true })
-
 setup.board.on('ready', () => {
   setup.init()
 
@@ -56,7 +54,7 @@ setup.board.on('ready', () => {
       bundledReadings.readings = Object.values(latestReadings)
       bundledReadings.timestamp = timestamp
 
-      db.insert(bundledReadings)
+      setup.db.insert(bundledReadings)
       publishAndRetainHistory()
 
       setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
@@ -211,7 +209,7 @@ setup.board.on('ready', () => {
 })
 
 function publishAndRetainHistory () {
-  db.find({}).sort({ timestamp: 1 }).exec((error, history) => {
+  setup.db.find({}).sort({ timestamp: 1 }).exec((error, history) => {
     if (error) {
       console.error(error)
     }

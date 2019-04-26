@@ -5,14 +5,15 @@ const Readline = require('@serialport/parser-readline')
 const PiCamera = require('pi-camera')
 const Datastore = require('nedb')
 
+let db
+
 let devices = {
   dht11: null,
   photocell: null,
   relayOxygenpump: null,
   relayWaterpump: null,
   additionalArduino: null,
-  camera: null,
-  db: null
+  camera: null
 }
 
 const bundledReadingsTopic = 'utils/bundled-readings'
@@ -49,6 +50,8 @@ const additionalArduinoPort = new SerialPort('/dev/arduino02', {
 })
 
 function init () {
+  db = new Datastore({ filename: `${process.env.LOGS_PATH}/readings`, autoload: true })
+
   devices.dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'
   })
@@ -95,6 +98,7 @@ module.exports = {
   init,
   get,
   board,
+  db,
   devices,
   bundledReadingsTopic,
   historyTopic,
