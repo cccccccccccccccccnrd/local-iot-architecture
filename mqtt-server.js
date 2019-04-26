@@ -2,23 +2,19 @@ require('dotenv').config()
 const mosca = require('mosca')
 const mqtt = require('mqtt')
 
-let server, client = 'cooli'
-
-function serve (port) {
-  const settings = {
-    http: {
-      port,
-      bundle: true,
-      static: __dirname
-    },
-    persistence: {
-      factory: mosca.persistence.Memory
-    }
+const server = new mosca.Server({
+  http: {
+    port: 3001,
+    bundle: true,
+    static: __dirname
+  },
+  persistence: {
+    factory: mosca.persistence.Memory
   }
+})
 
-  server = new mosca.Server(settings)
-
-  let authenticate = function (client, username, password, callback) {
+server.on('ready', () => {
+  server.authenticate = (client, username, password, callback) => {
     let authorized = (username === process.env.MQTT_USERNAME && String(password) === process.env.MQTT_PASSWORD)
     if (authorized) {
       client.user = username
@@ -27,44 +23,29 @@ function serve (port) {
       console.log('not authorized username ' + username + ' tried to connect')
     }
   }
+  console.log('mqtt-server is running on port', settings.http.port)
+})
 
-  server.on('ready', function () {
-    server.authenticate = authenticate
-    console.log('mqtt-server is running on port', settings.http.port)
-  })
+server.on('clientConnected', (client) => {
+  console.log(`${ Date.now() } client connected ${ client.id }`)
+})
 
-  server.on('clientConnected', (client) => {
-    console.log(`${ Date.now() } client connected ${ client.id }`)
-  })
+server.on('clientDisconnected', (client) => {
+  console.log(`${ Date.now() } client disconnected ${ client.id }`)
+})
 
-  server.on('clientDisconnected', (client) => {
-    console.log(`${ Date.now() } client disconnected ${ client.id }`)
-  })
+/* MQTT client setup */
+const client = mqtt.connect('mqtt://127.0.0.1', {
+  clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
+  username: process.env.MQTT_USERNAME,
+  password: process.env.MQTT_PASSWORD
+})
 
-  /* MQTT client setup */
-  const clientSettings = {
-    clientId: 'broker-client-' + Math.random().toString(16).substr(2, 8),
-    username: process.env.MQTT_USERNAME,
-    password: process.env.MQTT_PASSWORD
-  }
-
-  client = mqtt.connect('mqtt://127.0.0.1', clientSettings)
-
-  client.on('connect', () => {
-    client.subscribe('actor/#')
-  })
-}
-
-function get (clientOrServer) {
-  if (clientOrServer === 'server') return server
-  if (clientOrServer === 'client') return client
-  else {
-    throw Error(`Could not find ${clientOrServer}`)
-  }
-}
+client.on('connect', () => {
+  client.subscribe('actor/#')
+})
 
 module.exports = {
-  serve,
   server,
   client
 }

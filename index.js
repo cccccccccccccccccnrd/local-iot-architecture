@@ -1,11 +1,10 @@
 require('dotenv').config()
 const setup = require('./config')
 const httpServer = require('./http-server')
-const mqttServer = require('./mqtt-server')
+const mqtt = require('./mqtt-server')
 // const iotaMam = require('./iota-mam')
 
 httpServer.serve(3000)
-mqttServer.serve(3001)
 
 setup.board.on('ready', () => {
   setup.init()
@@ -76,7 +75,7 @@ setup.board.on('ready', () => {
 
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
     
-    mqttServer.server.publish({
+    mqtt.server.publish({
       topic: setup.bundledReadingsTopic,
       payload: JSON.stringify(setup.bundledReadings)
     })
@@ -92,7 +91,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.server.publish({
+    mqtt.server.publish({
       topic: setup.temperatureTopic,
       payload: JSON.stringify(setup.temperatureState)
     })
@@ -105,7 +104,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.server.publish({
+    mqtt.server.publish({
       topic: setup.humidityTopic,
       payload: JSON.stringify(setup.humidityState)
     })
@@ -120,7 +119,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.server.publish({
+    mqtt.server.publish({
       topic: setup.lightIntensityTopic,
       payload: JSON.stringify(setup.lightIntensityState)
     })
@@ -137,7 +136,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.server.publish({
+    mqtt.server.publish({
       topic: setup.waterTemperatureTopic,
       payload: JSON.stringify(setup.waterTemperatureState)
     })
@@ -150,7 +149,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.server.publish({
+    mqtt.server.publish({
       topic: setup.waterElectricalConductivityTopic,
       payload: JSON.stringify(setup.waterElectricalConductivityState)
     })
@@ -159,8 +158,8 @@ setup.board.on('ready', () => {
   })
 
   /* MQTT subscribe */
-  console.log(mqttServer.client)
-  mqttServer.client.on('message', (topicBuffer, messageBuffer) => {
+  console.log(mqtt.client)
+  mqtt.client.on('message', (topicBuffer, messageBuffer) => {
     const topic = String(topicBuffer)
     const message = String(messageBuffer)
 
@@ -215,7 +214,7 @@ function publishAndRetainHistory () {
       console.error(error)
     }
 
-    mqttServer.server.publish({ topic: setup.historyTopic, payload: JSON.stringify(history), retain: true }, () => {
+    mqtt.server.publish({ topic: setup.historyTopic, payload: JSON.stringify(history), retain: true }, () => {
       console.log(JSON.stringify(history))
     })
   })
