@@ -7,6 +7,28 @@ const Datastore = require('nedb')
 
 const db = new Datastore({ filename: `${process.env.LOGS_PATH}/readings`, autoload: true })
 
+const topics = {
+  bundledReadings: 'utils/bundled-readings',
+  history: 'utils/history',
+  oxygenpump: 'actor/oxygenpump',
+  waterpump: 'actor/waterpump',
+  temperature: 'sensor/temperature',
+  humidity: 'sensor/temperature',
+  lightIntensity: 'sensor/light-intensity',
+  waterTemperature: 'sensor/water-temperature',
+  waterElectricalConductivity: 'sensor/water-electrical-conductivity'
+}
+
+let states = {
+  oxygenpump: false,
+  waterpump: false,
+  temperature: 0,
+  humidity: 0,
+  lightIntensity: 0,
+  waterTemperature: 0,
+  waterElectricalConductivity: 0
+}
+
 let devices = {
   dht11: null,
   photocell: null,
@@ -15,31 +37,6 @@ let devices = {
   additionalArduino: null,
   camera: null
 }
-
-const bundledReadingsTopic = 'utils/bundled-readings'
-
-const historyTopic = 'utils/history'
-
-const oxygenpumpTopic = 'actor/oxygenpump'
-let oxygenpumpState = false
-
-const waterpumpTopic = 'actor/waterpump'
-let waterpumpState = false
-
-const temperatureTopic = 'sensor/temperature'
-let temperatureState = 0
-
-const humidityTopic = 'sensor/humidity'
-let humidityState = 0
-
-const lightIntensityTopic = 'sensor/light-intensity'
-let lightIntensityState = 0
-
-const waterTemperatureTopic = 'sensor/water-temperature'
-let waterTemperatureState = 0
-
-const waterElectricalConductivityTopic = 'sensor/water-electrical-conductivity'
-let waterElectricalConductivityState = 0
 
 const board = new five.Board({
   port: '/dev/arduino01'
@@ -98,20 +95,6 @@ module.exports = {
   board,
   db,
   devices,
-  bundledReadingsTopic,
-  historyTopic,
-  oxygenpumpTopic,
-  oxygenpumpState,
-  waterpumpTopic,
-  waterpumpState,
-  temperatureTopic,
-  temperatureState,
-  humidityTopic,
-  humidityState,
-  lightIntensityTopic,
-  lightIntensityState,
-  waterTemperatureTopic,
-  waterTemperatureState,
-  waterElectricalConductivityTopic,
-  waterElectricalConductivityState
+  topics,
+  states
 }

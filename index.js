@@ -20,28 +20,28 @@ setup.board.on('ready', () => {
     if ((now.getHours() === 8 && now.getMinutes() === 55) ||
         (now.getHours() === 14 && now.getMinutes() === 55) ||
         (now.getHours() === 22 && now.getMinutes() === 55)) {
-      setup.oxygenpumpState = !setup.oxygenpumpState
+      setup.states.oxygenpump = !setup.states.oxygenpump
       setup.get('relayOxygenpump').open()
-      console.log('oxygenpump:', setup.oxygenpumpState)
+      console.log('oxygenpump:', setup.states.oxygenpump)
 
       setTimeout(() => {
-        setup.oxygenpumpState = !setup.oxygenpumpState
+        setup.states.oxygenpump = !setup.states.oxygenpump
         setup.get('relayOxygenpump').close()
-        console.log('oxygenpump:', setup.oxygenpumpState)
+        console.log('oxygenpump:', setup.states.oxygenpump)
       }, 5 * 60000)
     }
 
     if ((now.getHours() === 9 && now.getMinutes() === 0) ||
         (now.getHours() === 15 && now.getMinutes() === 0) ||
         (now.getHours() === 23 && now.getMinutes() === 0)) {
-      setup.waterpumpState = !setup.waterpumpState
+      setup.states.waterpump = !setup.states.waterpump
       setup.get('relayWaterpump').open()
-      console.log('waterpump:', setup.waterpumpState)
+      console.log('waterpump:', setup.states.waterpump)
 
       setTimeout(() => {
-        setup.waterpumpState = !setup.waterpumpState
+        setup.states.waterpump = !setup.states.waterpump
         setup.get('relayWaterpump').close()
-        console.log('waterpump:', setup.waterpumpState)
+        console.log('waterpump:', setup.states.waterpump)
       }, 1 * 60000)
     }
 
@@ -76,8 +76,8 @@ setup.board.on('ready', () => {
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
     
     mqtt.server.publish({
-      topic: setup.bundledReadingsTopic,
-      payload: JSON.stringify(setup.bundledReadings)
+      topic: setup.topics.bundledReadings,
+      payload: JSON.stringify(bundledReadings)
     })
 
     console.log(JSON.stringify(bundledReadings))
@@ -85,122 +85,121 @@ setup.board.on('ready', () => {
 
   /* MQTT publish */
   setup.get('dht11').on('change', function () {
-    setup.temperatureState = {
+    setup.states.temperature = {
       type: 'temperature',
       value: this.thermometer.celsius,
       timestamp: Date.now()
     }
 
     mqtt.server.publish({
-      topic: setup.temperatureTopic,
-      payload: JSON.stringify(setup.temperatureState)
+      topic: setup.topics.temperature,
+      payload: JSON.stringify(setup.states.temperature)
     })
 
-    latestReadings.temperature = setup.temperatureState
+    latestReadings.temperature = setup.states.temperature
 
-    setup.humidityState = {
+    setup.states.humidity = {
       type: 'humidity',
       value: this.hygrometer.relativeHumidity,
       timestamp: Date.now()
     }
 
     mqtt.server.publish({
-      topic: setup.humidityTopic,
-      payload: JSON.stringify(setup.humidityState)
+      topic: setup.topics.humidity,
+      payload: JSON.stringify(setup.states.humidity)
     })
 
-    latestReadings.humidity = setup.humidityState
+    latestReadings.humidity = setup.states.humidity
   })
 
   setup.get('photocell').on('data', function () {
-    setup.lightIntensityState = {
+    setup.states.lightIntensity = {
       type: 'light-intensity',
       value: Math.floor(100 - this.level * 100),
       timestamp: Date.now()
     }
 
     mqtt.server.publish({
-      topic: setup.lightIntensityTopic,
-      payload: JSON.stringify(setup.lightIntensityState)
+      topic: setup.topics.lightIntensity,
+      payload: JSON.stringify(setup.states.lightIntensity)
     })
 
-    latestReadings.lightIntensity = setup.lightIntensityState
+    latestReadings.lightIntensity = setup.states.lightIntensity
   })
 
   setup.get('additionalArduino').on('data', function (data) {
     if (!data.startsWith('{')) return
 
-    setup.waterTemperatureState = {
+    setup.states.waterTemperature = {
       type: 'water-temperature',
       value: Math.floor(JSON.parse(data.toString()).temperature),
       timestamp: Date.now()
     }
 
     mqtt.server.publish({
-      topic: setup.waterTemperatureTopic,
-      payload: JSON.stringify(setup.waterTemperatureState)
+      topic: setup.topics.waterTemperature,
+      payload: JSON.stringify(setup.states.waterTemperature)
     })
 
-    latestReadings.waterTemperature = setup.waterTemperatureState
+    latestReadings.waterTemperature = setup.states.waterTemperature
 
-    setup.waterElectricalConductivityState = {
+    setup.states.waterElectricalConductivity = {
       type: 'electrical-conductivity',
       value: Math.floor(JSON.parse(data.toString()).ec),
       timestamp: Date.now()
     }
 
     mqtt.server.publish({
-      topic: setup.waterElectricalConductivityTopic,
-      payload: JSON.stringify(setup.waterElectricalConductivityState)
+      topic: setup.topics.waterElectricalConductivity,
+      payload: JSON.stringify(setup.states.waterElectricalConductivity)
     })
 
-    latestReadings.waterElectricalConductivity = setup.waterElectricalConductivityState
+    latestReadings.waterElectricalConductivity = setup.states.waterElectricalConductivity
   })
 
   /* MQTT subscribe */
-  console.log(mqtt.client)
   mqtt.client.on('message', (topicBuffer, messageBuffer) => {
     const topic = String(topicBuffer)
     const message = String(messageBuffer)
 
-    if (topic === setup.oxygenpumpTopic) {
+    if (topic === setup.topics.oxygenpump) {
       if (message === 'toggle') {
-        setup.oxygenpumpState = !setup.oxygenpumpState
+        setup.states.oxygenpump = !setup.states.oxygenpump
 
-        if (setup.oxygenpumpState) {
+        if (setup.states.oxygenpump) {
           setup.get('relayOxygenpump').open()
-          console.log('oxygenpump:', setup.oxygenpumpState)
+          console.log('oxygenpump:', setup.states.oxygenpump)
         } else {
           setup.get('relayOxygenpump').close()
-          console.log('oxygenpump:', setup.oxygenpumpState)
+          console.log('oxygenpump:', setup.states.oxygenpump)
         }
       } else if (Number.isInteger(Number(message))) {
-        setup.oxygenpumpState = !setup.oxygenpumpState
+        setup.states.oxygenpump = !setup.states.oxygenpump
 
-        if (setup.oxygenpumpState) {
+        if (setup.states.oxygenpump) {
           setup.get('relayOxygenpump').open()
-          console.log(`oxygenpump: ${setup.oxygenpumpState} open for ${Number(message)}`)
+          console.log(`oxygenpump: ${setup.states.oxygenpump} open for ${Number(message)}`)
 
           setTimeout(() => {
-            setup.oxygenpumpState = !setup.oxygenpumpState
+            setup.states.oxygenpump = !setup.states.oxygenpump
             setup.get('relayOxygenpump').close()
-            console.log(`oxygenpump: ${setup.oxygenpumpState}`)
+            console.log(`oxygenpump: ${setup.states.oxygenpump}`)
           }, String(message))
         }
       }
     } else if (topic === setup.waterpumpTopic) {
       if (message === 'flushlol') {
-        setup.waterpumpState = !setup.waterpumpState
+        setup.states.waterpump = !setup.states.waterpump
 
-        if (setup.waterpumpState) {
+        if (setup.states.waterpump) {
           console.log(setup.devices)
           setup.devices.relayWaterpump.open()
-          console.log(`waterpump got flushed lol: ${setup.waterpumpState}`)
+          console.log(`waterpump got flushed lol: ${setup.states.waterpump}`)
 
           setTimeout(() => {
-            setup.waterpumpState = !setup.waterpumpState
+            setup.states.waterpump = !setup.states.waterpump
             setup.devices.relayWaterpump.close()
-            console.log(`waterpump: ${setup.waterpumpState}`)
+            console.log(`waterpump: ${setup.states.waterpump}`)
           }, 1 * 60000)
         }
       }
@@ -214,7 +213,7 @@ function publishAndRetainHistory () {
       console.error(error)
     }
 
-    mqtt.server.publish({ topic: setup.historyTopic, payload: JSON.stringify(history), retain: true }, () => {
+    mqtt.server.publish({ topic: setup.topics.history, payload: JSON.stringify(history), retain: true }, () => {
       console.log(JSON.stringify(history))
     })
   })
