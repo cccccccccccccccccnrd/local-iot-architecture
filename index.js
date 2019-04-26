@@ -187,7 +187,7 @@ setup.board.on('ready', () => {
           }, String(message))
         }
       }
-    } else if (topic === setup.waterpumpTopic) {
+    } else if (topic === setup.topics.waterpump) {
       if (message === 'flushlol') {
         setup.states.waterpump = !setup.states.waterpump
 
