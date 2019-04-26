@@ -163,7 +163,6 @@ setup.board.on('ready', () => {
     const topic = String(topicBuffer)
     const message = String(messageBuffer)
 
-    console.log(topic, message)
     if (topic === setup.oxygenpumpTopic) {
       if (message === 'toggle') {
         setup.oxygenpumpState = !setup.oxygenpumpState
@@ -194,12 +193,13 @@ setup.board.on('ready', () => {
         setup.waterpumpState = !setup.waterpumpState
 
         if (setup.waterpumpState) {
-          setup.get('relayWaterpump').open()
+          console.log(setup.devices)
+          setup.devices.relayWaterpump.open()
           console.log(`waterpump got flushed lol: ${setup.waterpumpState}`)
 
           setTimeout(() => {
             setup.waterpumpState = !setup.waterpumpState
-            setup.get('relayWaterpump').close()
+            setup.devices.relayWaterpump.close()
             console.log(`waterpump: ${setup.waterpumpState}`)
           }, 1 * 60000)
         }

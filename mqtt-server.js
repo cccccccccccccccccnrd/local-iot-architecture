@@ -64,5 +64,7 @@ function get (clientOrServer) {
 
 module.exports = {
   serve,
-  get
+  get,
+  server,
+  client
 }
