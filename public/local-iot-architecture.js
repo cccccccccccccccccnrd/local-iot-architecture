@@ -272,7 +272,7 @@ connectButton.onclick = function () {
       logToTextarea(bundledReadingsState)
       console.log(String(message))
     } else if (topic === historyTopic) {
-      historyTopic = String(message)
+      historyState = String(message)
       logToTextarea(historyTopic)
       console.log(String(message))
     }
