@@ -159,10 +159,10 @@ setup.board.on('ready', () => {
   })
 
   /* MQTT subscribe */
-  mqttServer.get('client').on('message', function (topicBuffer, messageBuffer) {
+  mqttServer.get('client').on('message', (topicBuffer, messageBuffer) => {
     const topic = String(topicBuffer)
     const message = String(messageBuffer)
-    
+
     console.log(topic, message)
     if (topic === setup.oxygenpumpTopic) {
       if (message === 'toggle') {
