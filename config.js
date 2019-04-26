@@ -48,8 +48,6 @@ const additionalArduinoPort = new SerialPort('/dev/arduino02', {
   baudRate: 115200
 })
 
-const db = new Datastore({ filename: `${process.env.LOGS_PATH}/readings`, autoload: true })
-
 function init () {
   devices.dht11 = new five.Multi({
     controller: 'DHT11_I2C_NANO_BACKPACK'

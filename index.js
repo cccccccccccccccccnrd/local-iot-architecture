@@ -7,6 +7,8 @@ const mqttServer = require('./mqtt-server')
 httpServer.serve(3000)
 mqttServer.serve(3001)
 
+const db = new Datastore({ filename: `${process.env.LOGS_PATH}/readings`, autoload: true })
+
 setup.board.on('ready', () => {
   setup.init()
 
@@ -54,7 +56,7 @@ setup.board.on('ready', () => {
       bundledReadings.readings = Object.values(latestReadings)
       bundledReadings.timestamp = timestamp
 
-      setup.get('db').insert(bundledReadings)
+      db.insert(bundledReadings)
       publishAndRetainHistory()
 
       setup.get('camera').set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
@@ -76,7 +78,7 @@ setup.board.on('ready', () => {
 
     // iotaMam.publishToTangle(JSON.stringify(bundledReadings))
     
-    mqttServer.get('server').publish({
+    mqttServer.server.publish({
       topic: setup.bundledReadingsTopic,
       payload: JSON.stringify(setup.bundledReadings)
     })
@@ -92,7 +94,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.get('server').publish({
+    mqttServer.server.publish({
       topic: setup.temperatureTopic,
       payload: JSON.stringify(setup.temperatureState)
     })
@@ -105,7 +107,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.get('server').publish({
+    mqttServer.server.publish({
       topic: setup.humidityTopic,
       payload: JSON.stringify(setup.humidityState)
     })
@@ -120,7 +122,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.get('server').publish({
+    mqttServer.server.publish({
       topic: setup.lightIntensityTopic,
       payload: JSON.stringify(setup.lightIntensityState)
     })
@@ -137,7 +139,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.get('server').publish({
+    mqttServer.server.publish({
       topic: setup.waterTemperatureTopic,
       payload: JSON.stringify(setup.waterTemperatureState)
     })
@@ -150,7 +152,7 @@ setup.board.on('ready', () => {
       timestamp: Date.now()
     }
 
-    mqttServer.get('server').publish({
+    mqttServer.server.publish({
       topic: setup.waterElectricalConductivityTopic,
       payload: JSON.stringify(setup.waterElectricalConductivityState)
     })
@@ -159,7 +161,7 @@ setup.board.on('ready', () => {
   })
 
   /* MQTT subscribe */
-  mqttServer.get('client').on('message', (topicBuffer, messageBuffer) => {
+  mqttServer.client.on('message', (topicBuffer, messageBuffer) => {
     const topic = String(topicBuffer)
     const message = String(messageBuffer)
 
@@ -209,12 +211,12 @@ setup.board.on('ready', () => {
 })
 
 function publishAndRetainHistory () {
-  setup.get('db').find({}).sort({ timestamp: 1 }).exec((error, history) => {
+  db.find({}).sort({ timestamp: 1 }).exec((error, history) => {
     if (error) {
       console.error(error)
     }
 
-    mqttServer.get('server').publish({ topic: setup.historyTopic, payload: JSON.stringify(history), retain: true }, () => {
+    mqttServer.server.publish({ topic: setup.historyTopic, payload: JSON.stringify(history), retain: true }, () => {
       console.log(JSON.stringify(history))
     })
   })

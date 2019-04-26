@@ -15,6 +15,7 @@ function serve (port) {
       factory: mosca.persistence.Memory
     }
   }
+
   server = new mosca.Server(settings)
 
   let authenticate = function (client, username, password, callback) {
@@ -64,7 +65,6 @@ function get (clientOrServer) {
 
 module.exports = {
   serve,
-  get,
   server,
   client
 }
