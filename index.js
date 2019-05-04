@@ -8,7 +8,15 @@ httpServer.serve(3000)
 
 setup.board.on('ready', () => {
   setup.init()
-  console.log('camera', setup.devices.camera)
+  /* console.log('camera', setup.devices.camera) */
+  setup.devices.camera.set('output', `${ process.env.LOGS_PATH }/cool.jpg`)
+  setup.devices.camera.snap()
+    .then(result => {
+      console.log(`logs ${timestamp} saved`)
+    })
+    .catch(error => {
+      console.log(error)
+    })
 
   publishAndRetainHistory()
 
