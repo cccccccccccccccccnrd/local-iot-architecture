@@ -221,8 +221,9 @@ function publishAndRetainHistory () {
       console.error(error)
     }
 
-    mqtt.server.publish({ topic: setup.topics.history, payload: JSON.stringify(history), retain: true }, () => {
-      console.log(JSON.stringify(history))
-    })
+    mqtt.server.publish({
+      topic: setup.topics.history,
+      payload: JSON.stringify(history),
+      retain: true })
   })
 }
