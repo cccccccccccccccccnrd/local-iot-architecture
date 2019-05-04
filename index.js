@@ -6,8 +6,8 @@ const mqtt = require('./mqtt-server')
 
 httpServer.serve(3000)
 
-setup.devices.camera.set('output', `${ process.env.LOGS_PATH }/${ timestamp }.jpg`)
-setup.devices.camera.snap()
+console.log(setup.devices.camera)
+setup.devices.camera.set('output', `${ process.env.LOGS_PATH }/cool.jpg`)
 
 setup.board.on('ready', () => {
   setup.init()
