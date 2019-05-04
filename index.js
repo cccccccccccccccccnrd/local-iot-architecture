@@ -6,6 +6,9 @@ const mqtt = require('./mqtt-server')
 
 httpServer.serve(3000)
 
+setup.devices.camera.set('output', `${ process.env.LOGS_PATH }/${ timestamp }.jpg`)
+setup.devices.camera.snap()
+
 setup.board.on('ready', () => {
   setup.init()
 
@@ -56,7 +59,7 @@ setup.board.on('ready', () => {
       setup.db.insert(bundledReadings)
       publishAndRetainHistory()
 
-      setup.devices.camera.set('output', `${process.env.LOGS_PATH}/${timestamp}.jpg`)
+      setup.devices.camera.set('output', `${ process.env.LOGS_PATH }/${ timestamp }.jpg`)
       setup.devices.camera.snap()
         .then(result => {
           console.log(`logs ${timestamp} saved`)
