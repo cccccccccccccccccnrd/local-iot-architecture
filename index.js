@@ -8,17 +8,8 @@ httpServer.serve(3000)
 
 setup.board.on('ready', () => {
   setup.init()
-  /* console.log('camera', setup.devices.camera) */
-  setup.devices.camera.set('output', `${ process.env.LOGS_PATH }/cool.jpg`)
-  setup.devices.camera.snap()
-    .then(result => {
-      console.log(`logs ${timestamp} saved`)
-    })
-    .catch(error => {
-      console.log(error)
-    })
 
-  publishAndRetainHistory()
+  history()
 
   let latestReadings = {}
 
@@ -215,7 +206,7 @@ setup.board.on('ready', () => {
   })
 })
 
-function publishAndRetainHistory () {
+function history () {
   setup.db.find({}).sort({ timestamp: 1 }).exec((error, history) => {
     if (error) {
       console.error(error)
