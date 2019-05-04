@@ -8,7 +8,7 @@ httpServer.serve(3000)
 
 setup.board.on('ready', () => {
   setup.init()
-  console.log(setup.devices.camera)
+  console.log('camera', setup.devices.camera)
 
   publishAndRetainHistory()
 
